@@ -8,7 +8,7 @@
 |Restricción |Explicación
 
 |Implementación 
-|El front.end estará formado por React y el back-end por Node.js con Express.
+|El front-end estará formado por React y el back-end por Node.js con Express.
 
 |Seguridad
 |La información de los usuarios se almacenará en PODs siguiendo los principios SOLID.
