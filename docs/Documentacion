@@ -1,0 +1,28 @@
+= Estrategia de solución
+
+* Base de datos: TBD.
+
+* Express js: Express es un marco de aplicación web de Node js que proporciona amplias funciones para crear aplicaciones web y móviles. Se utiliza para crear una aplicación web híbrida, de varias páginas y de una sola página.
+
+* React JS: Es un framework creado por Facebook ampliamente utlizado para crear componentes de la interfaz de usuario. Escogido por el gran volumen de documentación y ser el framework utilizado durante los anteriores cursos.
+
+* Despliegue: TBD.
+
+== Diseño
+
+== Seguridad
+Garantizamos la seguridad del usuario mediante el uso de PODs.
+
+== Testabilidad
+Se realizarán pruebas para cada parte individual de la aplicación, garantizando así el correcto funcionamiento de los diferentes modulos tanto individualmente como de forma conjunta.
+
+== Desarrollo
+Para esta fase inicial del proyecto se ha tenido más en cuenta el Front-End, el Back-End se tendrá mayor en consideración más adelante en el curso, ya que en otras asignaturas se van a adquirir conocimientos útiles que se podrán aplicar.
+
+== Estructura
+
+== Interfaz
+La interfaz gráfica será elegida entre todos los miembros del equipo, aportando cada uno algún boceto o idea, los cuales serán puestos en común y se decidirá cual se ajusta mejor a la apicación esperada y que elementos de dichos bocetos resultan más adecuados.
+Para ello se tendrá en cuenta la usabilidad y las necesidades de los difentes tipos de usuarios.
+
+
