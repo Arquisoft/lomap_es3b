@@ -28,6 +28,7 @@
 
 |Control del Repositorio
 |Todo el proyecto se encuentra en un repositorio en github con las siguientes ramas: Rama Master, rama Release, Rama Develop y una rama por cada usuario.
+|=== 
 
 == Convenciones
 
