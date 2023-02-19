@@ -5,14 +5,14 @@
 [role="arc42help"]
 image:07_deployment_view.png["Deployment view de la aplicación"]
 
-La aplicación se encuentra alojada en un servidor web que interactua con los diferentes clientes a traves del puerto 8081. Ademas este servidor se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. Tambien obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt.
+La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 8081. Ademés, este servidor se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt.
 
 === Infraestructura Nivel 2
 ==== Web App
-La Web APP es la que se comunica con los distintos clientes de usuario a traves del puerto 3000. Esta proporciona vistas HTML 5 con JavaScript con las que el usuario podra interactuar desde su navegador. Ademas des de la propia WebAPP se conectará con lo PODs de los usuarios para permitir el acceso y permitir la visualización de los mapas.
+La Web APP es la que se comunica con los distintos clientes de usuario a traves del puerto 3000. Esta proporciona vistas HTML 5 con JavaScript con las que el usuario podrá interactuar desde su navegador. Además desde la propia WebAPP se conectará con lo PODs de los usuarios para permitir el acceso y permitir la visualización de los mapas.
 
 ==== REST API
-La REST API nutre de información a la Web App por medio de los distintos endpoints que proporciona. La API se encuentra alojada en el puerto 5000. Ademas la información que proporciona la obtiene de la BBDD MongoDB alojada en la nube.
+La REST API nutre de información a la Web App por medio de los distintos endpoints que proporciona. La API se encuentra alojada en el puerto 5000. Además, la información que proporciona la obtiene de la BBDD MongoDB alojada en la nube.
 
 ==== PODs SOLID
 Los PODs almacenan la información de los usuarios y se encuentran dentro de los servidores de Inrupt en la nube, que sirve PODs de SOLID.
