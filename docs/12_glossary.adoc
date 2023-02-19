@@ -1,31 +1,28 @@
 [[section-glossary]]
 == Glossary
 
-
-
-[role="arc42help"]
-****
-.Contents
-The most important domain and technical terms that your stakeholders use when discussing the system.
-
-You can also see the glossary as source for translations if you work in multi-language teams.
-
-.Motivation
-You should clearly define your terms, so that all stakeholders
-
-* have an identical understanding of these terms
-* do not use synonyms and homonyms
-
-.Form
-A table with columns <Term> and <Definition>.
-
-Potentially more columns in case you need translations.
-
-****
-
 [options="header"]
 |===
-| Term         | Definition
-| <Term-1>     | <definition-1>
-| <Term-2>     | <definition-2>
+| Termino         | Definición
+| REACT     
+| Biblioteca de JavaScript para construir interfaces de usuario
+
+| Principios SOLID
+| Single Responsibility, Open-Close Principle, Liskov Substitution, Interface Segregation Principle, Dependency Inversion Principle
+
+| AsciiDoc
+| Lenguaje de marcado de texto sin formato para escribir contenido técnico.
+
+| GitHub
+| Portal creado para alojar el código de las aplicaciones de cualquier desarrollador
+
+| Node.js
+| Entorno de tiempo de ejecución de JavaScript 
+
+| Express
+| Es el framework web más popular de Node
+
+| POD
+| Contenedor, en el que se presenta un conjunto de datos al usuario.
+
 |===
