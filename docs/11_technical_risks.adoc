@@ -17,5 +17,8 @@
 
 |Equipos
 |No estamos muy familiarizados con los trabajos en equipo y puede que nos sea dificil coordinarnos.
+
+|Github
+|Todos lo hemos usado ya y sabemos más o menos el funcionamiento, pero hay caracteristicas que son nuevas para nosotros y estamos aprendiendo a utilizar.
 |=== 
 ****
