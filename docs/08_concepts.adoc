@@ -1,67 +1,20 @@
 [[section-concepts]]
-== Cross-cutting Concepts
+= Conceptos transversales
 
+== Persistencia
+Los datos de los usuarios serán almacenados, de manera que cada usuario conservará la información que hayan creado sobre un lugar de manera descentralizada.
 
-[role="arc42help"]
-****
-.Content
-This section describes overall, principal regulations and solution ideas that are
-relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
+== Usuarios y su privacidad
+Las contraseñas e información sensible no sera almacenada en una base de datos para mayor seguridad. En cambio, se optará por almacenar dicha información en un pod personal de cada usuario siguiendo los principios SOLID.
 
-* domain models
-* architecture patterns or design patterns
-* rules for using specific technology
-* principal, often technical decisions of overall decisions
-* implementation rules
+== Interfaz de Usuario
+Para la interfaz gráfica se usará el framework React, teniendo como base los diseños aceptados y creados por los miembros del equipo.
 
-.Motivation
-Concepts form the basis for _conceptual integrity_ (consistency, homogeneity)
-of the architecture. Thus, they are an important contribution to achieve inner qualities of your system.
+== Manejo de Sesión
+Para el inicio de la sesión será necesario estar registrado previamente o deberá registrarse. La información almacenada por el usuario solo será accesible por este a través de su pod y siguiendo los principios SOLID.
 
-Some of these concepts cannot be assigned to individual building blocks
-(e.g. security or safety). This is the place in the template that we provided for a
-cohesive specification of such concepts.
+== Testeable
+Para añadir una funcionalidad o característica deberá ser probada adecuadamente con anterioridad. Con esto en mente se deberán realizar tanto pruebas unitarias, para comprobar el correcto funcionamiento del código, como pruebas relacionadas con la usabilidad.
 
-.Form
-The form can be varied:
-
-* concept papers with any kind of structure
-* cross-cutting model excerpts or scenarios using notations of the architecture views
-* sample implementations, especially for technical concepts
-* reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)
-
-.Structure
-A potential (but not mandatory) structure for this section could be:
-
-* Domain concepts
-* User Experience concepts (UX)
-* Safety and security concepts
-* Architecture and design patterns
-* "Under-the-hood"
-* development concepts
-* operational concepts
-
-Note: it might be difficult to assign individual concepts to one specific topic
-on this list.
-
-image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
-****
-
-
-=== Domain model
-
-image:UmlDiagram.png["Example UML Diagram"]
-
-
-
-=== _<Concept 2>_
-
-_<explanation>_
-
-...
-
-=== _<Concept n>_
-
-_<explanation>_
+== Modelo de dominio
+Concepto inicial del modelo de dominio, altamente sujeto a cambios y ampliaciones.
