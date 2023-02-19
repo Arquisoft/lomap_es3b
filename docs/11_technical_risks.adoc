@@ -1,17 +1,21 @@
 [[section-technical-risks]]
-== Risks and Technical Debts
+== Riesgos y deudas técnicas
 
-
-[role="arc42help"]
 ****
-.Contents
-A list of identified technical risks or technical debts, ordered by priority
+[cols="1,1"]
+|===
+|Riesgo |Explicación
 
-.Motivation
-“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.) 
+|Desconocimiento de REACT 
+|Es la primera vez que trabajamos con este framework.
 
-This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.
+|Desconocimiento de Node.js
+|Es la primera vez que trabajamos con ello. Lo estamos usando también en otra asignatura, lo cual nos beneficiara para entenderlo.
 
-.Form
-List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
+|Uso de POD's
+|No conocemos el funcionamiento de estos.
+
+|Equipos
+|No estamos muy familiarizados con los trabajos en equipo y puede que nos sea dificil
+|=== 
 ****
