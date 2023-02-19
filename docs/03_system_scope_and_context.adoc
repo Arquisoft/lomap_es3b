@@ -3,8 +3,6 @@
 
 === Contexto Empresarial
 
-[role="arc42help"]
-
 La aplicación LoMap consta de un Frontend y un Backend que se comunican con un sistema de PODs y una base de datos que contiene los lugares que se van a utilizar en la aplicación.
 
 Los usuarios se comunicarán con el Frontend de la aplicación el cual se comunicará con el sistema de PODs externo a la aplicación para obtener la información del Usuario y sus lugares almacenados. El Frontend también se comunicaré con el Backend de la aplicación para obtener la información de los lugares que almacena en Usuario en el POD.
@@ -14,9 +12,9 @@ Los usuarios se comunicarán con el Frontend de la aplicación el cual se comuni
 image:03_business_context.png["Business Context de la Aplicación"]
 
 **Tabla de Contexto Empresarial**
-
+[options="header", cols="1,1,1"]
 |===
-|Elemento de comunicación|Input|Output
+| Elemento de comunicación | Input| Output
 | Frontend | El Frontend recibe como entradas los datos solicitados al POD así como peticiones por parte del Usuario de diferentes pantallas de la pagina Web. También recibe las respuestas de las peticiones al Backend de la aplicación. | Las salidas que proporciona el Frontend son peticiones al Backend de la aplicación para la obtención de información sobre un lugar así como peticiones al POD para obtener información de los mapas de un usuario. También proporciona una visualización al usuario de forma gráfica.
 | Backend | Recibe como entradas las peticiones por parte del Frontend y las respuestas por parte de la BBDD | El Backend tiene como salidas las respuestas a las peticiones del Frontend y las peticiones de datos a la BBDD. 
 | BBDD | Como entrada tiene las peticiones de datos almacenados por parte del Backend de la aplicación | Como salidas devuelve los objetos solicitados o un mensaje de error en el caso de que no exista lo que el Backend solicita.
@@ -24,18 +22,14 @@ image:03_business_context.png["Business Context de la Aplicación"]
 | Usuario | El usuario visualiza de forma gráfica la petición que ha realizado al Frontend de la aplicación | El usuario solicita al Frontend la visualización de una pagina de la aplicación.
 |===
 
-**<optionally: Explanation of external domain interfaces>**
-
 === Contexto Técnico
-
-[role="arc42help"]
 
 **Diagrama de Contexto Técnico**
 
 image:03_technical_context.png["Technical Context de la Aplicación"]
 
 **Mapeado de Input/Output a Canales**
-
+[options="header", cols="1,1,1"]
 |===
 |Canal de comunicación|Input|Output
 | SOLID-WebAPP | Se utiliza una comunicación HTTPS para solicitar datos a SOLID | Se utiliza una comunicación HTTPS para la obtención de la respuesta por parte de SOLID.

@@ -1,7 +1,6 @@
 [[section-technical-risks]]
 == Riesgos y deudas técnicas
 
-****
 [cols="1,1"]
 |===
 |Riesgo |Explicación
@@ -20,5 +19,4 @@
 
 |Github
 |Todos lo hemos usado ya y sabemos más o menos el funcionamiento, pero hay caracteristicas que son nuevas para nosotros y estamos aprendiendo a utilizar.
-|=== 
-****
+|===

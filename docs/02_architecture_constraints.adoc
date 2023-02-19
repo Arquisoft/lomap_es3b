@@ -1,9 +1,9 @@
 [[section-architecture-constraints]]
-= Restricciones
+== Restricciones
 
-== Restricciones tecnicas
+=== Restricciones tecnicas
 
-[cols="1,1"]
+[options="header", cols="1,1"]
 |===
 |Restricción |Explicación
 
@@ -15,11 +15,11 @@
 
 |Base de Datos
 |Usaremos TBD.
-|=== 
+|===
 
-== Restricciones organizacionales
+=== Restricciones organizacionales
 
-[cols="1,1"]
+[options="header", cols="1,1"]
 |===
 |Restricción |Explicación
 
@@ -28,11 +28,11 @@
 
 |Control del Repositorio
 |Todo el proyecto se encuentra en un repositorio en github con las siguientes ramas: Rama Master, rama Release, Rama Develop y una rama por cada usuario.
-|=== 
+|===
 
-== Convenciones
+=== Convenciones
 
-[cols="1,1"]
+[options="header", cols="1,1"]
 |===
 |Restricción |Explicación
 
@@ -41,3 +41,4 @@
 
 |Idioma
 |Español.
+|===

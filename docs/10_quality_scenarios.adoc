@@ -1,11 +1,11 @@
 [[section-quality-scenarios]]
-= Requisitos de calidad
+== Requisitos de calidad
 
-== Árbol de calidad
+=== Árbol de calidad
 
 image::arbolDeCalidad.png["Example UML Diagram"]
 
-== Escenarios de calidad
+=== Escenarios de calidad
 [options="header"]
 |==================================================================================
 |Id   |Atributo de calidad      |Escenario de calidad

@@ -2,6 +2,7 @@
 == Glossary
 
 [options="header"]
+
 |===
 | Termino         | Definición
 | REACT     

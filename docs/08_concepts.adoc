@@ -1,20 +1,20 @@
 [[section-concepts]]
-= Conceptos transversales
+== Conceptos transversales
 
-== Persistencia
+=== Persistencia
 Los datos de los usuarios serán almacenados, de manera que cada usuario conservará la información que hayan creado sobre un lugar de manera descentralizada.
 
-== Usuarios y su privacidad
+=== Usuarios y su privacidad
 Las contraseñas e información sensible no sera almacenada en una base de datos para mayor seguridad. En cambio, se optará por almacenar dicha información en un pod personal de cada usuario siguiendo los principios SOLID.
 
-== Interfaz de Usuario
+=== Interfaz de Usuario
 Para la interfaz gráfica se usará el framework React, teniendo como base los diseños aceptados y creados por los miembros del equipo.
 
-== Manejo de Sesión
+=== Manejo de Sesión
 Para el inicio de la sesión será necesario estar registrado previamente o deberá registrarse. La información almacenada por el usuario solo será accesible por este a través de su pod y siguiendo los principios SOLID.
 
-== Testeable
+=== Testeable
 Para añadir una funcionalidad o característica deberá ser probada adecuadamente con anterioridad. Con esto en mente se deberán realizar tanto pruebas unitarias, para comprobar el correcto funcionamiento del código, como pruebas relacionadas con la usabilidad.
 
-== Modelo de dominio
+=== Modelo de dominio
 Concepto inicial del modelo de dominio, altamente sujeto a cambios y ampliaciones.
