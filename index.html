@@ -757,7 +757,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_contexto_empresarial">3.1. Contexto Empresarial</h3>
-<div class="paragraph arc42help">
+<div class="paragraph">
 <p>La aplicación LoMap consta de un Frontend y un Backend que se comunican con un sistema de PODs y una base de datos que contiene los lugares que se van a utilizar en la aplicación.</p>
 </div>
 <div class="paragraph">
@@ -816,7 +816,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 <div class="sect2">
 <h3 id="_contexto_técnico">3.2. Contexto Técnico</h3>
-<div class="paragraph arc42help">
+<div class="paragraph">
 <p><strong>Diagrama de Contexto Técnico</strong></p>
 </div>
 <div class="paragraph">
@@ -831,12 +831,14 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <col style="width: 33.3333%;">
 <col style="width: 33.3334%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Canal de comunicación</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Input</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Output</p></td>
+<th class="tableblock halign-left valign-top">Canal de comunicación</th>
+<th class="tableblock halign-left valign-top">Input</th>
+<th class="tableblock halign-left valign-top">Output</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SOLID-WebAPP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se utiliza una comunicación HTTPS para solicitar datos a SOLID</p></td>
@@ -921,17 +923,13 @@ Para ello se tendrá en cuenta la usabilidad y las necesidades de los difentes t
 <div class="sect1">
 <h2 id="section-building-block-view">5. Building Block View</h2>
 <div class="sectionbody">
-<div class="sidebarblock arc42help">
-<div class="content">
 <div class="paragraph">
 <p>El código se descompone de manera estructurada por niveles, en los que se enseñan las dependencias internas de cada elemento.
-El sistema se divide en Whitebox y Blackbox</p>
-</div>
-</div>
+El sistema se divide en Whitebox y Blackbox.</p>
 </div>
 <div class="sect2">
 <h3 id="_whitebox_overall_system">5.1. Whitebox Overall System</h3>
-<table class="tableblock frame-all grid-all stretch arc42help">
+<table class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 1. Añadir el dibujo del whitebox</caption>
 <colgroup>
 <col style="width: 33.3333%;">
@@ -957,7 +955,7 @@ El sistema se divide en Whitebox y Blackbox</p>
 </div>
 <div class="sect2">
 <h3 id="_blackbox_overall_system">5.2. Blackbox Overall System</h3>
-<table class="tableblock frame-all grid-all stretch arc42help">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -1090,7 +1088,7 @@ Bob &lt;-- Iomap: Confirmación de datos añadidos correctamente</pre>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_infraestructura_nivel_1">7.1. Infraestructura Nivel 1</h3>
-<div class="paragraph arc42help">
+<div class="paragraph">
 <p><span class="image"><img src="./images/07_deployment_view.png" alt="Deployment view de la aplicación"></span></p>
 </div>
 <div class="paragraph">
@@ -1135,12 +1133,14 @@ Bob &lt;-- Iomap: Confirmación de datos añadidos correctamente</pre>
 <col style="width: 33.3333%;">
 <col style="width: 33.3334%;">
 </colgroup>
-<tbody>
+<thead>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Dispositivo</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tiempo de respuesta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Disponibilidad</p></td>
+<th class="tableblock halign-left valign-top">Dispositivo</th>
+<th class="tableblock halign-left valign-top">Tiempo de respuesta</th>
+<th class="tableblock halign-left valign-top">Disponibilidad</th>
 </tr>
+</thead>
+<tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Web App</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Poco tiempo de respuesta</p></td>
@@ -1212,7 +1212,7 @@ Bob &lt;-- Iomap: Confirmación de datos añadidos correctamente</pre>
 <div class="sect1">
 <h2 id="section-design-decisions">9. Design Decisions</h2>
 <div class="sectionbody">
-<table class="tableblock frame-all grid-all stretch arc42help">
+<table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 20%;">
 <col style="width: 40%;">
@@ -1322,8 +1322,6 @@ Bob &lt;-- Iomap: Confirmación de datos añadidos correctamente</pre>
 <div class="sect1">
 <h2 id="section-technical-risks">11. Riesgos y deudas técnicas</h2>
 <div class="sectionbody">
-<div class="sidebarblock">
-<div class="content">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 50%;">
@@ -1358,8 +1356,6 @@ Bob &lt;-- Iomap: Confirmación de datos añadidos correctamente</pre>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
