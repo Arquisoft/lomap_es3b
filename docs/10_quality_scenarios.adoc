@@ -3,7 +3,7 @@
 
 == Árbol de calidad
 
-image:arbolDeCalidad.png["Example UML Diagram"]
+image::arbolDeCalidad.png["Example UML Diagram"]
 
 == Escenarios de calidad
 [options="header"]
