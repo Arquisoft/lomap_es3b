@@ -1,75 +1,45 @@
 [[section-introduction-and-goals]]
-== Introduction and Goals
+== Introducción y metas
 
-[role="arc42help"]
-****
-Describes the relevant requirements and the driving forces that software architects and development team must consider. These include
+LoMap es una aplicación desarrollada por HappySw, en la que sus usuarios tendrán acceso a un mapa personalizado con los sitios de su interés dentro de la ciudad de Bruselas.
 
-* underlying business goals, essential features and functional requirements for the system
-* quality goals for the architecture
-* relevant stakeholders and their expectations
-****
+La funcionalidad principal se basa en un mapa, en el cual el propio usuario podrá seleccionar y guardar sus locales o lugares favoritos para tenerlos siempre a mano. Estos lugares pueden ir desde tiendas, bares o los monumentos más icónicos de la capital belga.
 
-=== Requirements Overview
+A diferencia de otras aplicaciones de mapas, LoMap permite al usuario que sea él el que decida que ver sobre su propio mapa, eliminando los lugares de menos interés, lo cual permite que sea muy práctico, tanto para los propios habitantes de la ciudad como para los turistas.
 
-[role="arc42help"]
-****
-.Contents
-Short description of the functional requirements, driving forces, extract (or abstract)
-of requirements. Link to (hopefully existing) requirements documents
-(with version number and information where to find it).
+La aplicación respeta la privacidad de los clientes mediante los principios SOLID.
 
-.Motivation
-From the point of view of the end users a system is created or modified to
-improve support of a business activity and/or improve the quality.
 
-.Form
-Short textual description, probably in tabular use-case format.
-If requirements documents exist this overview should refer to these documents.
+=== Descripción de los requisitos
 
-Keep these excerpts as short as possible. Balance readability of this document with potential redundancy w.r.t to requirements documents.
-****
+Los principales requisitos funcionales de la aplicación serán:
 
-=== Quality Goals
+* Los usuarios podrán marcar con chinchetas (temporal) los lugares de interés.
+* El sistema almacenará y mostrará los lugares ya marcados anteriormente dependiendo de los datos que haya en el pod de cada usuario.
+* Los usuarios podrán añadir tanto fotos, como comentarios en los lugares que hayan añadido.
+* Los usuarios podrán agregar amigos para poder ver los lugares y comentarios que hicieron sobre los mismos.
+* El mapa tendrá filtros, ya sea para filtrar los lugares por restaurantes o monumentos, o para ver los lugares favoritos de sus amigos.
 
-[role="arc42help"]
-****
-.Contents
-The top three (max five) quality goals for the architecture whose fulfillment is of highest importance to the major stakeholders. We really mean quality goals for the architecture. Don't confuse them with project goals. They are not necessarily identical.
 
-.Motivation
-You should know the quality goals of your most important stakeholders, since they will influence fundamental architectural decisions. Make sure to be very concrete about these qualities, avoid buzzwords.
-If you as an architect do not know how the quality of your work will be judged …
+=== Objetivos de calidad
 
-.Form
-A table with quality goals and concrete scenarios, ordered by priorities
-****
+[options="header",cols="1,2,2"]
+
+|===
+|Prioridad|Meta|Motivación
+| 1 | Usabilidad | La aplicación debe ser fácilmente usable por cualquier usuario, con mucha o poca experiencia.
+| 2 | Calidad | La aplicación debe satisfacer las necesidades del usuario de una forma correcta.
+| 3 | Privacidad | El tratamiento de la información privada del usuario debe ser descentralizada, asegurando así su privacidad.
+| 4 | Eficiencia | Al abrir la aplicación o seleccionar un elemento debe ser eficiente y sus tiempos de carga bajos.
+|===
 
 === Stakeholders
 
-[role="arc42help"]
-****
-.Contents
-Explicit overview of stakeholders of the system, i.e. all person, roles or organizations that
-
-* should know the architecture
-* have to be convinced of the architecture
-* have to work with the architecture or with code
-* need the documentation of the architecture for their work
-* have to come up with decisions about the system or its development
-
-.Motivation
-You should know all parties involved in development of the system or affected by the system.
-Otherwise, you may get nasty surprises later in the development process.
-These stakeholders determine the extent and the level of detail of your work and its results.
-
-.Form
-Table with role names, person names, and their expectations with respect to the architecture and its documentation.
-****
-
 [options="header",cols="1,2,2"]
+
 |===
-|Role/Name|Contact|Expectations
-| _<Role-1>_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
+|Rol/Nombre|Contacto|Expectativas
+| Cliente | Interaccionan de manera directa con la aplicación, tienen un usuario y amigos y pueden visualizar los puntos de interés | El objetivo principal es que sea capaz de interactuar con la aplicación de forma intuitiva y de una manera cómoda para el usuario aún sin ser un usuario avanzado.
+| Equipo de desarrollo | Los creadores de la aplicación, pueden modificarla y mejorarla | Trabajan para aprender las tecnologías necesarias para desarrollar el proyecto y funcionar como un equipo.
+| Profesores | Interaccionan con el equipo de desarrollo para corregir posibles defectos | Esperan que la aplicación sea funcional y cumpla los requisitos requeridos. También proporcionan soporte en caso de que sea necesario para el equipo de desarrollo.
 |===

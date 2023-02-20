@@ -1,66 +1,39 @@
 [[section-system-scope-and-context]]
 == System Scope and Context
 
+=== Contexto Empresarial
 
-[role="arc42help"]
-****
-.Contents
-System scope and context - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
+La aplicación LoMap consta de un Frontend y un Backend que se comunican con un sistema de PODs y una base de datos que contiene los lugares que se van a utilizar en la aplicación.
 
-If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).
+Los usuarios se comunicarán con el Frontend de la aplicación el cual se comunicará con el sistema de PODs externo a la aplicación para obtener la información del Usuario y sus lugares almacenados. El Frontend también se comunicaré con el Backend de la aplicación para obtener la información de los lugares que almacena en Usuario en el POD.
 
-.Motivation
-The domain interfaces and technical interfaces to communication partners are among your system's most critical aspects. Make sure that you completely understand them.
+**Diagrama de Contexto Empresarial**
 
-.Form
-Various options:
+image:03_business_context.png["Business Context de la Aplicación"]
 
-* Context diagrams
-* Lists of communication partners and their interfaces.
-****
+**Tabla de Contexto Empresarial**
+[options="header", cols="1,1,1"]
+|===
+| Elemento de comunicación | Input| Output
+| Frontend | El Frontend recibe como entradas los datos solicitados al POD así como peticiones por parte del Usuario de diferentes pantallas de la pagina Web. También recibe las respuestas de las peticiones al Backend de la aplicación. | Las salidas que proporciona el Frontend son peticiones al Backend de la aplicación para la obtención de información sobre un lugar así como peticiones al POD para obtener información de los mapas de un usuario. También proporciona una visualización al usuario de forma gráfica.
+| Backend | Recibe como entradas las peticiones por parte del Frontend y las respuestas por parte de la BBDD | El Backend tiene como salidas las respuestas a las peticiones del Frontend y las peticiones de datos a la BBDD. 
+| BBDD | Como entrada tiene las peticiones de datos almacenados por parte del Backend de la aplicación | Como salidas devuelve los objetos solicitados o un mensaje de error en el caso de que no exista lo que el Backend solicita.
+| POD | Como entrada el POD recibe una petición de obtención de los datos de un Usuario | Como salida devuelve los datos del Usuario si está autorizada la petición o un mensaje de error en caso contrario.
+| Usuario | El usuario visualiza de forma gráfica la petición que ha realizado al Frontend de la aplicación | El usuario solicita al Frontend la visualización de una pagina de la aplicación.
+|===
 
+=== Contexto Técnico
 
-=== Business Context
+**Diagrama de Contexto Técnico**
 
-[role="arc42help"]
-****
-.Contents
-Specification of *all* communication partners (users, IT-systems, ...) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.
+image:03_technical_context.png["Technical Context de la Aplicación"]
 
-.Motivation
-All stakeholders should understand which data are exchanged with the environment of the system.
-
-.Form
-All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.
-
-Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of external domain interfaces>**
-
-=== Technical Context
-
-[role="arc42help"]
-****
-.Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
-
-.Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
-
-.Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
-
-****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
+**Mapeado de Input/Output a Canales**
+[options="header", cols="1,1,1"]
+|===
+|Canal de comunicación|Input|Output
+| SOLID-WebAPP | Se utiliza una comunicación HTTPS para solicitar datos a SOLID | Se utiliza una comunicación HTTPS para la obtención de la respuesta por parte de SOLID.
+| _WebApp-RestAPI_ | Se utiliza una petición HTTPS desde la WebApp hacía la RestAPI | Se utiliza una respuesta HTTPS desde la RestAPI hacía la WebApp.
+| _RestAPI-MongoDB_ | Se utiliza una petición HTTPS desde la RestAP hacía la base de datos MongoDB online | Se devuelve una respuesta HTTPS por parte de la base de datos MongoDB hacía la RestAPI.
+| _WebAPP-Usuario_ | La WebApp recibe una peticíon HTTP por parte del Usuario | La WebApp devuelve una pagina dinámica al Usuario por medio de una respuesta HTTP.
+|===
