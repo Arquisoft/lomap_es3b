@@ -1,0 +1,53 @@
+
+:root{
+    --grey200: #b8b8cf;
+    --grey300: #343434;   
+
+    --orange100:#e88c53;
+    --orange200:#c3713b;
+    --orange300:#4e3928;
+}
+
+
+.info{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    
+}
+
+.infomenu{
+    background-color: var(--orange200);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: center;
+    align-items: center;
+    border-radius: 8px;
+    border: 1px solid;
+}
+
+.tab{
+    padding: 2px 5px;
+    line-height: 1.6;
+    border-bottom: 2px solid var(--orange200);
+}
+
+.tab:first-of-type {
+    border-radius: 8px 0px 0px 8px;
+}
+
+.tab:hover{
+    color: white;
+    border-bottom-color: white;
+}
+
+.tab > p {
+    margin: auto 4px;
+}
+
+.infocontent{
+    margin: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
