@@ -1,11 +1,11 @@
 [[section-runtime-view]]
 == Vista en tiempo de ejecución
 
-=== <Runtime Scenario 1>
+=== Registro en aplicación
 
-* Registro en aplicación
+[plantuml,"registro",png]
 ----
-[plantuml, “registro”, png]
+@startuml
 actor Bob
 participant Iomap
 database Pod
@@ -16,10 +16,9 @@ Bob -> Pod: Bob inserta sus datos
 Iomap <-- Pod: Validación
 Bob <-- Iomap: Confirmación registro
 ----
-=== <Runtime Scenario 2>
+=== Inicio de sesión en aplicación
 
-* Inicio de sesión en aplicación
-
+[plantuml,"inicioSesion",png]
 ----
 actor Bob
 participant Iomap
@@ -32,9 +31,9 @@ Iomap <-- Pod: Validación
 Bob <-- Iomap: Confirmación inicio sesión
 ----
 
-=== <Runtime Scenario 3>
-* Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)
+=== Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)
 
+[plantuml,"filtro",png]
 ----
 actor Bob
 participant Iomap
@@ -46,9 +45,9 @@ DataBase --> Iomap: Devuelve la lista de restaurantes
 Iomap-> Iomap: Muestra solo los restaurantes en el mapa
 ----
 
-=== <Runtime Scenario 4>
-* Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)
+=== Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)
 
+[plantuml,"añadirLugar",png]
 ----
 actor Bob
 participant Iomap
