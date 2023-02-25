@@ -4,8 +4,8 @@
 === <Runtime Scenario 1>
 
 * Registro en aplicación
-[plantuml, “registro”, png]
 ----
+[plantuml, “registro”, png]
 actor Bob
 participant Iomap
 database Pod
