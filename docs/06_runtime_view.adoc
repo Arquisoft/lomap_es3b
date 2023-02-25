@@ -7,7 +7,7 @@
 ----
 actor Bob
 participant Iomap
-participant Pod
+database Pod
 Bob -> Iomap: Bob pide registrarse
 Iomap -> Pod: Redirecciona registro al proveedor del POD
 Bob <-- Pod: Pide datos del registro
@@ -22,7 +22,7 @@ Bob <-- Iomap: Confirmación registro
 ----
 actor Bob
 participant Iomap
-participant Pod
+database Pod
 Bob -> Iomap: Bob pide iniciar sesión
 Iomap -> Pod: Redirecciona al proveedor del POD
 Bob <-- Pod: Pide datos del inicio de sesión
@@ -37,7 +37,7 @@ Bob <-- Iomap: Confirmación inicio sesión
 ----
 actor Bob
 participant Iomap
-participant Pod
+database Pod
 database DataBase as "DataBase"
 Bob -> Iomap: Pulsa en filtro "Restaurantes"
 Iomap-> DataBase: Pide la lista de restaurantes
@@ -51,7 +51,7 @@ Iomap-> Iomap: Muestra solo los restaurantes en el mapa
 ----
 actor Bob
 participant Iomap
-participant Pod
+database Pod
 database DataBase as "DataBase"
 Bob -> Iomap: Pulsa en "Crear lugar"
 Iomap-> Iomap: Bob es redireccionado a la vista de "Crear lugar"
