@@ -1,0 +1,18 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+  
+  :root {
+    --main-color: rgb(104, 117, 217);
+  }
+  
+  div[id="menu"] {
+    grid-area: div;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    border: solid;
+    border: thick double;
+  }
+  
