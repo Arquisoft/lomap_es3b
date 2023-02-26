@@ -7,7 +7,7 @@ function Pruebas(): JSX.Element {
 
             <div className="Buscador">
                 <input type="text" name="buscar" value=" "> </input>
-                <button> 🔍︎ Buscar </button>
+                <button> 🔍︎ Buscar  </button>
             </div>
             <div>
                 <img src= "multimedia/mapa.png" alt="Mapa" ></img>
