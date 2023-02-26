@@ -4,9 +4,10 @@ function Pruebas(): JSX.Element {
 
     return (
         <>
-           <div className="Buscador">
-                <p> 🔍︎ Buscador </p>
+
+            <div className="Buscador">
                 <input type="text" name="buscar" value=" "> </input>
+                <button> 🔍︎ Buscar </button>
             </div>
             <div>
                 <img src= "multimedia/mapa.png" alt="Mapa" ></img>
