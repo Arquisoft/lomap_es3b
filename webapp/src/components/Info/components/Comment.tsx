@@ -7,23 +7,31 @@ type Comentario = {
 }
 
 type CommentProps = {
-    comentario:Comentario;
+    comentario: Comentario;
 }
 
-function Comment(props: CommentProps):JSX.Element{
+function Comment(props: CommentProps): JSX.Element {
+
     return (
         <>
             <div className="comentario">
-                <div className="cabecera">
-                    <div className="usuario"></div>
-                    <div className="fecha"></div>
-                </div>
-                <div className="contenido">
-                    <p></p>
+                <div>
+                    <div className="cabecera">
+                        <div className="usuario">
+                            <p>{props.comentario.usuario}</p>
+                        </div>
+                        <div className="fecha">
+                            <p>{props.comentario.fecha.toDateString()}</p>
+                        </div>
+                    </div>
+                    <div className="contenido">
+                        <p>{props.comentario.contenido}</p>
+                    </div>
                 </div>
             </div>
         </>
     );
 }
 
+export type { Comentario };
 export default Comment;

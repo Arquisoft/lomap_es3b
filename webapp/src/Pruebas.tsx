@@ -5,7 +5,7 @@ function Pruebas(): JSX.Element {
 
     return (
         <>
-            <Info seleccionado={1}/>
+            <Info/>
         </>
     );
 }
