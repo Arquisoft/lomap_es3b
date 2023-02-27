@@ -1,11 +1,11 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-type inicioProp = {
+type inicioProps = {
 
 };
 
-function InicioSesion(props: inicioProp): JSX.Element{
+function InicioSesion(props: inicioProps): JSX.Element{
     return (
         <>
             <div className="inicioSesion">
