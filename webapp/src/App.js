@@ -1,5 +1,5 @@
-import Dropdown from "./Dropdown";
-import Slider from "./Slider";
+import Dropdown from "./pages/maps/Dropdown";
+import Slider from "./pages/maps/Slider";
 import "./styles.css";
 import * as React from "react";
 
