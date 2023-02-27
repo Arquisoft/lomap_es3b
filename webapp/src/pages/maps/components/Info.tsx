@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-import './Info.css';
 import Tab from './Tab';
 import Comment,{Comentario} from './Comment';
 

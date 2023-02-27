@@ -1,14 +1,12 @@
 import React from 'react';
 import './App.css';
-import Filters from './pages/maps/components/Filters';
-import Map from './pages/maps/components/Map';
+import MapsPage from './pages/maps/MapsPage';
 
 function App(): JSX.Element {
 
   return (
     <>
-      <Filters/>
-      <Map/>
+      <MapsPage/>
     </>
   );
 }
