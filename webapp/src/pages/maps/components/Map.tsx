@@ -1,11 +1,11 @@
 import React from 'react';
-import mapa from './multimedia/mapa.png';
+import mapa from '../multimedia/mapa.png';
 
-type PruebaProps={
+type MapProps={
 
 };
 
-function Prueba(props: PruebaProps): JSX.Element {
+function Map(props: MapProps): JSX.Element {
 
     return (
         <>
@@ -20,4 +20,4 @@ function Prueba(props: PruebaProps): JSX.Element {
     );
 }
 
-export default Prueba;
+export default Map;

@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Prueba from './pages/maps/Prueba';
+import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Prueba/>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

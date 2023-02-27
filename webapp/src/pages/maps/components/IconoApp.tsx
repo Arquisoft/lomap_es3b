@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './images/icono2.jpg'
+import logo from '../multimedia/icono2.jpg'
 
 type ImageProp = {
 
