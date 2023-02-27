@@ -1,5 +1,5 @@
 import React from 'react';
-import mapa from './multimedia/mapa.png';
+import mapa from '../multimedia/mapa.png';
 
 type MapProps={
 
