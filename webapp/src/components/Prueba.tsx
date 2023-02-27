@@ -1,11 +1,14 @@
 import React from 'react';
 
-function Pruebas(): JSX.Element {
+type PruebaProps={
+
+};
+
+function Prueba(props: PruebaProps): JSX.Element {
 
     return (
         <>
-
-            <div className="Buscador">
+            <div className="buscador">
                 <input type="text" name="buscar" value=" "> </input>
                 <button> 🔍︎ Buscar  </button>
             </div>
@@ -16,4 +19,4 @@ function Pruebas(): JSX.Element {
     );
 }
 
-export default Pruebas;
+export default Prueba;
