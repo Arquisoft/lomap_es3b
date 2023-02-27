@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import './Info.css';
-import Tab from './components/Tab';
-import Comment,{Comentario} from './components/Comment';
+import Tab from '../../pages/maps/components/Tab';
+import Comment,{Comentario} from '../../pages/maps/components/Comment';
 
 
 type InfoProps = {
