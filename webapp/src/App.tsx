@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import Container from '@mui/material/Container';
-import EmailForm from './components/EmailForm';
-import Welcome from './components/Welcome';
-import UserList from './components/UserList';
+// import Box from '@mui/material/Box';
+// import Link from '@mui/material/Link';
+// import Container from '@mui/material/Container';
+// import EmailForm from './components/EmailForm';
+// import Welcome from './components/Welcome';
+// import UserList from './components/UserList';
 import  {getUsers} from './api/api';
 import {User} from './shared/shareddtypes';
 import './App.css';
-import Prueba from './components/Prueba'
+import Prueba from './pages/maps/Prueba'
 
 function App(): JSX.Element {
 
