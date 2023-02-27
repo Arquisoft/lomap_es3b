@@ -25,10 +25,7 @@ function UserList(props: UserListProps): JSX.Element {
           </ListItem>
         )
       })}
-      </List>
-      
-        
-          
+      </List>    
     </>
   );
 }
