@@ -1,5 +1,4 @@
-[[section-solution-strategy]]
-== Estrategia de solución
+= Estrategia de solución
 
 * Base de datos: TBD.
 
@@ -9,20 +8,20 @@
 
 * Despliegue: TBD.
 
-=== Diseño
+== Diseño
 
-=== Seguridad
+== Seguridad
 Garantizamos la seguridad del usuario mediante el uso de PODs.
 
-=== Testabilidad
+== Testabilidad
 Se realizarán pruebas para cada parte individual de la aplicación, garantizando así el correcto funcionamiento de los diferentes modulos tanto individualmente como de forma conjunta.
 
-=== Desarrollo
+== Desarrollo
 Para esta fase inicial del proyecto se ha tenido más en cuenta el Front-End, el Back-End se tendrá mayor en consideración más adelante en el curso, ya que en otras asignaturas se van a adquirir conocimientos útiles que se podrán aplicar.
 
-=== Estructura
+== Estructura
 
-=== Interfaz
+== Interfaz
 La interfaz gráfica será elegida entre todos los miembros del equipo, aportando cada uno algún boceto o idea, los cuales serán puestos en común y se decidirá cual se ajusta mejor a la apicación esperada y que elementos de dichos bocetos resultan más adecuados.
 Para ello se tendrá en cuenta la usabilidad y las necesidades de los difentes tipos de usuarios.
 

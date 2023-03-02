@@ -1,57 +1,62 @@
 [[section-runtime-view]]
-== Runtime View
+== Vista en tiempo de ejecución
 
+=== Registro en aplicación
 
-[role="arc42help"]
-****
-.Contents
-The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:
-
-* important use cases or features: how do building blocks execute them?
-* interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?
-* operation and administration: launch, start-up, stop
-* error and exception scenarios
-
-Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their *architectural relevance*. It is *not* important to describe a large number of scenarios. You should rather document a representative selection.
-
-.Motivation
-You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).
-
-.Form
-There are many notations for describing scenarios, e.g.
-
-* numbered list of steps (in natural language)
-* activity diagrams or flow charts
-* sequence diagrams
-* BPMN or EPCs (event process chains)
-* state machines
-* ...
-
-****
-
-=== <Runtime Scenario 1>
-
-
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
+[plantuml,"registro",png]
 ----
-actor Alice
+@startuml
 actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+participant Iomap
+database Pod
+Bob -> Iomap: Bob pide registrarse
+Iomap -> Pod: Redirecciona registro al proveedor del POD
+Bob <-- Pod: Pide datos del registro
+Bob -> Pod: Bob inserta sus datos
+Iomap <-- Pod: Validación
+Bob <-- Iomap: Confirmación registro
 ----
-=== <Runtime Scenario 2>
+=== Inicio de sesión en aplicación
 
-=== ...
+[plantuml,"inicioSesion",png]
+----
+actor Bob
+participant Iomap
+database Pod
+Bob -> Iomap: Bob pide iniciar sesión
+Iomap -> Pod: Redirecciona al proveedor del POD
+Bob <-- Pod: Pide datos del inicio de sesión
+Bob -> Pod: Bob inserta sus datos
+Iomap <-- Pod: Validación
+Bob <-- Iomap: Confirmación inicio sesión
+----
 
-=== <Runtime Scenario n>
+=== Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)
+
+[plantuml,"filtro",png]
+----
+actor Bob
+participant Iomap
+database Pod
+database DataBase as "DataBase"
+Bob -> Iomap: Pulsa en filtro "Restaurantes"
+Iomap-> DataBase: Pide la lista de restaurantes
+DataBase --> Iomap: Devuelve la lista de restaurantes
+Iomap-> Iomap: Muestra solo los restaurantes en el mapa
+----
+
+=== Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)
+
+[plantuml,"añadirLugar",png]
+----
+actor Bob
+participant Iomap
+database Pod
+database DataBase as "DataBase"
+Bob -> Iomap: Pulsa en "Crear lugar"
+Iomap-> Iomap: Bob es redireccionado a la vista de "Crear lugar"
+Bob <-- Iomap: La aplicación pide los datos del lugar
+Bob -> Iomap: Bob inserta los datos
+Iomap --> DataBase: La aplicación añade el lugar a la base de datos
+Bob <-- Iomap: Confirmación de datos añadidos correctamente
+----
