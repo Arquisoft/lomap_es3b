@@ -7,10 +7,10 @@ El c√≥digo se descompone de manera estructurada por niveles, en los que se ense√
 El sistema se divide en Whitebox y Blackbox.
 
 
+
 === Whitebox Overall System
 
 image:05_Esquema_Whitebox.jpg["Whitebox"]
-
 
 [options="header",cols="1,2"]
 |===

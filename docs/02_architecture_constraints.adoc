@@ -1,19 +1,44 @@
 [[section-architecture-constraints]]
-== Architecture Constraints
+== Restricciones
 
+=== Restricciones tecnicas
 
-[role="arc42help"]
-****
-.Contents
-Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+[options="header", cols="1,1"]
+|===
+|Restricción |Explicación
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+|Implementación 
+|El front-end estará formado por React y el back-end por Node.js con Express.
 
-.Form
-Simple tables of constraints with explanations.
-If needed you can subdivide them into
-technical constraints, organizational and political constraints and
-conventions (e.g. programming or versioning guidelines, documentation or naming conventions)
-****
+|Seguridad
+|La información de los usuarios se almacenará en PODs siguiendo los principios SOLID.
+
+|Base de Datos
+|Usaremos TBD.
+|===
+
+=== Restricciones organizacionales
+
+[options="header", cols="1,1"]
+|===
+|Restricción |Explicación
+
+|Equipo 
+|Lara Fernández Méndez, Eloy Alfredo Schmidt Rodríguez, Luis Manuel Solares García, Miguel Mier Castañón.
+
+|Control del Repositorio
+|Todo el proyecto se encuentra en un repositorio en github con las siguientes ramas: Rama Master, rama Release, Rama Develop y una rama por cada usuario.
+|===
+
+=== Convenciones
+
+[options="header", cols="1,1"]
+|===
+|Restricción |Explicación
+
+|Documentación 
+|Arquitectura AsciiDoc.
+
+|Idioma
+|Español.
+|===

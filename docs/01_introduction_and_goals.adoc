@@ -1,8 +1,6 @@
 [[section-introduction-and-goals]]
 == Introducción y metas
 
-[role="arc42help"]
-
 LoMap es una aplicación desarrollada por HappySw, en la que sus usuarios tendrán acceso a un mapa personalizado con los sitios de su interés dentro de la ciudad de Bruselas.
 
 La funcionalidad principal se basa en un mapa, en el cual el propio usuario podrá seleccionar y guardar sus locales o lugares favoritos para tenerlos siempre a mano. Estos lugares pueden ir desde tiendas, bares o los monumentos más icónicos de la capital belga.
@@ -14,8 +12,6 @@ La aplicación respeta la privacidad de los clientes mediante los principios SOL
 
 === Descripción de los requisitos
 
-[role="arc42help"]
-****
 Los principales requisitos funcionales de la aplicación serán:
 
 * Los usuarios podrán marcar con chinchetas (temporal) los lugares de interés.
@@ -24,13 +20,11 @@ Los principales requisitos funcionales de la aplicación serán:
 * Los usuarios podrán agregar amigos para poder ver los lugares y comentarios que hicieron sobre los mismos.
 * El mapa tendrá filtros, ya sea para filtrar los lugares por restaurantes o monumentos, o para ver los lugares favoritos de sus amigos.
 
-****
 
 === Objetivos de calidad
 
-[role="arc42help"]
-
 [options="header",cols="1,2,2"]
+
 |===
 |Prioridad|Meta|Motivación
 | 1 | Usabilidad | La aplicación debe ser fácilmente usable por cualquier usuario, con mucha o poca experiencia.
@@ -39,12 +33,10 @@ Los principales requisitos funcionales de la aplicación serán:
 | 4 | Eficiencia | Al abrir la aplicación o seleccionar un elemento debe ser eficiente y sus tiempos de carga bajos.
 |===
 
-
 === Stakeholders
 
-[role="arc42help"]
-
 [options="header",cols="1,2,2"]
+
 |===
 |Rol/Nombre|Contacto|Expectativas
 | Cliente | Interaccionan de manera directa con la aplicación, tienen un usuario y amigos y pueden visualizar los puntos de interés | El objetivo principal es que sea capaz de interactuar con la aplicación de forma intuitiva y de una manera cómoda para el usuario aún sin ser un usuario avanzado.
