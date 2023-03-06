@@ -30,5 +30,11 @@ afterAll(async () => {
 })
 
 describe('place ', () => {
-    
+    /**
+     * Test that we can list users without any error.
+     */
+    it('can be searched',async () => {
+        const response:Response = await request(app).get("/api/place/prueba");
+        expect(response.statusCode).toBe(200);
+    });
 });
