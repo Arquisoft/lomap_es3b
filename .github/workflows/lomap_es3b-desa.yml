@@ -2,7 +2,7 @@ name: CI for LOMAP ES3B DEVELOP
 
 on:
   push:
-    branches: 'develop'
+    branches: 'Eloy_UO271588'
     
 jobs:
   unit-test-webapp:
