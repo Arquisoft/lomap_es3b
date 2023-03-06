@@ -12,7 +12,6 @@ El sistema se divide en Whitebox y Blackbox.
 
 image:05_Esquema_Whitebox.jpg["Whitebox"]
 
-
 [options="header",cols="1,2"]
 |===
 |Actores | Descripción
