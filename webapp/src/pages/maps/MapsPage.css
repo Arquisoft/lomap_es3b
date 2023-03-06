@@ -13,6 +13,22 @@ html{
     background-color: rgb(227, 227, 227);
 }
 
+.mapspage{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenido{
+    display: flex;
+    flex-direction: row;
+}
+
+.imagen > img{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
 .info{
     display: flex;
     flex-direction: column;
