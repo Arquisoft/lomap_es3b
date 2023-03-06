@@ -3,7 +3,7 @@ name: CI for LOMAP ES3B DEVELOP
 on:
   push:
     branches: 'develop'
-
+    
 jobs:
   unit-test-webapp:
     runs-on: ubuntu-latest
