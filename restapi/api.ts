@@ -24,6 +24,7 @@ api.get(
     }
 );
 
+// Prueba de base de datos
 api.get(
   "/prueba",
   function(req: Request, res: Response): void {
