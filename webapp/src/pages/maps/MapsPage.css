@@ -202,6 +202,11 @@ html{
     margin: 0px 8px;
 }
 
+.leaflet-div-icon{
+    background-color: transparent;
+    border: none;
+}
+
 .buscador{
     width: calc(100% - 16px);
     margin: 10px 8px;
