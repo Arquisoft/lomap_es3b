@@ -10,7 +10,7 @@ function InicioSesion(props: inicioProps): JSX.Element{
     return (
         <>
             <div className="inicioSesion">
-            <Button variant="outline-warning">Inicio de sesión</Button>{' '}
+                <Button variant="warning">Inicio de sesión</Button>{' '}
             </div>
         </>
     );
