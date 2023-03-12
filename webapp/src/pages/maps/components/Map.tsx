@@ -23,7 +23,7 @@ function Map(props: MapProps): JSX.Element {
                 <button> 🔍︎ Buscar  </button>
 
             </div>
-            <div id="map">
+            <div className="map">
                 
                 <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
                     <TileLayer

@@ -21,7 +21,7 @@ function MapsPage():JSX.Element{
                 <div className="contenido">
 
                     {/*Contenido menusuperior*/}
-                    <div className="menusup">
+                    <div className="left">
                         <Filters/>
                     </div>
 
