@@ -787,12 +787,12 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Frontend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebAPP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El Frontend recibe como entradas los datos solicitados al POD así como peticiones por parte del Usuario de diferentes pantallas de la pagina Web. También recibe las respuestas de las peticiones al Backend de la aplicación.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Las salidas que proporciona el Frontend son peticiones al Backend de la aplicación para la obtención de información sobre un lugar así como peticiones al POD para obtener información de los mapas de un usuario. También proporciona una visualización al usuario de forma gráfica.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Backend</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">REST API</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Recibe como entradas las peticiones por parte del Frontend y las respuestas por parte de la BBDD</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El Backend tiene como salidas las respuestas a las peticiones del Frontend y las peticiones de datos a la BBDD.</p></td>
 </tr>
@@ -802,7 +802,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <td class="tableblock halign-left valign-top"><p class="tableblock">Como salidas devuelve los objetos solicitados o un mensaje de error en el caso de que no exista lo que el Backend solicita.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">POD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD SOLID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Como entrada el POD recibe una petición de obtención de los datos de un Usuario</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Como salida devuelve los datos del Usuario si está autorizada la petición o un mensaje de error en caso contrario.</p></td>
 </tr>
@@ -840,22 +840,22 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">SOLID-WebAPP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">POD SOLID-WebAPP</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se utiliza una comunicación HTTPS para solicitar datos a SOLID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se utiliza una comunicación HTTPS para la obtención de la respuesta por parte de SOLID.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WebApp-RestAPI</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebApp-RestAPI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se utiliza una petición HTTPS desde la WebApp hacía la RestAPI</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se utiliza una respuesta HTTPS desde la RestAPI hacía la WebApp.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>RestAPI-MongoDB</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RestAPI-MongoDB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se utiliza una petición HTTPS desde la RestAP hacía la base de datos MongoDB online</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se devuelve una respuesta HTTPS por parte de la base de datos MongoDB hacía la RestAPI.</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WebAPP-Usuario</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WebAPP-Usuario</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">La WebApp recibe una peticíon HTTP por parte del Usuario</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">La WebApp devuelve una pagina dinámica al Usuario por medio de una respuesta HTTP.</p></td>
 </tr>
