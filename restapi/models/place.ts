@@ -11,10 +11,14 @@ const PlaceSchema = Schema(
             type: String, 
             required: true 
         },
-        coord: [{ 
-            latitude: Number, 
-            altitude: Number
-        }  ],
+        latitude: { 
+            type: Number, 
+            required: true
+        } ,
+        longitude: { 
+            type: Number, 
+            required: true
+        } ,
         comments: { // Los comentarios igual conviene sacarlos de otro apartado de la base de datos
             type: String, 
             required: true 
