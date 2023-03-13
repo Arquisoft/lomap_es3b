@@ -6,7 +6,7 @@ node_modules
 .pnp.js
 
 #package-lock
-package-lock.json
+#package-lock.json
 
 # testing
 webapp/coverage

@@ -1,13 +1,9 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
-require ('dotenv').config();
 
-const {dbConnection} = require("./database/config.ts")
 const Place= require("./models/place")
 
 const api:Router = express.Router()
-dbConnection()
-
 interface User {
     name: string;
     email: string;
@@ -32,6 +28,7 @@ api.get(
       name : "Oviedo", direction : "Calle Uria", coord : "23"
     }
     Place.collection.insertOne(place);
+    console.log(place)
     res.sendStatus(200);
   }
 )
