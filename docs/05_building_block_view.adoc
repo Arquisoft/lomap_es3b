@@ -5,13 +5,16 @@
 
 El código se descompone de manera estructurada por niveles, en los que se enseñan las dependencias internas de cada elemento.
 El sistema se divide en Whitebox y Blackbox.
+El sistema se divide en Whitebox y Blackbox.
 
 
 === Whitebox Overall System
 
-.Añadir el dibujo del whitebox
+image:05_Esquema_Whitebox.jpg["Whitebox"]
+
 [options="header",cols="1,2"]
 |===
+|Actores | Descripción
 |Actores | Descripción
 | Cliente / Usuario | Es el que interactúa directamente con la aplicación y su interfaz de usuario. Cada uno tiene un POD en el cual se almacenan sus datos y al cual se puede acceder.
 | Administrador | Tiene acceso al completo de la aplicación y puede administrarla para que funcione correctamente.
@@ -20,6 +23,7 @@ El sistema se divide en Whitebox y Blackbox.
 === Blackbox Overall System
 [options="header",cols="1,2"]
 |===
+| Nombre | Descripción
 | Nombre | Descripción
 | SOLID | Cada usuario tiene su POD y permite a la aplicación acceder a sus datos.
 | Base de Datos | Provee a la aplicación de la información necesaria, ya sean los mapas o los puntos de interés.
