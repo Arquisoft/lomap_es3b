@@ -480,10 +480,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#section-runtime-view">6. Vista en tiempo de ejecución</a>
 <ul class="sectlevel2">
-<li><a href="#_runtime_scenario_1">6.1. &lt;Runtime Scenario 1&gt;</a></li>
-<li><a href="#_runtime_scenario_2">6.2. &lt;Runtime Scenario 2&gt;</a></li>
-<li><a href="#_runtime_scenario_3">6.3. &lt;Runtime Scenario 3&gt;</a></li>
-<li><a href="#_runtime_scenario_4">6.4. &lt;Runtime Scenario 4&gt;</a></li>
+<li><a href="#_registro_en_aplicación">6.1. Registro en aplicación</a></li>
+<li><a href="#_inicio_de_sesión_en_aplicación">6.2. Inicio de sesión en aplicación</a></li>
+<li><a href="#_busqueda_de_lugares_mediante_filtros_considerando_que_la_sesión_ya_está_iniciada">6.3. Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)</a></li>
+<li><a href="#_añadir_nuevo_lugar_al_mapa_considerando_que_la_sesión_ya_está_iniciada">6.4. Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)</a></li>
 </ul>
 </li>
 <li><a href="#section-deployment-view">7. Vista de implementación</a>
@@ -925,12 +925,15 @@ Para ello se tendrá en cuenta la usabilidad y las necesidades de los difentes t
 <div class="sectionbody">
 <div class="paragraph">
 <p>El código se descompone de manera estructurada por niveles, en los que se enseñan las dependencias internas de cada elemento.
+El sistema se divide en Whitebox y Blackbox.
 El sistema se divide en Whitebox y Blackbox.</p>
 </div>
 <div class="sect2">
 <h3 id="_whitebox_overall_system">5.1. Whitebox Overall System</h3>
+<div class="paragraph">
+<p><span class="image"><img src="./images/05_Esquema_Whitebox.jpg" alt="Whitebox"></span></p>
+</div>
 <table class="tableblock frame-all grid-all stretch">
-<caption class="title">Table 1. Añadir el dibujo del whitebox</caption>
 <colgroup>
 <col style="width: 33.3333%;">
 <col style="width: 66.6667%;">
@@ -942,6 +945,10 @@ El sistema se divide en Whitebox y Blackbox.</p>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Actores</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
+</tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cliente / Usuario</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Es el que interactúa directamente con la aplicación y su interfaz de usuario. Cada uno tiene un POD en el cual se almacenan sus datos y al cual se puede acceder.</p></td>
@@ -968,6 +975,10 @@ El sistema se divide en Whitebox y Blackbox.</p>
 </thead>
 <tbody>
 <tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nombre</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
+</tr>
+<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SOLID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cada usuario tiene su POD y permite a la aplicación acceder a sus datos.</p></td>
 </tr>
@@ -989,94 +1000,34 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <h2 id="section-runtime-view">6. Vista en tiempo de ejecución</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_runtime_scenario_1">6.1. &lt;Runtime Scenario 1&gt;</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Registro en aplicación</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
+<h3 id="_registro_en_aplicación">6.1. Registro en aplicación</h3>
+<div class="imageblock">
 <div class="content">
-<pre>actor Bob
-participant Iomap
-participant Pod
-Bob -&gt; Iomap: Bob pide registrarse
-Iomap -&gt; Pod: Redirecciona registro al proveedor del POD
-Bob &lt;-- Pod: Pide datos del registro
-Bob -&gt; Pod: Bob inserta sus datos
-Iomap &lt;-- Pod: Validación
-Bob &lt;-- Iomap: Confirmación registro</pre>
+<img src="./images/registro.png" alt="registro" width="472" height="365">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_2">6.2. &lt;Runtime Scenario 2&gt;</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Inicio de sesión en aplicación</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
+<h3 id="_inicio_de_sesión_en_aplicación">6.2. Inicio de sesión en aplicación</h3>
+<div class="imageblock">
 <div class="content">
-<pre>actor Bob
-participant Iomap
-participant Pod
-Bob -&gt; Iomap: Bob pide iniciar sesión
-Iomap -&gt; Pod: Redirecciona al proveedor del POD
-Bob &lt;-- Pod: Pide datos del inicio de sesión
-Bob -&gt; Pod: Bob inserta sus datos
-Iomap &lt;-- Pod: Validación
-Bob &lt;-- Iomap: Confirmación inicio sesión</pre>
+<img src="./images/inicioSesion.png" alt="inicioSesion" width="454" height="365">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_3">6.3. &lt;Runtime Scenario 3&gt;</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
+<h3 id="_busqueda_de_lugares_mediante_filtros_considerando_que_la_sesión_ya_está_iniciada">6.3. Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)</h3>
+<div class="imageblock">
 <div class="content">
-<pre>actor Bob
-participant Iomap
-participant Pod
-database DataBase as "DataBase"
-Bob -&gt; Iomap: Pulsa en filtro "Restaurantes"
-Iomap-&gt; DataBase: Pide la lista de restaurantes
-DataBase --&gt; Iomap: Devuelve la lista de restaurantes
-Iomap-&gt; Iomap: Muestra solo los restaurantes en el mapa</pre>
+<img src="./images/filtro.png" alt="filtro" width="564" height="318">
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_runtime_scenario_4">6.4. &lt;Runtime Scenario 4&gt;</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)</p>
-</li>
-</ul>
-</div>
-<div class="listingblock">
+<h3 id="_añadir_nuevo_lugar_al_mapa_considerando_que_la_sesión_ya_está_iniciada">6.4. Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)</h3>
+<div class="imageblock">
 <div class="content">
-<pre>actor Bob
-participant Iomap
-participant Pod
-database DataBase as "DataBase"
-Bob -&gt; Iomap: Pulsa en "Crear lugar"
-Iomap-&gt; Iomap: Bob es redireccionado a la vista de "Crear lugar"
-Bob &lt;-- Iomap: La aplicación pide los datos del lugar
-Bob -&gt; Iomap: Bob inserta los datos
-Iomap --&gt; DataBase: La aplicación añade el lugar a la base de datos
-Bob &lt;-- Iomap: Confirmación de datos añadidos correctamente</pre>
+<img src="./images/añadirLugar.png" alt="añadirLugar" width="705" height="378">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1429,7 +1380,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-12 18:43:41 +0100
+Last updated 2023-02-28 15:30:11 +0100
 </div>
 </div>
 </body>
