@@ -1,6 +1,6 @@
-import {useEffect, useState} from "react";
-import {LoginButton} from "@inrupt/solid-ui-react";
-import {Button, Container, FormGroup, TextField} from "@mui/material";
+import { useEffect, useState } from "react";
+import { LoginButton, SessionProvider } from "@inrupt/solid-ui-react";
+import { Button, Container, FormGroup, TextField } from "@mui/material";
 
 const LoginPage = () => {
     const [idp, setIdp] = useState("https://inrupt.net");
@@ -11,26 +11,12 @@ const LoginPage = () => {
     }, [setCurrentUrl]);
 
     return (
-        <Container fixed>
-            <FormGroup>
-                <TextField
-                    label="Identity Provider"
-                    placeholder="Identity Provider"
-                    type="url"
-                    value={idp}
-                    onChange={(e) => setIdp(e.target.value)}
-                    InputProps={{
-                        endAdornment: (
-                            <LoginButton oidcIssuer={idp} redirectUrl="http://localhost:3000">
-                                <Button variant="contained" color="primary">
-                                    Login
-                                </Button>
-                            </LoginButton>
-                        ),
-                    }}
-                />
-            </FormGroup>
-        </Container>
+        <SessionProvider sessionId="log-in-example">
+            <LoginButton 
+                oidcIssuer={idp}
+                redirectUrl={window.location.href}
+            />
+        </SessionProvider>
     );
 }
 
