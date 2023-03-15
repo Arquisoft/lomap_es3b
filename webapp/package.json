@@ -5,8 +5,11 @@
   "dependencies": {
     "@emotion/react": "11.10.6",
     "@emotion/styled": "11.10.6",
+    "@inrupt/solid-ui-react": "^2.8.2",
+    "@inrupt/prism-react-components": "^0.13.9",
     "@mui/material": "5.11.10",
     "@popperjs/core": "^2.11.6",
+    "@solid/lit-prism-patterns": "^0.13.9",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
