@@ -20,8 +20,10 @@ export default function Filters() {
 
   return (
     <div className="filtros">
-      <h1>Primera versión menú de filtros</h1>
-      <div id="menu">
+      <div className="header">
+        <p>Filtros</p>
+      </div>
+      <div className="menu">
         <Dropdown items={categorias} dropdownTitle="Categorias" />
         <Dropdown items={amigos} dropdownTitle="Amigos" />
         <MinimumDistanceSlider />
