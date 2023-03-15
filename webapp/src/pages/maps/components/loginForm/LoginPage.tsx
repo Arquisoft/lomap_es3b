@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { LoginButton, SessionProvider } from "@inrupt/solid-ui-react";
+import { LoginButton, SessionProvider, LogoutButton } from "@inrupt/solid-ui-react";
 import { Button, Container, FormGroup, TextField } from "@mui/material";
 
 const LoginPage = () => {
@@ -16,6 +16,7 @@ const LoginPage = () => {
                 oidcIssuer={idp}
                 redirectUrl={window.location.href}
             />
+            <LogoutButton onError={console.log} />
         </SessionProvider>
     );
 }
