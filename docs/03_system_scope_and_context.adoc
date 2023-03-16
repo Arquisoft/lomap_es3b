@@ -15,10 +15,10 @@ image:03_business_context.png["Business Context de la Aplicación"]
 [options="header", cols="1,1,1"]
 |===
 | Elemento de comunicación | Input| Output
-| Frontend | El Frontend recibe como entradas los datos solicitados al POD así como peticiones por parte del Usuario de diferentes pantallas de la pagina Web. También recibe las respuestas de las peticiones al Backend de la aplicación. | Las salidas que proporciona el Frontend son peticiones al Backend de la aplicación para la obtención de información sobre un lugar así como peticiones al POD para obtener información de los mapas de un usuario. También proporciona una visualización al usuario de forma gráfica.
-| Backend | Recibe como entradas las peticiones por parte del Frontend y las respuestas por parte de la BBDD | El Backend tiene como salidas las respuestas a las peticiones del Frontend y las peticiones de datos a la BBDD. 
+| WebAPP | El Frontend recibe como entradas los datos solicitados al POD así como peticiones por parte del Usuario de diferentes pantallas de la pagina Web. También recibe las respuestas de las peticiones al Backend de la aplicación. | Las salidas que proporciona el Frontend son peticiones al Backend de la aplicación para la obtención de información sobre un lugar así como peticiones al POD para obtener información de los mapas de un usuario. También proporciona una visualización al usuario de forma gráfica.
+| REST API | Recibe como entradas las peticiones por parte del Frontend y las respuestas por parte de la BBDD | El Backend tiene como salidas las respuestas a las peticiones del Frontend y las peticiones de datos a la BBDD. 
 | BBDD | Como entrada tiene las peticiones de datos almacenados por parte del Backend de la aplicación | Como salidas devuelve los objetos solicitados o un mensaje de error en el caso de que no exista lo que el Backend solicita.
-| POD | Como entrada el POD recibe una petición de obtención de los datos de un Usuario | Como salida devuelve los datos del Usuario si está autorizada la petición o un mensaje de error en caso contrario.
+| POD SOLID | Como entrada el POD recibe una petición de obtención de los datos de un Usuario | Como salida devuelve los datos del Usuario si está autorizada la petición o un mensaje de error en caso contrario.
 | Usuario | El usuario visualiza de forma gráfica la petición que ha realizado al Frontend de la aplicación | El usuario solicita al Frontend la visualización de una pagina de la aplicación.
 |===
 
@@ -32,8 +32,8 @@ image:03_technical_context.png["Technical Context de la Aplicación"]
 [options="header", cols="1,1,1"]
 |===
 |Canal de comunicación|Input|Output
-| SOLID-WebAPP | Se utiliza una comunicación HTTPS para solicitar datos a SOLID | Se utiliza una comunicación HTTPS para la obtención de la respuesta por parte de SOLID.
-| _WebApp-RestAPI_ | Se utiliza una petición HTTPS desde la WebApp hacía la RestAPI | Se utiliza una respuesta HTTPS desde la RestAPI hacía la WebApp.
-| _RestAPI-MongoDB_ | Se utiliza una petición HTTPS desde la RestAP hacía la base de datos MongoDB online | Se devuelve una respuesta HTTPS por parte de la base de datos MongoDB hacía la RestAPI.
-| _WebAPP-Usuario_ | La WebApp recibe una peticíon HTTP por parte del Usuario | La WebApp devuelve una pagina dinámica al Usuario por medio de una respuesta HTTP.
+| POD SOLID-WebAPP | Se utiliza una comunicación HTTPS para solicitar datos a SOLID | Se utiliza una comunicación HTTPS para la obtención de la respuesta por parte de SOLID.
+| WebApp-RestAPI | Se utiliza una petición HTTPS desde la WebApp hacía la RestAPI | Se utiliza una respuesta HTTPS desde la RestAPI hacía la WebApp.
+| RestAPI-MongoDB | Se utiliza una petición HTTPS desde la RestAP hacía la base de datos MongoDB online | Se devuelve una respuesta HTTPS por parte de la base de datos MongoDB hacía la RestAPI.
+| WebAPP-Usuario | La WebApp recibe una peticíon HTTP por parte del Usuario | La WebApp devuelve una pagina dinámica al Usuario por medio de una respuesta HTTP.
 |===

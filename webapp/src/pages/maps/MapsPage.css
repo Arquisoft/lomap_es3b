@@ -13,6 +13,28 @@ html{
     background-color: rgb(227, 227, 227);
 }
 
+.mapspage{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenido{
+    display: flex;
+    flex-direction: row;
+}
+
+.contenido > .central {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.imagen > img{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
 .info{
     display: flex;
     flex-direction: column;
@@ -167,4 +189,97 @@ html{
     background-color: var(--grey200);
     border-radius: 0px 0px 8px 8px;
     padding: 0px 8px;
+}
+
+.mapa{
+    border-radius: 8px;
+}
+
+.map{
+    width: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+    margin: 0px 8px;
+}
+
+.leaflet-div-icon{
+    background-color: transparent;
+    border: none;
+}
+
+.buscador{
+    width: calc(100% - 16px);
+    margin: 10px 8px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px 8px 8px 8px;
+}
+
+.buscador > button {
+    background-color: var(--orange200);
+    border-radius: 0px 8px 8px 0px;
+    border: 0px;
+    color: white;
+}
+
+.buscador > input {
+    width: 100%;
+    border-radius: 8px 0px 0px 8px;
+    border: var(--orange200) 2px solid;
+}
+
+.leaflet-container{
+    width: 100%;
+    height: 280px;
+    margin-inline: auto;
+    border-radius:8px;
+    border: var(--orange200) 2px solid;
+}
+
+.filtros > .menu {
+    display:flex;
+    flex-direction: column;
+}
+
+.filtros {
+    background-color: white;
+    border-radius: 8px;
+    height: 100%;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.447);
+    margin: 10px 0px 10px 10px;
+}
+
+.filtros > .header {
+    background-color: var(--orange200);
+    color: white;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.filtros > .header > p {
+    font-size: 0.95rem;
+    font-weight: bold;
+    padding: 1vh 5px;
+    margin: 0px;
+}
+
+.left {
+    display:flex;
+    flex-direction: column;
+}
+
+.navigationmenu{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center;
+    background-color: var(--orange200);
+    padding: 5px 10px;
+}
+
+.inicioSesion{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
 }

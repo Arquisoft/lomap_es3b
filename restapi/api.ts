@@ -1,13 +1,9 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
-require ('dotenv').config();
 
-const {dbConnection} = require("./database/config.ts")
 const Place= require("./models/place")
 
 const api:Router = express.Router()
-dbConnection()
-
 interface User {
     name: string;
     email: string;
@@ -32,6 +28,7 @@ api.get(
       name : "Oviedo", direction : "Calle Uria", longitude : 33.3 , latitude: 33.33, comments:"Muy bueno", photoLink : {photo1: "https://ingenieriainformatica.uniovi.es/image/image_gallery?uuid=52c688ab-7f0c-424a-9113-60d512f0ca8b&groupId=780436&t=1347274143849" , photo2: "Hola"}
     }
     Place.collection.insertOne(place);
+    console.log(place)
     res.sendStatus(200);
   }
 )

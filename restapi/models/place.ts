@@ -10,7 +10,16 @@ const PlaceSchema = Schema(
         direction: { 
             type: String, 
             required: true 
+        }, 
+        latitude: {
+            type: Number,
+            required: true
         },
+        longitud: {
+            type: Number,
+            required: true
+        },
+<<<<<<< HEAD
         latitude: { 
             type: Number, 
             required: true
@@ -19,15 +28,16 @@ const PlaceSchema = Schema(
             type: Number, 
             required: true
         } ,
+=======
+>>>>>>> 9d88c59d5edc07863c3a997792f0897950db8b7e
         comments: { // Los comentarios igual conviene sacarlos de otro apartado de la base de datos
             type: String, 
             required: true 
         },
-        photoLink: [{ // Las fotos igual se podria hacer como con los comentarios
-            photo1: String, 
-            photo2: String, 
-            photo3: String  
-        }]
+        photoLink: {
+            type: [String],
+            reguired: true
+        }
     }, 
     
     { 
