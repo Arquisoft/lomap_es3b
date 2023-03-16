@@ -1,3 +1,4 @@
+import { useSession } from '@inrupt/solid-ui-react';
 import React from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import Filters from "./components/Filters";
@@ -7,6 +8,8 @@ import './MapsPage.css';
 
 
 function MapsPage():JSX.Element{
+
+    const { session } = useSession();
 
     return (
         <>
@@ -38,7 +41,12 @@ function MapsPage():JSX.Element{
                             <Info/>
                         </div>
                     </div>
-                </div>  
+                </div>
+
+                {session.info.isLoggedIn ? 
+                    <p>{session.info.sessionId}</p>:
+                    <p>No logueado</p>
+                }
             </div>
         </>
     );
