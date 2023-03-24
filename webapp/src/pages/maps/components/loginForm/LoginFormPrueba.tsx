@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Session } from "@inrupt/solid-client-authn-browser";
-import { getFetch } from "@inrupt/solid-client";
+import { getDefaultSession } from "@inrupt/solid-client-authn-browser";
+import { FOAF, VCARD } from "@inrupt/vocab-common-rdf";
+import { SolidDataset, getSolidDataset } from "@inrupt/solid-client";
 import "./LoginForm.css";
 
 const identityProviderUrl = "proveedor de identidad (supongo que inrupt)";
@@ -11,6 +13,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  /** 
   async function handleLogin(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const session = new Session();
@@ -32,7 +35,27 @@ function LoginForm() {
     } catch (error) {
       setError("Failed to log in");
     }
-  }
+  }*/
+
+  const handleLogin = async () => {
+    try {
+      const session = getDefaultSession();
+      const fetcher = session.fetch.bind(session);
+      const response = await fetcher(username);
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const dataset = await getSolidDataset(username, { fetch: fetcher });
+      const profile = FOAF.getPerson(dataset, username);
+
+      setUsername(FOAF.name.get(profile));
+      setPassword(VCARD.hasPhoto.get(profile));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <form className="login-form" onSubmit={handleLogin}>

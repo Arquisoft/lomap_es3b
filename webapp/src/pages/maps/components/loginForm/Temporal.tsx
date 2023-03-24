@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-//import LoginForm from "./LoginForm";
+import LoginForm from "./LoginFormPrueba";
 
 
 // ESTO HAY QUE AÑADIRLO AL BOTON QUE ABRA EL MODAL --> BOTON DE INICIO DE SESION

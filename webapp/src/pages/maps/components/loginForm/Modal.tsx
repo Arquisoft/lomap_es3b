@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from "react";
 import "./Modal.css";
 
 interface Props {
@@ -6,7 +6,8 @@ interface Props {
   children: ReactNode;
 }
 
-function Modal(props: Props):  JSX.Element{
+// para que salga la pantalla con fondo difuminado para hacer login
+function Modal(props: Props): JSX.Element{
   return (
         <div className="modal">
             <div className="modal-content">

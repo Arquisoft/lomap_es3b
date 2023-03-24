@@ -19,6 +19,13 @@ type MapProps = {
 
 };
 
+// PREPARADO PARA CUANDO SE GUARDEN LOS MARCADORES
+/** 
+async function guardarMarcador(datos: any){
+    await addMarcador(datos);
+}
+*/
+
 
 function Map(props: MapProps): JSX.Element {
 
