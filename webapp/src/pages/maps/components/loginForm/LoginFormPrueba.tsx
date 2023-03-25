@@ -8,7 +8,7 @@ import "./LoginForm.css";
 const identityProviderUrl = "proveedor de identidad (supongo que inrupt)";
 const userProfileUrl = "enlace al pod";
 
-function LoginForm() {
+const LoginForm = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -46,12 +46,13 @@ function LoginForm() {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
+      /** 
       const dataset = await getSolidDataset(username, { fetch: fetcher });
       const profile = FOAF.getPerson(dataset, username);
 
       setUsername(FOAF.name.get(profile));
       setPassword(VCARD.hasPhoto.get(profile));
+      */
     } catch (error) {
       console.log(error);
     }

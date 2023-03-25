@@ -1,6 +1,6 @@
 // import React from 'react';
 import L from "leaflet";
-
+import { useSession } from "@inrupt/solid-ui-react";
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import {Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -29,6 +29,7 @@ async function guardarMarcador(datos: any){
 
 function Map(props: MapProps): JSX.Element {
 
+    const {session} = useSession();
     var defaultPlace:Place = {
         direction: "Calle",
         latitude:0,

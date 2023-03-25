@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import Button from 'react-bootstrap/Button';
 import "./Modal.css";
 
 interface Props {
@@ -7,16 +8,16 @@ interface Props {
 }
 
 // para que salga la pantalla con fondo difuminado para hacer login
-function Modal(props: Props): JSX.Element{
+function Modal(props: Props): JSX.Element {
   return (
-        <div className="modal">
-            <div className="modal-content">
-                <span className="close" onClick={props.handleClose}>
-                    &times;
-                </span>
-                {props.children}
-            </div>
-        </div>
+    <div className="modal">
+      <Button className="close" onClick={props.handleClose}>
+        &times;
+      </Button>
+      <div className="modal-content">
+        {props.children}
+      </div>
+    </div>
   );
 }
 

@@ -23,7 +23,7 @@ function App() {
       <button onClick={handleOpenModal}>Log In</button>
       {showModal && (
         <Modal handleClose={handleCloseModal}>
-          <LoginForm handleClose={handleCloseModal} />
+          <LoginForm  />
         </Modal>
       )}
     </div>
