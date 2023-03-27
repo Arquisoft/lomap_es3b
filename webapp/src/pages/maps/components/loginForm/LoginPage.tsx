@@ -11,7 +11,7 @@ const LoginPage = () => {
     }, [setCurrentUrl]);
 
     return (
-        <SessionProvider sessionId="log-in-example">
+        <SessionProvider sessionId="login" onError={console.log} restorePreviousSession>
             <LoginButton 
                 oidcIssuer={idp}
                 redirectUrl={window.location.href}
