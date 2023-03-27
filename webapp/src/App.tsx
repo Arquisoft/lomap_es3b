@@ -14,13 +14,13 @@ function App(): JSX.Element {
         <MapsPage />
       </>
     );
-   } else {
-     return (
-       <>
-         <LoginPage />
-       </>
-     );
-  }
+    } else {
+      return (
+        <>
+          <LoginPage />
+        </>
+      );
+   }
 
 }
 

@@ -18,8 +18,9 @@ const icon = new L.Icon({
 });
 
 type MapProps = {
-
+    
 };
+
 
 
 function Map(props: MapProps): JSX.Element {
@@ -75,8 +76,8 @@ function Map(props: MapProps): JSX.Element {
                 <button> 🔍︎ Buscar  </button>
             </div>
             <div className="map">
-                <MapContainer center={centro} zoom={13} scrollWheelZoom={false}>
-                    <TileLayer
+                <MapContainer center={centro} zoom={13} scrollWheelZoom={false} > 
+                    <TileLayer 
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
@@ -86,8 +87,12 @@ function Map(props: MapProps): JSX.Element {
                             <Popup>
                             {position2.direction}
                         </Popup>
+                        
                         </Marker>
                     )}
+
+                
+
                 </MapContainer>
             </div>
         </>
