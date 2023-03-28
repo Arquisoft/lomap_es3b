@@ -8,19 +8,19 @@ function App(): JSX.Element {
 
   const { session } = useSession();
 
-  if (session.info.isLoggedIn) {
+  //if (session.info.isLoggedIn) {
     return (
       <>
         <MapsPage />
       </>
     );
-    } else {
-      return (
-        <>
-          <LoginPage />
-        </>
-      );
-   }
+  //   } else {
+  //     return (
+  //       <>
+  //         <LoginPage />
+  //       </>
+  //     );
+  //  }
 
 }
 

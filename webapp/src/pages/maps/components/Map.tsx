@@ -1,7 +1,6 @@
-// import React from 'react';
 import L from "leaflet";
 
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
 import {Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getPlaces } from '../../../api/api';
@@ -22,10 +21,26 @@ type MapProps = {
 };
 
 
+let listPlaces:Place[] = [{
+    direction: "Calle Valdés Salas 11",
+    latitude:43.35485,
+    longitude:-5.85123,
+    comments: "",
+    photoLink:[]
+}, {
+     direction: "Gijón",
+     latitude:43.5322,
+     longitude:-5.6611,
+     comments: "",
+     photoLink:[]
+}]
+
+
+
 
 function Map(props: MapProps): JSX.Element {
 
-    var defaultPlace:Place = {
+    const defaultPlace:Place = {
         direction: "Aviles",
         latitude:43.5580,
         longitude:-5.9247,
@@ -35,36 +50,17 @@ function Map(props: MapProps): JSX.Element {
 
     const [markers, setMarkers] = useState<Place>(defaultPlace);
 
-    var listPlaces:Place[] = [{
-        direction: "Calle Valdés Salas 11",
-        latitude:43.35485,
-        longitude:-5.85123,
-        comments: "",
-        photoLink:[]
-    }, {
-         direction: "Gijón",
-         latitude:43.5322,
-         longitude:-5.6611,
-         comments: "",
-         photoLink:[]
-    }]
-
 
     const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         getMarkups();
     }
 
-    var getMarkups = async () => {
+    let getMarkups = async () => {
         setMarkers(await getPlaces());
     }
    
-    
-    console.log(markers);
 
-    const centro:[number, number] = [43.35485, -5.85123]
-    
-    
     return (
 
         <>
@@ -76,12 +72,12 @@ function Map(props: MapProps): JSX.Element {
                 <button> 🔍︎ Buscar  </button>
             </div>
             <div className="map">
-                <MapContainer center={centro} zoom={13} scrollWheelZoom={false} > 
+                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={false} > 
                     <TileLayer 
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    
+                    <MapContent />
                     {listPlaces.map((position2, idx) =>
                         <Marker key={idx} position={[position2.latitude, position2.longitude]} icon={icon}>
                             <Popup>
@@ -89,15 +85,31 @@ function Map(props: MapProps): JSX.Element {
                         </Popup>
                         
                         </Marker>
-                    )}
-
-                
-
+                    )} 
                 </MapContainer>
             </div>
         </>
     );
 }
+
+
+const MapContent = () => {
+    const map = useMapEvents({
+        click(e) {              
+            var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
+            marker.setIcon(icon);
+            map.addLayer(marker);
+        },            
+    })
+
+    return (
+
+        <>   
+           
+        </>
+    );
+}
+
 
 
 export default Map;
