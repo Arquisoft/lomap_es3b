@@ -36,8 +36,8 @@ app.listen(port, ():void => {
 
  
 const lugarPrueba: Place = {
-    name:"Prueba",
-    direction:"Calle Turina 2",
+    name:"Prueba 2",
+    direction:"Villamañan",
     latitude: 43.37058,
     longitude: -5.84045,
     comments:"",

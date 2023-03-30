@@ -1,14 +1,16 @@
 import L from "leaflet";
-
 import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
 import {Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { getPlaces } from '../../../api/api';
+import { getPlaces, addMarker } from '../../../api/api';
 import React,{useState,useEffect} from 'react';
 import { Place } from '../../../shared/shareddtypes';
-import { guardarLugar } from '../../../../../restapi/database/config';
 
 
+
+async function guardarLugar(lugarMarcado: any) {
+    await addMarker(lugarMarcado);
+}
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
@@ -57,9 +59,8 @@ function Map(props: MapProps): JSX.Element {
 
     const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         //guardarLugar(defaultPlace);
-        getMarkups();
+        //getMarkups();
     }
 
     let getMarkups = async () => {
@@ -71,7 +72,7 @@ function Map(props: MapProps): JSX.Element {
 
         <>
             <form name="lugares" onSubmit={handleClick}>
-                <button type="submit"> Cargar</button>
+                <button id="pruebaguardar" type="submit"> Cargar</button>
             </form>
             <div className="buscador">
                 <input type="text" name="buscar"></input>
@@ -98,11 +99,31 @@ function Map(props: MapProps): JSX.Element {
     );
 }
 
+var lat:number;
+var long: number;
+const pruebaGuardadoLugar = document.getElementById('pruebaguardar');
+
+pruebaGuardadoLugar?.addEventListener('click', async() =>{
+    const paGuardar:Place = {
+        name: "Miguel",
+        direction: "Antuna Branka Simica 18",
+        latitude:lat,
+        longitude:long,
+        comments: "",
+        photoLink:[]
+    }
+    console.log("Preparado para guardar lugar en Map.tsx");
+    guardarLugar(paGuardar);
+})
+
+
 
 const MapContent = () => {
     const map = useMapEvents({
         click(e) {              
             var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
+            lat = e.latlng.lat;
+            long = e.latlng.lng;
             marker.setIcon(icon);
             map.addLayer(marker);
         },            

@@ -26,12 +26,14 @@ export async function getPlaces():Promise<Place>{
     return response.json()
 }
 
-export async function addMarker(marker:{name: string, latitude:number, longitude:number, comment:string }):Promise<boolean>{
+export async function addMarker(marker:{name: string, latitude:number, longitude:number, comment:string, direction:string, photoLink:string}):Promise<boolean>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
+  console.log("Preparado para guardar lugar en api.ts de webapp");
   let response = await fetch(apiEndPoint+'/db/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({'name':marker.name,'latitude':marker.latitude, 'longitude':marker.longitude, 'comment':marker.comment})
+      body: JSON.stringify({'name':marker.name, 'direction':marker.direction,'latitude':marker.latitude, 'longitude':marker.longitude, 'comment':marker.comment,
+        'photoLink':marker.photoLink})
     });
   if (response.status===200)
     return true;

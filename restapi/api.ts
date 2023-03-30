@@ -71,13 +71,16 @@ api.post(
   ],
 
   async (req: Request, res: Response): Promise<Response> => {
+    console.log("LLegamos a api.ts de la restapi");
     let name = req.body.name;
     let longitud = req.body.longitude;
     let latitud = req.body.latitud;
-    let direccion = req.body.direccion;
-    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:"", photoLink:[]};
+    let direccion = req.body.direction;
+    let comments = req.body.comments;
+    let photoLink = req.body.photoLink;
+    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:comments, photoLink:photoLink};
     
-    //guardarLugar(place);
+    guardarLugar(place); // aqui casca
 
     return res.sendStatus(200);
   }
