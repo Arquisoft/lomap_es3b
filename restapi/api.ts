@@ -1,8 +1,9 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
 import { guardarLugar } from './database/config';
+import {Place} from '../webapp/src/shared/shareddtypes';
 
-const Place= require("./models/place")
+const Places= require("./models/place")
 
 const api:Router = express.Router()
 interface User {
@@ -10,6 +11,7 @@ interface User {
     email: string;
 }
 
+/** 
 export interface Place {
   name: String;
   longitude: number;
@@ -18,6 +20,7 @@ export interface Place {
   comments: String;
   photo: String;
 }
+*/
 
 //This is not a restapi as it mantains state but it is here for
 //simplicity. A database should be used instead.
@@ -40,7 +43,7 @@ api.get(
     var place = {
       name : "Oviedo", direction : "Calle Uria", longitude : 33.3 , latitude: 33.33, comments:"Muy bueno", photoLink : {photo1: "https://ingenieriainformatica.uniovi.es/image/image_gallery?uuid=52c688ab-7f0c-424a-9113-60d512f0ca8b&groupId=780436&t=1347274143849" , photo2: "Hola"}
     }
-    Place.collection.insertOne(place);
+    Places.collection.insertOne(place);
     console.log(place)
     res.sendStatus(200);
   }
@@ -72,9 +75,9 @@ api.post(
     let longitud = req.body.longitude;
     let latitud = req.body.latitud;
     let direccion = req.body.direccion;
-    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:"", photo:""};
+    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:"", photoLink:[]};
     
-    guardarLugar(place);
+    //guardarLugar(place);
 
     return res.sendStatus(200);
   }
