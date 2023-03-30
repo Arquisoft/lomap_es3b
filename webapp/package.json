@@ -7,6 +7,7 @@
     "@emotion/styled": "11.10.6",
     "@inrupt/lit-generated-vocab-common": "^0.3.11",
     "@inrupt/solid-ui-react": "^2.8.2",
+    "@inrupt/vocab-common-rdf": "^1.0.5",
     "@mui/material": "5.11.10",
     "@popperjs/core": "^2.11.6",
     "@solid/lit-prism-patterns": "^0.13.9",

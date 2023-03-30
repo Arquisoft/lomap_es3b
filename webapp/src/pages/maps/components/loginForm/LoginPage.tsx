@@ -7,6 +7,7 @@ const LoginPage = () => {
     return (
         <>
             <input type="url" value={idp} onChange={(e) => setIdp(e.target.value)} />
+            
             <LoginButton
                 oidcIssuer={idp}
                 redirectUrl={"http://localhost:3000/map"}
