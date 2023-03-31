@@ -7,6 +7,8 @@ import React,{useState,useEffect} from 'react';
 import { Place } from '../../../shared/shareddtypes';
 
 
+var lat:number;
+var long: number;
 
 async function guardarLugar(lugarMarcado: any) {
     await addMarker(lugarMarcado);
@@ -59,6 +61,16 @@ function Map(props: MapProps): JSX.Element {
 
     const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const paGuardar:Place = {
+            name: "PRUEBA INSERCION con comentario",
+            direction: "Lugar 1234",
+            latitude:lat,
+            longitude:long,
+            comments: "esto es una prueba",
+            photoLink:[]
+        }
+        console.log("Preparado para guardar lugar en Map.tsx");
+        guardarLugar(paGuardar);
         //guardarLugar(defaultPlace);
         //getMarkups();
     }
@@ -79,7 +91,7 @@ function Map(props: MapProps): JSX.Element {
                 <button> 🔍︎ Buscar  </button>
             </div>
             <div className="map">
-                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={false} > 
+                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={true} > 
                     <TileLayer 
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -99,22 +111,6 @@ function Map(props: MapProps): JSX.Element {
     );
 }
 
-var lat:number;
-var long: number;
-const pruebaGuardadoLugar = document.getElementById('pruebaguardar');
-
-pruebaGuardadoLugar?.addEventListener('click', async() =>{
-    const paGuardar:Place = {
-        name: "Miguel",
-        direction: "Antuna Branka Simica 18",
-        latitude:lat,
-        longitude:long,
-        comments: "",
-        photoLink:[]
-    }
-    console.log("Preparado para guardar lugar en Map.tsx");
-    guardarLugar(paGuardar);
-})
 
 
 

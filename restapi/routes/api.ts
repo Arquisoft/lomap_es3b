@@ -1,11 +1,14 @@
 import express, { Request, Response, Router } from 'express';
 import {check} from 'express-validator';
-import { guardarLugar } from './database/config';
-import {Place} from '../webapp/src/shared/shareddtypes';
+import { guardarLugar } from '../database/config';
+import {Place} from '../../webapp/src/shared/shareddtypes';
 
-const Places= require("./models/place")
+
+
+const Places= require("../models/place")
 
 const api:Router = express.Router()
+
 interface User {
     name: string;
     email: string;
@@ -74,7 +77,7 @@ api.post(
     console.log("LLegamos a api.ts de la restapi");
     let name = req.body.name;
     let longitud = req.body.longitude;
-    let latitud = req.body.latitud;
+    let latitud = req.body.latitude;
     let direccion = req.body.direction;
     let comments = req.body.comments;
     let photoLink = req.body.photoLink;
@@ -86,5 +89,16 @@ api.post(
   }
 
 )
+
+api.get('/place/:place', (req:Request, res:Response) => {
+
+  return res.send(req.params.place);
+});
+
+api.get('/places/list', async (req:Request, res:Response):Promise<Response> => {
+  var place = await Places.findOne({});
+  console.log(api);
+  return res.status(200).send(place);
+});
 
 export default api;
