@@ -1,21 +1,19 @@
 import L from "leaflet";
-import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
-import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
-import {Marker, Popup} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { getPlaces } from '../../../api/api';
+import { useMapEvents } from 'react-leaflet';
+import { addMarker, getPlaces } from '../../../api/api';
 
 import { Place } from '../../../shared/shareddtypes';
 
 type MapProps = {
     
 };
+
 var lat:number;
 var long: number;
 
-async function guardarLugar(lugarMarcado: any) {
-    await addMarker(lugarMarcado);
-}
+ async function guardarLugar(lugarMarcado: any) {
+     await addMarker(lugarMarcado); 
+ }
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
@@ -27,18 +25,13 @@ const icon = new L.Icon({
 
 //Luego se cambiaran por las de la base de datos
 let listPlaces:Place[] = [ {
+    name:"Universidad Ingenieria Informatica",
     direction: "Calle Valdés Salas 11",
     latitude:43.35485,
     longitude:-5.85123,
     comments: "",
     photoLink:[]
-    },{
-     direction: "Gijón",
-     latitude:43.5322,
-     longitude:-5.6611,
-     comments: "",
-     photoLink:[]
-}]
+    }]
 
 
 /* const defaultPlace:Place = {
@@ -98,6 +91,7 @@ function Map(props: MapProps): JSX.Element {
             if (botonAñadir != undefined) {
                 botonAñadir.onclick = function() {
                     let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
+                    let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
                     let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
                     let comentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
                     if(nombreLugar!=""){
@@ -160,24 +154,24 @@ function reiniciarModal(){
 
 
 
-const MapContent = () => {
-    const map = useMapEvents({
-        click(e) {              
-            var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
-            lat = e.latlng.lat;
-            long = e.latlng.lng;
-            marker.setIcon(icon);
-            map.addLayer(marker);
-        },            
-    })
+// const MapContent = () => {
+//     const map = useMapEvents({
+//         click(e) {              
+//             var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
+//             lat = e.latlng.lat;
+//             long = e.latlng.lng;
+//             marker.setIcon(icon);
+//             map.addLayer(marker);
+//         },            
+//     })
 
-    return (
+//     return (
 
-        <>   
+//         <>   
            
-        </>
-    );
-}
+//         </>
+//     );
+// }
 
 
 
