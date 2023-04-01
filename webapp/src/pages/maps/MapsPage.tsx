@@ -4,7 +4,6 @@ import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-import {FormGroup, Label, Modal, ModalBody, ModalHeader} from 'reactstrap';
 
 import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
 import {Marker, Popup} from 'react-leaflet';
@@ -76,7 +75,8 @@ function MapComponent(props: MapProps): JSX.Element {
                     <span>&times;</span>
                 </button>
                 <form id="formAñadirLugar">
-                <p>Nombre del Lugar: <input id="nombreLugar" type="text"></input></p>
+                <p>Nombre: <input id="nombreLugar" type="text"></input></p>
+                <p>Dirección: <input id="dirLugar" type="text"></input></p>
                 <p>Descripción: <input id="descrpLugar" type="text"></input></p>
                 <p>Comentario: <input id="comentLugar" type="text"></input></p>
                 </form>
