@@ -5,11 +5,31 @@ import Filters from "./components/Filters";
 import Map from "./components/Map";
 import Info from "./components/Info";
 import './MapsPage.css';
+import addMarker from '../../helpers/Markers';
+import { MarkerDTO } from '../../shared/shareddtypes';
+import Button from 'react-bootstrap/esm/Button';
 
 
 function MapsPage():JSX.Element{
 
     const { session } = useSession();
+    const { webId } = session.info;
+    console.log(webId);
+
+    const marker:MarkerDTO = {
+        id:"1",
+        name:"prueba",
+        latitude: 43,
+        longitude:-5.3,
+    }
+
+    var blob = new Blob([JSON.stringify(marker)],{type:"aplication/json"})
+
+    var file = new File([blob], "marker.info", {type: blob.type});
+
+    const handleOnClick = async () =>{
+        await addMarker(session,file.name,file,webId!);
+    }
 
     return (
         <>
@@ -43,10 +63,9 @@ function MapsPage():JSX.Element{
                     </div>
                 </div>
 
-                {session.info.isLoggedIn ? 
-                    <p>{session.info.sessionId}</p>:
-                    <p>No logueado</p>
-                }
+                
+                
+            
             </div>
         </>
     );

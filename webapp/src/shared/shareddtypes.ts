@@ -10,3 +10,11 @@ export type Place = {
     comments:string;
     photoLink:string[];
 }
+
+export type MarkerDTO = {
+    //A completar
+    id:string;
+    name:string;
+    latitude:number;
+    longitude:number;
+}
