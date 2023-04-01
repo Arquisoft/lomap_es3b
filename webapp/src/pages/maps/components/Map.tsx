@@ -115,10 +115,14 @@ function Map({ categorias, amigos, minDistance, maxDistance }: Props): JSX.Eleme
     const centro:[number, number] = [43.35485, -5.85123]
 
     const filterPlaces = (places: Place[]) => {
-        return places.filter((place) => {
-          const categoryMatch = categorias.includes(place.category);
-          return categoryMatch;
-        });
+        if(categorias.length == 0){
+            return places;
+        } else {
+            return places.filter((place) => {
+                const categoryMatch = categorias.includes(place.category);
+                return categoryMatch;
+              });
+        }
       }
 
       function filterByDistance(center: [number, number], radiusInner: number, radiusOuter: number, places: Place[]): Place[] {
