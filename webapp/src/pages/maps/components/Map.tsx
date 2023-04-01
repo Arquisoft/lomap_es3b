@@ -1,5 +1,6 @@
 import L from "leaflet";
 import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
 import {Marker, Popup} from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { getPlaces } from '../../../api/api';
@@ -9,6 +10,12 @@ import { Place } from '../../../shared/shareddtypes';
 type MapProps = {
     
 };
+var lat:number;
+var long: number;
+
+async function guardarLugar(lugarMarcado: any) {
+    await addMarker(lugarMarcado);
+}
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
@@ -35,6 +42,10 @@ let listPlaces:Place[] = [ {
 
 
 /* const defaultPlace:Place = {
+function Map(props: MapProps): JSX.Element {
+
+    const defaultPlace:Place = {
+        name: "Ronda 14",
         direction: "Aviles",
         latitude:43.5580,
         longitude:-5.9247,
@@ -47,9 +58,23 @@ let listPlaces:Place[] = [ {
 
     const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        getMarkups();
+        const paGuardar:Place = {
+            name: "PRUEBA INSERCION con comentario",
+            direction: "Lugar 1234",
+            latitude:lat,
+            longitude:long,
+            comments: "esto es una prueba",
+            photoLink:[]
+        }
+        console.log("Preparado para guardar lugar en Map.tsx");
+        guardarLugar(paGuardar);
+        //guardarLugar(defaultPlace);
+        //getMarkups();
     }
 
+    let getMarkups = async () => {
+        setMarkers(await getPlaces());   // PARA OBTENER LOS LUGARES DE MONGODB
+    }
     let getMarkups = async () => {
         setMarkers(await getPlaces());
     } */
@@ -78,6 +103,7 @@ function Map(props: MapProps): JSX.Element {
                     if(nombreLugar!=""){
                         modal!.style.display = "none";
                         let element:Place = {
+                            name:"",
                             direction: nombreLugar,
                             latitude:e.latlng.lat,
                             longitude:e.latlng.lng,
@@ -131,6 +157,27 @@ function reiniciarModal(){
     (document.getElementById("comentLugar") as HTMLInputElement).value="";
 }
 
+
+
+
+const MapContent = () => {
+    const map = useMapEvents({
+        click(e) {              
+            var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
+            lat = e.latlng.lat;
+            long = e.latlng.lng;
+            marker.setIcon(icon);
+            map.addLayer(marker);
+        },            
+    })
+
+    return (
+
+        <>   
+           
+        </>
+    );
+}
 
 
 

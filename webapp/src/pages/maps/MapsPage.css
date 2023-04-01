@@ -221,6 +221,8 @@ html{
     border-radius: 0px 8px 8px 0px;
     border: 0px;
     color: white;
+    padding: 0px;
+    margin-right: 4px;
 }
 
 .buscador > input {
