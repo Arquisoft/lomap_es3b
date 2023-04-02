@@ -10,6 +10,7 @@ export type Place = {
     longitude:number;
     comments:string;
     photoLink:string[];
+    category:string;
 }
 
 export interface PlaceInter {

@@ -9,6 +9,7 @@ import { Place } from '../../../shared/shareddtypes';
 
 var lat:number;
 var long: number;
+let lugaresArray: Place[];
 
 async function guardarLugar(lugarMarcado: any) {
     await addMarker(lugarMarcado);
@@ -32,14 +33,16 @@ let listPlaces:Place[] = [{
     latitude:43.35485,
     longitude:-5.85123,
     comments: "",
-    photoLink:[]
+    photoLink:[],
+    category:"Restaurante"
 }, {
      name: "Gijón",
      direction: "Gijón",
      latitude:43.5322,
      longitude:-5.6611,
      comments: "",
-     photoLink:[]
+     photoLink:[],
+     category:"Restaurante"
 }]
 
 
@@ -53,12 +56,13 @@ function Map(props: MapProps): JSX.Element {
         latitude:43.5580,
         longitude:-5.9247,
         comments: "",
-        photoLink:[]
+        photoLink:[],
+        category:"Restaurante"
     }
 
     const [markers, setMarkers] = useState<Place>(defaultPlace);
 
-
+    // BOTON CARGAR
     const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const paGuardar:Place = {
@@ -67,16 +71,21 @@ function Map(props: MapProps): JSX.Element {
             latitude:lat,
             longitude:long,
             comments: "esto es una prueba",
-            photoLink:[]
+            photoLink:[],
+            category:"Restaurante"
         }
         console.log("Preparado para guardar lugar en Map.tsx");
         guardarLugar(paGuardar);
-        //guardarLugar(defaultPlace);
-        //getMarkups();
+
+        getMarkups();
     }
 
     let getMarkups = async () => {
-        setMarkers(await getPlaces());   // PARA OBTENER LOS LUGARES DE MONGODB
+        lugaresArray = await getPlaces();
+        lugaresArray.forEach((lug)=>{
+            setMarkers(lug);
+            console.log("Lugar recogido: ", lug.name);
+        });
     }
    
 
@@ -96,15 +105,16 @@ function Map(props: MapProps): JSX.Element {
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    
                     <MapContent />
-                    {listPlaces.map((position2, idx) =>
+                        {Array.isArray(lugaresArray) && lugaresArray.map((position2, idx) =>
                         <Marker key={idx} position={[position2.latitude, position2.longitude]} icon={icon}>
-                            <Popup>
+                        <Popup>
                             {position2.direction}
                         </Popup>
-                        
                         </Marker>
-                    )} 
+                    )}
+                    
                 </MapContainer>
             </div>
         </>

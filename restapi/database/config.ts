@@ -79,6 +79,18 @@ export async function cogerLugar(lugarID:number) {
     return lugar;
 }
 
+export async function cogerLugares(): Promise<Place[]> {
+    await connectToDatabase();
+
+    const tablaDB = db.collection('places');
+
+    const lugares = await tablaDB.find().toArray();
+
+    client.close();
+
+    return lugares;
+}
+
 export async function borrarLugar(lugarID:number) {
     await connectToDatabase();
 
