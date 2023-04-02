@@ -5,7 +5,7 @@ import Filters from "./components/Filters";
 import Map from "./components/Map";
 import Info from "./components/Info";
 import './MapsPage.css';
-import addMarker from '../../helpers/Markers';
+import addMarker from '../../pods/Markers';
 import { MarkerDTO } from '../../shared/shareddtypes';
 import Button from 'react-bootstrap/esm/Button';
 
@@ -62,10 +62,6 @@ function MapsPage():JSX.Element{
                         </div>
                     </div>
                 </div>
-
-                
-                
-            
             </div>
         </>
     );

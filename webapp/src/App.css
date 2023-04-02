@@ -4,13 +4,18 @@
 
 html{
   height: 100%;
+  width: 100%;
+  overflow:hidden;
 }
 body{
   display: flex;
   height: 100% !important;
   background-color: transparent !important;
+  overflow:hidden;
 }
 
 #root{
   height: 100%;
+  width:100%;
+  overflow:hidden;
 }

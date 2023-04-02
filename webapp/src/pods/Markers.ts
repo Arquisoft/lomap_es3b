@@ -16,4 +16,8 @@ async function addMarker(session: Session, name:string, file: File, url:string){
     }
 }
 
+async function getMarkers(session: Session, url:string){
+    //TO-DO
+}
+
 export default addMarker;
