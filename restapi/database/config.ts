@@ -86,6 +86,8 @@ export async function cogerLugares(): Promise<Place[]> {
 
     const lugares = await tablaDB.find().toArray();
 
+    console.log(lugares);
+
     client.close();
 
     return lugares;

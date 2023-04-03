@@ -98,7 +98,6 @@ api.get('/place/:place', (req:Request, res:Response) => {
 
 api.get('/db/get', async (req:Request, res:Response):Promise<Response> => {
   var arrayLugares = await cogerLugares();
-  console.log(api);
   return res.status(200).send(arrayLugares);
 });
 

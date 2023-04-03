@@ -30,6 +30,8 @@ export async function addMarker(marker:Place):Promise<boolean>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   console.log("Preparado para guardar lugar en api.ts de webapp");
 
+  console.log(apiEndPoint+"/db/add");
+
   let response = await fetch(apiEndPoint+'/db/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -40,5 +42,6 @@ export async function addMarker(marker:Place):Promise<boolean>{
   if (response.status===200)
     return true;
   else
+    console.log(response);
     return false;
 }
