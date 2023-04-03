@@ -107,6 +107,27 @@ function MapsPage(props: MapProps): JSX.Element {
         (document.getElementById("comentLugar") as HTMLInputElement).value = "";
     }
 
+    const [categorias, setCategorias] = useState<string[]>([]);
+    const [amigos, setAmigos] = useState<string[]>([]);
+    const [minDistance, setMinDistance] = useState<number>(0);
+    const [maxDistance, setMaxDistance] = useState<number>(0);
+
+    const handleCategoriaChange = (selectedOption: string[]) => {
+        console.log(`Categoría seleccionada: ${selectedOption}`);
+        setCategorias(selectedOption);
+    };
+      
+    const handleAmigoChange = (selectedOption: string[]) => {
+        console.log(`Amigo seleccionado: ${selectedOption}`);
+        setAmigos(selectedOption);
+    };
+      
+    const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
+        console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
+        setMinDistance(selectedMinDistance);
+        setMaxDistance(selectedMaxDistance);
+    };
+
     return (
         <>
             <div className="mapspage">
@@ -121,7 +142,11 @@ function MapsPage(props: MapProps): JSX.Element {
 
                     {/*Contenido menusuperior*/}
                     <div className="left">
-                        <Filters />
+                        <Filters 
+                        onCategoriaChange={handleCategoriaChange}
+                        onAmigoChange={handleAmigoChange}
+                        onMinDistanceChange={handleMinDistanceChange}
+                        />
                     </div>
 
                     {/*Contenido central */}
@@ -129,7 +154,15 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Mapa*/}
                         <div className="mapa">
-                            <Map markers={markers!} funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }} funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }} newMarker={newMarker} />
+                            <Map markers={markers!}
+                            funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }} 
+                            funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }} 
+                            newMarker={newMarker} 
+                            categorias={categorias}
+                            amigos={amigos}
+                            minDistance={minDistance}
+                            maxDistance={maxDistance}
+                            />
                         </div>
 
                         {/*Información*/}

@@ -12,9 +12,11 @@ type MapProps = {
     funcNewMarker: (p:L.Marker) => void;
     funcSelectedMarker: (p:Place) => void;
     newMarker: L.Marker|undefined;
+    categorias: string[];
+    amigos: string[];
+    minDistance: number;
+    maxDistance: number;
 };
-
-
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
@@ -23,7 +25,7 @@ const icon = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
-function Map(props: MapProps): JSX.Element {
+function Map({ categorias, amigos, minDistance, maxDistance, ...props }: MapProps): JSX.Element {
 
 
     const defaultPlace: Place = {
@@ -32,7 +34,7 @@ function Map(props: MapProps): JSX.Element {
         latitude: 43.5580,
         longitude: -5.9247,
         comments: "",
-        photoLink: [],
+        photoLink:[],
         category: "Restaurante"
     }
 
@@ -50,7 +52,6 @@ function Map(props: MapProps): JSX.Element {
         })
     
         return (
-
             <>
 
             </>
@@ -60,6 +61,49 @@ function Map(props: MapProps): JSX.Element {
     type markerProps = {
         marker:Place
     }
+
+    const centro:[number, number] = [43.35485, -5.85123]
+
+    const filterPlaces = (places: Place[]) => {
+        if(categorias.length == 0){
+            return places;
+        } else {
+            return places.filter((place) => {
+                const categoryMatch = categorias.includes(place.category);
+                return categoryMatch;
+              });
+        }
+     }
+
+      function filterByDistance(center: [number, number], radiusInner: number, radiusOuter: number, places: Place[]): Place[] {
+        const [centerLat, centerLng] = center;
+        const result = places.filter(place => {
+          const {latitude, longitude} = place;
+          const distance = calculateDistance(centerLat, centerLng, latitude, longitude);
+          return distance >= radiusInner && distance <= radiusOuter;
+        });
+        return result;
+      }
+      
+      function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+        const R = 6371; // Radio de la tierra en kilómetros
+        const dLat = toRadians(lat2 - lat1);
+        const dLng = toRadians(lng2 - lng1);
+        const a =
+          Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+          Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+          Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c; // Distancia en kilómetros
+        return d;
+      }
+      
+      function toRadians(degrees: number): number {
+        return degrees * Math.PI / 180;
+      }
+      
+
+    const filteredPlaces = filterByDistance(centro, minDistance, maxDistance, filterPlaces(listPlaces));
 
     const CustomMarker = function(propsM:markerProps) {
         const map = useMap()
@@ -97,8 +141,8 @@ function Map(props: MapProps): JSX.Element {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <MapContent />
-                    
-                    {Array.isArray(props.markers) && props.markers.map((marker) =>
+
+                    {Array.isArray(props.markers) && filteredPlaces.map((marker) =>
                         <CustomMarker marker={marker}/>
                     )}
                 </MapContainer>

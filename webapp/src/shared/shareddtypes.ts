@@ -12,12 +12,3 @@ export type Place = {
     photoLink:string[];
     category:string;
 }
-
-export interface PlaceInter {
-    name: String;
-    longitude: number;
-    latitude: number;
-    direction: String;
-    comments: String;
-    photoLink: String;
-  }
