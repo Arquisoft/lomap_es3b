@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import Filters from "./components/Filters";
-import Map from "./components/Map";
 import Info from "./components/Info";
+import Map from "./components/Map";
 import './MapsPage.css';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place } from "../../shared/shareddtypes";
 
 
-function MapsPage(): JSX.Element {
+type MapProps = {
+
+};
+
+function MapsPage(props: MapProps): JSX.Element {
 
     const [markers, setMarkers] = useState<Array<Place>>();
     const [selectedMarker, setSelectedMarker] = useState<Place>();
     const [newMarker, setNewMarker] = useState<L.Marker>();
     const [newPlace, setNewPlace] = useState<Place>();
-
+    const [mostrarModal, setMostrarModal] = useState(false);
 
     const getMarkups = async () => {
 
@@ -22,8 +26,12 @@ function MapsPage(): JSX.Element {
         setMarkers(lugaresArray);
     }
 
+    useEffect(() => {
+        getMarkups();
+    }, []);
+
     async function guardarLugar(lugarMarcado: any) {
-        await addMarker(lugarMarcado);
+
     }
 
     // BOTON CARGAR
@@ -53,6 +61,7 @@ function MapsPage(): JSX.Element {
     function handleNewMarkerOnClick(m: L.Marker): void {
         setSelectedMarker(undefined);
         setNewMarker(m);
+        setMostrarModal(true);
         let p: Place = {
             name: "",
             direction: "",
@@ -65,9 +74,38 @@ function MapsPage(): JSX.Element {
         setNewPlace(p);
     }
 
-    useEffect(() => {
-        getMarkups();
-    },[]);
+    async function guardarDatos() {
+        //abrir el modal
+        let modal = document.getElementById("myModal");
+        //cerrar el modal al hacer click en cruz
+        let botonCerrar = document.getElementById("closeModal");
+        if (botonCerrar != undefined) {
+            botonCerrar.onclick = function () {
+                modal!.style.display = "none";
+            }
+        }
+
+        let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
+        let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
+        let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
+        let commentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
+        if (nombreLugar != "") {
+            modal!.style.display = "none";
+            newPlace!.name = nombreLugar;
+            newPlace!.direction = dirLugar;
+            newPlace!.comments = commentLugar;
+            newPlace!.photoLink = [];
+        }
+        reiniciarModal();
+        await addMarker(newPlace!);
+    }
+
+
+    function reiniciarModal() {
+        (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
+        (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
+        (document.getElementById("comentLugar") as HTMLInputElement).value = "";
+    }
 
     return (
         <>
@@ -96,9 +134,21 @@ function MapsPage(): JSX.Element {
 
                         {/*Información*/}
                         <div className="informacion">
-                            {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker?<form name="lugares" onSubmit={handleClick}>
-                                <button id="pruebaguardar" type="submit"> Cargar</button>
-                            </form>:<></>}
+                            {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker && mostrarModal ?
+                                <div id="myModal" className="modal">
+                                    <div className="modal-content">
+                                        <button id="closeModal" type="button" className="close" onClick={()=>setMostrarModal(false)} aria-label="Close">
+                                            <span>&times;</span>
+                                        </button>
+                                        <form id="formAñadirLugar" onSubmit={guardarDatos}>
+                                            <p>Nombre: <input id="nombreLugar" type="text"></input></p>
+                                            <p>Dirección: <input id="dirLugar" type="text"></input></p>
+                                            <p>Descripción: <input id="descrpLugar" type="text"></input></p>
+                                            <p>Comentario: <input id="comentLugar" type="text"></input></p>
+                                            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+                                        </form>
+                                    </div>
+                                </div> : <></>}
                         </div>
                     </div>
                 </div>
