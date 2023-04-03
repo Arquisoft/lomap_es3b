@@ -20,23 +20,28 @@ export async function getUsers():Promise<User[]>{
     return response.json()
 }
 
-export async function getPlaces():Promise<Place>{
+export async function getPlaces():Promise<Place[]>{
     const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
-    let response = await fetch(apiEndPoint+'/places/list');
+    let response = await fetch(apiEndPoint+'/db/get');
     return response.json()
 }
 
 export async function addMarker(marker:Place):Promise<boolean>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   console.log("Preparado para guardar lugar en api.ts de webapp");
+
+  console.log(apiEndPoint+"/db/add");
+
   let response = await fetch(apiEndPoint+'/db/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({'name':marker.name, 'direction':marker.direction,'latitude':marker.latitude, 'longitude':marker.longitude, 'comment':marker.comments,
-        'photoLink':marker.photoLink})
+        'photoLink':marker.photoLink, 'category':marker.category})
     });
+
   if (response.status===200)
     return true;
   else
+    console.log(response);
     return false;
 }

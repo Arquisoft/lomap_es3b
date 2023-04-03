@@ -31,13 +31,14 @@ app.listen(port, ():void => {
 
  
 const lugarPrueba: Place = {
-    name:"Prueba 2",
-    direction:"Villamañan",
-    latitude: 43.37058,
-    longitude: -5.84045,
-    comments:"",
-    photoLink:[]
+    name:"Prueba con categoria 2",
+    direction:"Antuna Branka Simica 18",
+    latitude: 43.50642,
+    longitude: 16.45876,
+    comments:"Buen sitio para vivir",
+    photoLink:[],
+    category:"Monumento"
 }
 //connectToDatabase();
-//guardarLugar(lugarPrueba);
+// guardarLugar(lugarPrueba);
 //nuevoComentario2(lugarPrueba, "Un sitio genial");
