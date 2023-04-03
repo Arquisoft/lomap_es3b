@@ -19,37 +19,63 @@ function MapsPage(props: MapProps): JSX.Element {
     const [newMarker, setNewMarker] = useState<L.Marker>();
     const [newPlace, setNewPlace] = useState<Place>();
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [filteredPlaces, setFilteredPlaces] = useState<Array<Place>>();
+    const [categorias, setCategorias] = useState<string[]>([]);
+    const [amigos, setAmigos] = useState<string[]>([]);
+    const [minDistance, setMinDistance] = useState<number>(0);
+    const [maxDistance, setMaxDistance] = useState<number>(0);
 
     const getMarkups = async () => {
-
         let lugaresArray = await getPlaces();
         setMarkers(lugaresArray);
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
 
     useEffect(() => {
         getMarkups();
     }, []);
 
-    async function guardarLugar(lugarMarcado: any) {
+    const centro: [number, number] = [43.35485, -5.85123]
 
+    const filterPlaces = (places: Place[]) => {
+        if (categorias.length == 0) {
+            return places;
+        } else {
+            return places.filter((place) => {
+                const categoryMatch = categorias.includes(place.category);
+                return categoryMatch;
+            });
+        }
     }
 
-    // BOTON CARGAR
-    const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        if (newMarker) {
-            const paGuardar: Place = {
-                name: "PRUEBA INSERCION con comentario",
-                direction: "Lugar 1234",
-                latitude: newMarker?.getLatLng().lat!,
-                longitude: newMarker?.getLatLng().lng!,
-                comments: "esto es una prueba",
-                photoLink: [],
-                category: "Restaurante"
-            }
-            console.log("Preparado para guardar lugar en Map.tsx");
-            guardarLugar(paGuardar);
-        }
+    function filterByDistance(center: [number, number], radiusInner: number, radiusOuter: number, places: Place[]): Place[] {
+        
+        console.log(places);
+        const [centerLat, centerLng] = center;
+        const result = places.filter(place => {
+            const { latitude, longitude } = place;
+            const distance = calculateDistance(centerLat, centerLng, latitude, longitude);
+            return distance >= radiusInner && distance <= radiusOuter;
+        });
+        console.log(result);
+        return result;
+    }
+
+    function calculateDistance(lat1: number, lng1: number, lat2: number, lng2: number): number {
+        const R = 6371; // Radio de la tierra en kilómetros
+        const dLat = toRadians(lat2 - lat1);
+        const dLng = toRadians(lng2 - lng1);
+        const a =
+            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+            Math.sin(dLng / 2) * Math.sin(dLng / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c; // Distancia en kilómetros
+        return d;
+    }
+
+    function toRadians(degrees: number): number {
+        return degrees * Math.PI / 180;
     }
 
     function handleMarkerOnClick(p: Place): void {
@@ -107,25 +133,23 @@ function MapsPage(props: MapProps): JSX.Element {
         (document.getElementById("comentLugar") as HTMLInputElement).value = "";
     }
 
-    const [categorias, setCategorias] = useState<string[]>([]);
-    const [amigos, setAmigos] = useState<string[]>([]);
-    const [minDistance, setMinDistance] = useState<number>(0);
-    const [maxDistance, setMaxDistance] = useState<number>(0);
-
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
         setCategorias(selectedOption);
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
       
     const handleAmigoChange = (selectedOption: string[]) => {
         console.log(`Amigo seleccionado: ${selectedOption}`);
         setAmigos(selectedOption);
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
       
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
         setMaxDistance(selectedMaxDistance);
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
 
     return (
@@ -154,14 +178,10 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Mapa*/}
                         <div className="mapa">
-                            <Map markers={markers!}
+                            <Map markers={filteredPlaces!}
                             funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }} 
                             funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }} 
                             newMarker={newMarker} 
-                            categorias={categorias}
-                            amigos={amigos}
-                            minDistance={minDistance}
-                            maxDistance={maxDistance}
                             />
                         </div>
 
