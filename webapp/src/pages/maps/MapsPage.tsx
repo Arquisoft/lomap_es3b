@@ -1,10 +1,18 @@
 import React from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import Filters from "./components/Filters";
-import Map from "./components/Map";
 import Info from "./components/Info";
+import Map from "./components/Map";
 import './MapsPage.css';
 
+import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
+import {Marker, Popup} from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+
+
+type MapProps = {
+    
+};
 
 function MapsPage():JSX.Element{
 
@@ -30,7 +38,7 @@ function MapsPage():JSX.Element{
 
                         {/*Mapa*/}
                         <div className="mapa">
-                            <Map/>
+                            <MapComponent/>
                         </div>
 
                         {/*Información*/}
@@ -39,6 +47,42 @@ function MapsPage():JSX.Element{
                         </div>
                     </div>
                 </div>  
+            </div>
+        </>
+    );
+}
+
+function MapComponent(props: MapProps): JSX.Element {
+    let modalOpened=false;
+    return (
+        <>
+            <div className="buscador">
+                <input type="text" name="buscar"></input>
+                <button> 🔍︎ Buscar  </button>
+            </div>
+            <div className="map">
+                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={false} > 
+                    <TileLayer 
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Map/>
+                </MapContainer>
+            </div>
+            <div id="myModal" className="modal">    
+                <div className="modal-content">
+                <button id="closeModal" type="button" className="close" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+                <form id="formAñadirLugar">
+                <p>Nombre: <input id="nombreLugar" type="text"></input></p>
+                <p>Dirección: <input id="dirLugar" type="text"></input></p>
+                <p>Descripción: <input id="descrpLugar" type="text"></input></p>
+                <p>Comentario: <input id="comentLugar" type="text"></input></p>
+                </form>
+                <button id="añadirLugar" type="button" className="enviar"> Añadir lugar </button>
+                
+                </div>
             </div>
         </>
     );

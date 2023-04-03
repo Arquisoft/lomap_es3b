@@ -1,18 +1,19 @@
 import L from "leaflet";
-import { MapContainer, TileLayer, useMap, useMapEvents  } from 'react-leaflet';
-import {Marker, Popup} from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { getPlaces, addMarker } from '../../../api/api';
-import React,{useState,useEffect} from 'react';
+import { useMapEvents } from 'react-leaflet';
+import { addMarker, getPlaces } from '../../../api/api';
+
 import { Place } from '../../../shared/shareddtypes';
 
+type MapProps = {
+    
+};
 
 var lat:number;
 var long: number;
 
-async function guardarLugar(lugarMarcado: any) {
-    await addMarker(lugarMarcado);
-}
+ async function guardarLugar(lugarMarcado: any) {
+     await addMarker(lugarMarcado); 
+ }
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
@@ -21,30 +22,19 @@ const icon = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
-type MapProps = {
-    
-};
 
-
-let listPlaces:Place[] = [{
-    name: "Escuela de Ingeniería Informática",
+//Luego se cambiaran por las de la base de datos
+let listPlaces:Place[] = [ {
+    name:"Universidad Ingenieria Informatica",
     direction: "Calle Valdés Salas 11",
     latitude:43.35485,
     longitude:-5.85123,
     comments: "",
     photoLink:[]
-}, {
-     name: "Gijón",
-     direction: "Gijón",
-     latitude:43.5322,
-     longitude:-5.6611,
-     comments: "",
-     photoLink:[]
-}]
+    }]
 
 
-
-
+/* const defaultPlace:Place = {
 function Map(props: MapProps): JSX.Element {
 
     const defaultPlace:Place = {
@@ -78,60 +68,110 @@ function Map(props: MapProps): JSX.Element {
     let getMarkups = async () => {
         setMarkers(await getPlaces());   // PARA OBTENER LOS LUGARES DE MONGODB
     }
+    let getMarkups = async () => {
+        setMarkers(await getPlaces());
+    } */
    
 
-    return (
+function Map(props: MapProps): JSX.Element {
 
-        <>
-            <form name="lugares" onSubmit={handleClick}>
-                <button id="pruebaguardar" type="submit"> Cargar</button>
-            </form>
-            <div className="buscador">
-                <input type="text" name="buscar"></input>
-                <button> 🔍︎ Buscar  </button>
-            </div>
-            <div className="map">
-                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={true} > 
-                    <TileLayer 
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                    />
-                    <MapContent />
-                    {listPlaces.map((position2, idx) =>
-                        <Marker key={idx} position={[position2.latitude, position2.longitude]} icon={icon}>
-                            <Popup>
-                            {position2.direction}
-                        </Popup>
-                        
-                        </Marker>
-                    )} 
-                </MapContainer>
-            </div>
-        </>
-    );
-}
-
-
-
-
-const MapContent = () => {
     const map = useMapEvents({
-        click(e) {              
-            var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
-            lat = e.latlng.lat;
-            long = e.latlng.lng;
-            marker.setIcon(icon);
-            map.addLayer(marker);
+        click(e) {    
+            //abrir el modal
+            let modal = document.getElementById("myModal");
+            modal!.style.display = "block";
+            //cerrar el modal al hacer click en cruz
+            let botonCerrar = document.getElementById("closeModal");
+            if (botonCerrar != undefined) {
+                botonCerrar.onclick = function() {
+                    modal!.style.display = "none";}
+            }
+            //Mandar informacion y añadir el lugar
+            let botonAñadir = document.getElementById("añadirLugar");
+            if (botonAñadir != undefined) {
+                botonAñadir.onclick = function() {
+                    let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
+                    let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
+                    let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
+                    let comentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
+                    if(nombreLugar!=""){
+                        modal!.style.display = "none";
+                        let element:Place = {
+                            name:"",
+                            direction: nombreLugar,
+                            latitude:e.latlng.lat,
+                            longitude:e.latlng.lng,
+                            comments: comentLugar,
+                            photoLink:[]
+                        }
+                        AddMarkerWithMap(element, map);
+                        reiniciarModal();
+                        
+                    }
+                } 
+            }
+
         },            
     })
 
-    return (
+    //Añadir markers de listPlaces (Luego se cambiara por los que esten en la base de datos o el pod)
+    for (const element of listPlaces) {
+        AddMarker(element);
+    }
 
-        <>   
-           
-        </>
-    );
+     return (
+            <>   
+               
+            </>
+        );
+    
 }
+
+
+function AddMarker(element:Place){
+    const map = useMapEvents({});
+    let marker = new L.Marker([element.latitude, element.longitude]);
+    marker.setIcon(icon);
+    map.addLayer(marker);
+    marker.bindPopup(element.direction)
+    marker.on('click', function(){ marker.openPopup() });
+}
+
+function AddMarkerWithMap(element:Place, map:L.Map){
+    let marker = new L.Marker([element.latitude, element.longitude]);
+    marker.setIcon(icon);
+    map.addLayer(marker);
+    marker.bindPopup(element.direction)
+    marker.on('click', function(){ marker.openPopup() });
+}
+
+function reiniciarModal(){
+    (document.getElementById("nombreLugar") as HTMLInputElement).value="";
+    (document.getElementById("descrpLugar") as HTMLInputElement).value="";
+    (document.getElementById("comentLugar") as HTMLInputElement).value="";
+}
+
+
+
+
+// const MapContent = () => {
+//     const map = useMapEvents({
+//         click(e) {              
+//             var marker = new L.Marker([e.latlng.lat,e.latlng.lng]);  
+//             lat = e.latlng.lat;
+//             long = e.latlng.lng;
+//             marker.setIcon(icon);
+//             map.addLayer(marker);
+//         },            
+//     })
+
+//     return (
+
+//         <>   
+           
+//         </>
+//     );
+// }
 
 
 
