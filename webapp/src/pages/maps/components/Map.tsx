@@ -1,115 +1,65 @@
-// import React from 'react';
 import L from "leaflet";
-import { useSession } from "@inrupt/solid-ui-react";
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
-import {Marker, Popup} from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { getPlaces } from '../../../api/api';
-import React,{useState,useEffect} from 'react';
+import { getPlaces, addMarker } from '../../../api/api';
+import React, { useState, useEffect } from 'react';
 import { Place } from '../../../shared/shareddtypes';
 
 
-
-const icon = new L.Icon({
-    iconUrl: require('../../../assets/marker-icon.png'),
-    iconSize: new L.Point(50, 50),
-    iconAnchor: [25,50],
-    className: 'leaflet-div-icon'
-});
-
-
-// PREPARADO PARA CUANDO SE GUARDEN LOS MARCADORES
-/** 
-async function guardarMarcador(datos: any){
-    await addMarcador(datos);
-}
-*/
-
-type Props = {
+type MapProps = {
+    markers: Array<Place>;
+    funcNewMarker: (p:L.Marker) => void;
+    funcSelectedMarker: (p:Place) => void;
+    newMarker: L.Marker|undefined;
     categorias: string[];
     amigos: string[];
     minDistance: number;
     maxDistance: number;
-}
+};
 
-function Map({ categorias, amigos, minDistance, maxDistance }: Props): JSX.Element {
+const icon = new L.Icon({
+    iconUrl: require('../../../assets/marker-icon.png'),
+    iconSize: new L.Point(50, 50),
+    iconAnchor: [25, 50],
+    className: 'leaflet-div-icon'
+});
 
-    const {session} = useSession();
-    var defaultPlace:Place = {
+function Map({ categorias, amigos, minDistance, maxDistance, ...props }: MapProps): JSX.Element {
+
+
+    const defaultPlace: Place = {
+        name: "Ronda 14",
         direction: "Aviles",
-        latitude:43.5580,
-        longitude:-5.9247,
+        latitude: 43.5580,
+        longitude: -5.9247,
         comments: "",
         photoLink:[],
-        category: "Coastal town"
+        category: "Restaurante"
     }
 
-    const [markers, setMarkers] = useState<Place>(defaultPlace);
+    const MapContent = () => {
+        const map = useMapEvents({
+            click(e) {
+                if (props.newMarker) {
+                    map.removeLayer(props.newMarker);
+                }
+                var marker = new L.Marker([e.latlng.lat, e.latlng.lng]);
+                props.funcNewMarker(marker);
+                marker.setIcon(icon);
+                map.addLayer(marker);
+            },
+        })
+    
+        return (
+            <>
 
-    const listPlaces: Place[] = [{        
-        direction: "Calle Valdés Salas 11",        
-        latitude: 43.35485,        
-        longitude: -5.85123,        
-        comments: "",        
-        photoLink: [],
-        category: "Biblioteca"
-    },
-    {
-        direction: "Gijón",
-        latitude: 43.5322,
-        longitude: -5.6611,
-        comments: "",
-        photoLink: [],
-        category: "Restaurante"
-    },
-    {
-        direction: "Cudillero",
-        latitude: 43.5616,
-        longitude: -6.1529,
-        comments: "",
-        photoLink: [],
-        category: "Restaurante"
-    },
-    {
-        direction: "Lagos de Covadonga",
-        latitude: 43.2809,
-        longitude: -4.9468,
-        comments: "",
-        photoLink: [],
-        category: "Monumento"
-    },
-    {
-        direction: "Playa de Gulpiyuri",
-        latitude: 43.4505,
-        longitude: -4.8285,
-        comments: "",
-        photoLink: [],
-        category: "Monumento"
-    },
-    {
-        direction: "Parque Natural de Somiedo",
-        latitude: 43.0483,
-        longitude: -6.0833,
-        comments: "",
-        photoLink: [],
-        category: "Monumento"
-    },
-    {
-        direction: "Ruta del Cares",
-        latitude: 43.2548,
-        longitude: -4.9299,
-        comments: "",
-        photoLink: [],
-        category: "Biblioteca"
-    }];
-
-    const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        getMarkups();
+            </>
+        );
     }
 
-    var getMarkups = async () => {
-        setMarkers(await getPlaces());
+    type markerProps = {
+        marker:Place
     }
 
     const centro:[number, number] = [43.35485, -5.85123]
@@ -123,7 +73,7 @@ function Map({ categorias, amigos, minDistance, maxDistance }: Props): JSX.Eleme
                 return categoryMatch;
               });
         }
-      }
+     }
 
       function filterByDistance(center: [number, number], radiusInner: number, radiusOuter: number, places: Place[]): Place[] {
         const [centerLat, centerLng] = center;
@@ -155,38 +105,50 @@ function Map({ categorias, amigos, minDistance, maxDistance }: Props): JSX.Eleme
 
     const filteredPlaces = filterByDistance(centro, minDistance, maxDistance, filterPlaces(listPlaces));
 
-    
+    const CustomMarker = function(propsM:markerProps) {
+        const map = useMap()
+
+        return (<Marker 
+            key={propsM.marker.direction}
+            position={[propsM.marker.latitude,propsM.marker.longitude]}
+            icon={icon}
+            eventHandlers={{
+                click: (e) => {
+                    if(props.newMarker){
+                        map.removeLayer(props.newMarker!);
+                    }
+                    props.funcSelectedMarker(propsM.marker);
+                },
+            }}
+        >
+        <Popup>
+            {propsM.marker.direction}
+        </Popup>
+        </Marker>
+        );
+    }
 
     return (
-
         <>
-            <form name="lugares" onSubmit={handleClick}>
-                <button type="submit"> Cargar</button>
-            </form>
             <div className="buscador">
                 <input type="text" name="buscar"></input>
                 <button> 🔍︎ Buscar  </button>
             </div>
             <div className="map">
-                <MapContainer center={centro} zoom={13} scrollWheelZoom={false}>
+                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={true}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    
-                    {filteredPlaces.map((position2, idx) =>
-                        <Marker key={idx} position={[position2.latitude, position2.longitude]} icon={icon}>
-                            <Popup>
-                            {position2.direction}<br></br>
-                            {position2.category}
-                        </Popup>
-                        </Marker>
+                    <MapContent />
+
+                    {Array.isArray(props.markers) && filteredPlaces.map((marker) =>
+                        <CustomMarker marker={marker}/>
                     )}
                 </MapContainer>
             </div>
         </>
     );
 }
-
 
 export default Map;

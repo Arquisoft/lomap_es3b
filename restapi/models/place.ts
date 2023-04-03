@@ -26,6 +26,10 @@ const PlaceSchema = Schema(
         photoLink: {
             type: [String],
             reguired: true
+        },
+        category: {
+            type: String,
+            reguired: true
         }
     }, 
     
