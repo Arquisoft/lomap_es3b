@@ -1,106 +1,109 @@
-// import React from 'react';
 import L from "leaflet";
-import { useSession } from "@inrupt/solid-ui-react";
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
-import {Marker, Popup} from 'react-leaflet';
+import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { getPlaces } from '../../../api/api';
-import React,{useState,useEffect} from 'react';
+import { getPlaces, addMarker } from '../../../api/api';
+import React, { useState, useEffect } from 'react';
 import { Place } from '../../../shared/shareddtypes';
 
 
+type MapProps = {
+    markers: Place[];
+    funcNewMarker: (p: L.Marker) => void;
+    funcSelectedMarker: (p: Place) => void;
+    newMarker: L.Marker | undefined;
+};
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
     iconSize: new L.Point(50, 50),
-    iconAnchor: [25,50],
+    iconAnchor: [25, 50],
     className: 'leaflet-div-icon'
 });
 
-type MapProps = {
-
-};
-
-// PREPARADO PARA CUANDO SE GUARDEN LOS MARCADORES
-/** 
-async function guardarMarcador(datos: any){
-    await addMarcador(datos);
-}
-*/
-
-
 function Map(props: MapProps): JSX.Element {
 
-    const {session} = useSession();
-    var defaultPlace:Place = {
+
+    const defaultPlace: Place = {
+        name: "Ronda 14",
         direction: "Aviles",
-        latitude:43.5580,
-        longitude:-5.9247,
+        latitude: 43.5580,
+        longitude: -5.9247,
         comments: "",
-        photoLink:[]
+        photoLink: [],
+        category: "Restaurante"
     }
 
-    const [markers, setMarkers] = useState<Place>(defaultPlace);
+    const MapContent = () => {
+        const map = useMapEvents({
+            click(e) {
+                if (props.newMarker) {
+                    map.removeLayer(props.newMarker);
+                }
+                var marker = new L.Marker([e.latlng.lat, e.latlng.lng]);
+                props.funcNewMarker(marker);
+                marker.setIcon(icon);
+                map.addLayer(marker);
+            },
+        })
 
-    var listPlaces:Place[] = [{
-        direction: "Calle Valdés Salas 11",
-        latitude:43.35485,
-        longitude:-5.85123,
-        comments: "",
-        photoLink:[]
-    }, {
-         direction: "Gijón",
-         latitude:43.5322,
-         longitude:-5.6611,
-         comments: "",
-         photoLink:[]
-    }]
+        return (
+            <>
 
-
-    const handleClick = (e:React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        getMarkups();
+            </>
+        );
     }
 
-    var getMarkups = async () => {
-        setMarkers(await getPlaces());
+    type markerProps = {
+        marker: Place
     }
-   
-    
-    console.log(markers);
 
-    const centro:[number, number] = [43.35485, -5.85123]
     
-    
+
+    const CustomMarker = function (propsM: markerProps) {
+        const map = useMap()
+
+        return (<Marker
+            key={propsM.marker.direction}
+            position={[propsM.marker.latitude, propsM.marker.longitude]}
+            icon={icon}
+            eventHandlers={{
+                click: (e) => {
+                    if (props.newMarker) {
+                        map.removeLayer(props.newMarker!);
+                    }
+                    props.funcSelectedMarker(propsM.marker);
+                },
+            }}
+        >
+            <Popup>
+                {propsM.marker.direction}
+            </Popup>
+        </Marker>
+        );
+    }
+
     return (
-
         <>
-            <form name="lugares" onSubmit={handleClick}>
-                <button type="submit"> Cargar</button>
-            </form>
             <div className="buscador">
                 <input type="text" name="buscar"></input>
                 <button> 🔍︎ Buscar  </button>
             </div>
             <div className="map">
-                <MapContainer center={centro} zoom={13} scrollWheelZoom={false}>
+                <MapContainer center={[43.35485, -5.85123]} zoom={13} scrollWheelZoom={true}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
-                    
-                    {listPlaces.map((position2, idx) =>
-                        <Marker key={idx} position={[position2.latitude, position2.longitude]} icon={icon}>
-                            <Popup>
-                            {position2.direction}
-                        </Popup>
-                        </Marker>
+                    <MapContent />
+
+                    {Array.isArray(props.markers) && props.markers.map((marker) =>
+                        <CustomMarker marker={marker} />
                     )}
                 </MapContainer>
             </div>
         </>
     );
 }
-
 
 export default Map;

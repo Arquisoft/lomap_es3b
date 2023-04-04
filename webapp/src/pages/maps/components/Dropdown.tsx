@@ -37,6 +37,7 @@ function getStyles(name:string, personName:string[], theme:Theme):any{
 type DropdownProps={
   items:string[];
   dropdownTitle:string;
+  onChange: (selectedOption: string[]) => void;
 }
 
 function Dropdown(props:DropdownProps):JSX.Element {
@@ -47,6 +48,7 @@ function Dropdown(props:DropdownProps):JSX.Element {
     const {target: { value }} = event;
       setPersonName(typeof value === 'string' ? value.split(',') : value,
     );
+    props.onChange(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (

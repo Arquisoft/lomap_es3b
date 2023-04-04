@@ -4,17 +4,11 @@ export type User = {
 }
 
 export type Place = {
+    name:string;
     direction:string;
     latitude:number;
     longitude:number;
     comments:string;
     photoLink:string[];
-}
-
-export type MarkerDTO = {
-    //A completar
-    id:string;
-    name:string;
-    latitude:number;
-    longitude:number;
+    category:string;
 }
