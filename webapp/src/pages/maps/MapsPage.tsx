@@ -29,6 +29,9 @@ function MapsPage(props: MapProps): JSX.Element {
     const [maxDistance, setMaxDistance] = useState<number>(0);
 
     const getMarkups = async () => {
+        //Sacar la session
+        //De la session sacar el webId
+        //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray = await getPlaces();
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
@@ -173,10 +176,10 @@ function MapsPage(props: MapProps): JSX.Element {
     var file = new File([blob], "marker.info", {type: blob.type});
 
     const handleOnClick = async () =>{
-        await addMarker(session,file.name,file,webId!);
+        await addMarkerPOD(session,file.name,file,webId!);
     }
     */
-   
+
     return (
         <>
             <div className="mapspage">

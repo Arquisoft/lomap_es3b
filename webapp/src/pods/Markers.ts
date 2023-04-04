@@ -3,7 +3,7 @@ import { saveFileInContainer } from "@inrupt/solid-client";
 import { MarkerDTO } from "../shared/shareddtypes";
 import { json } from "body-parser";
 
-async function addMarker(session: Session, name:string, file: File, url:string){
+async function addMarkerPOD(session: Session, name:string, file: File, url:string){
 
     try{
         await saveFileInContainer(url, file,{
@@ -16,8 +16,8 @@ async function addMarker(session: Session, name:string, file: File, url:string){
     }
 }
 
-async function getMarkers(session: Session, url:string){
+async function getMarkersPOD(session: Session, url:string){
     //TO-DO
 }
 
-export default addMarker;
+export default {addMarkerPOD, getMarkersPOD};
