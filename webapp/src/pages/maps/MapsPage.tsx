@@ -1,11 +1,14 @@
+import { useSession } from '@inrupt/solid-ui-react';
 import React, { useEffect, useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
+import addMarkerPOD from '../../pods/Markers';
+import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
-import { Place } from "../../shared/shareddtypes";
+import { Place, MarkerDTO } from "../../shared/shareddtypes";
 
 
 type MapProps = {
@@ -26,6 +29,9 @@ function MapsPage(props: MapProps): JSX.Element {
     const [maxDistance, setMaxDistance] = useState<number>(0);
 
     const getMarkups = async () => {
+        //Sacar la session
+        //De la session sacar el webId
+        //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray = await getPlaces();
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
@@ -151,6 +157,28 @@ function MapsPage(props: MapProps): JSX.Element {
         setMaxDistance(selectedMaxDistance);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
+
+    /*
+    const { session } = useSession();
+    const { webId } = session.info;
+    console.log(webId);
+
+
+    const markerPOD:MarkerDTO = {
+        id:"1",
+        name:"prueba",
+        latitude: 43,
+        longitude:-5.3,
+    }
+
+    var blob = new Blob([JSON.stringify(marker)],{type:"aplication/json"})
+
+    var file = new File([blob], "marker.info", {type: blob.type});
+
+    const handleOnClick = async () =>{
+        await addMarkerPOD(session,file.name,file,webId!);
+    }
+    */
 
     return (
         <>
