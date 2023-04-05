@@ -6,9 +6,10 @@ type Props = {
   onCategoriaChange: (selectedOption: string[]) => void;
   onAmigoChange: (selectedOption: string[]) => void;
   onMinDistanceChange: (selectedMinDistance: number, selectedMaxDistance: number) => void;
+  onButtonClick: () => void;
 }
 
-export default function Filters({onCategoriaChange, onAmigoChange, onMinDistanceChange }: Props) {
+export default function Filters({onCategoriaChange, onAmigoChange, onMinDistanceChange, onButtonClick}: Props) {
 
   const categories = [
     'Biblioteca',
@@ -35,6 +36,10 @@ export default function Filters({onCategoriaChange, onAmigoChange, onMinDistance
     onMinDistanceChange(selectedMinDistance, selectedMaxDistance);
   };
 
+  const handleButtonClick = () => {
+    onButtonClick();
+  };
+
   return (
     <div className="filtros">
       <div className="header">
@@ -44,6 +49,7 @@ export default function Filters({onCategoriaChange, onAmigoChange, onMinDistance
         <Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange}/>
         <Dropdown items={friends} dropdownTitle="Amigos" onChange={handleAmigoChange} />
         <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
+        <button onClick={handleButtonClick}>Aplicar filtros</button>
       </div>
     </div>
   );

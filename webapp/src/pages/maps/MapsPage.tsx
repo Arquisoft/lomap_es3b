@@ -142,19 +142,22 @@ function MapsPage(props: MapProps): JSX.Element {
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
         setCategorias(selectedOption);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
       
     const handleAmigoChange = (selectedOption: string[]) => {
         console.log(`Amigo seleccionado: ${selectedOption}`);
         setAmigos(selectedOption);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
       
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
         setMaxDistance(selectedMaxDistance);
+    };
+
+    const handleButtonClick = () => {
+        console.log("Monstrando todos los puntos entre " + minDistance + " y " + maxDistance + " que entren en las categorias " +
+            categorias);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
 
@@ -198,6 +201,7 @@ function MapsPage(props: MapProps): JSX.Element {
                         onCategoriaChange={handleCategoriaChange}
                         onAmigoChange={handleAmigoChange}
                         onMinDistanceChange={handleMinDistanceChange}
+                        onButtonClick={handleButtonClick}
                         />
                     </div>
 
