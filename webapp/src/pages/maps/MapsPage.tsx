@@ -9,6 +9,7 @@ import addMarkerPOD from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place, MarkerDTO } from "../../shared/shareddtypes";
+import Dropdown from "./components/Dropdown";
 
 
 type MapProps = {
@@ -27,6 +28,12 @@ function MapsPage(props: MapProps): JSX.Element {
     const [amigos, setAmigos] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(0);
+
+    const categories = [
+        'Biblioteca',
+        'Monumento',
+        'Restaurante',
+      ];
 
     const getMarkups = async () => {
         //Sacar la session
@@ -222,10 +229,11 @@ function MapsPage(props: MapProps): JSX.Element {
                                             <span>&times;</span>
                                         </button>
                                         <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={guardarDatos}>
-                                            <label>Nombre: <input id="nombreLugar" type="text"></input></label>
-                                            <label>Dirección: <input id="dirLugar" type="text"></input></label>
+                                            <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
+                                            <label>Dirección: <input id="dirLugar" type="text" required></input></label>
                                             <label>Descripción: <input id="descrpLugar" type="text"></input></label>
                                             <label>Comentario: <input id="comentLugar" type="text"></input></label>
+                                            <label>Categoría:<Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange} /> </label>
                                             <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
                                         </form>
                                     </div>
