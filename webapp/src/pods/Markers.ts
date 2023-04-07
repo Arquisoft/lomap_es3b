@@ -3,10 +3,12 @@ import { saveFileInContainer } from "@inrupt/solid-client";
 import { MarkerDTO } from "../shared/shareddtypes";
 import { json } from "body-parser";
 
-async function addMarkerPOD(session: Session, name:string, file: File, url:string){
+export async function addMarkerPOD(session: Session, name:string, file: File, url:string){
 
+    var mapUrl = url.split("/profile")[0] + "/map";
+    
     try{
-        await saveFileInContainer(url, file,{
+        await saveFileInContainer(mapUrl, file,{
             slug: file.name,
             contentType: file.type,
             fetch: session.fetch
@@ -16,8 +18,6 @@ async function addMarkerPOD(session: Session, name:string, file: File, url:strin
     }
 }
 
-async function getMarkersPOD(session: Session, url:string){
+export async function getMarkersPOD(session: Session, url:string){
     //TO-DO
 }
-
-export default {addMarkerPOD, getMarkersPOD};
