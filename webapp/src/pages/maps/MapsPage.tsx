@@ -221,11 +221,11 @@ function MapsPage(props: MapProps): JSX.Element {
                                         <button id="closeModal" type="button" className="close" onClick={()=>setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <form id="formAñadirLugar" onSubmit={guardarDatos}>
-                                            <p>Nombre: <input id="nombreLugar" type="text"></input></p>
-                                            <p>Dirección: <input id="dirLugar" type="text"></input></p>
-                                            <p>Descripción: <input id="descrpLugar" type="text"></input></p>
-                                            <p>Comentario: <input id="comentLugar" type="text"></input></p>
+                                        <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={guardarDatos}>
+                                            <label>Nombre: <input id="nombreLugar" type="text"></input></label>
+                                            <label>Dirección: <input id="dirLugar" type="text"></input></label>
+                                            <label>Descripción: <input id="descrpLugar" type="text"></input></label>
+                                            <label>Comentario: <input id="comentLugar" type="text"></input></label>
                                             <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
                                         </form>
                                     </div>
