@@ -5,7 +5,7 @@ import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-import addMarkerPOD from '../../pods/Markers';
+import { getMarkersPOD } from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place, MarkerDTO } from "../../shared/shareddtypes";
@@ -30,9 +30,15 @@ function MapsPage(props: MapProps): JSX.Element {
 
     const getMarkups = async () => {
         //Sacar la session
+        const { session } = useSession();
+        
         //De la session sacar el webId
+        const { webId } = session.info;
+        console.log(webId);
+
         //Asignar a un array el resultado de llamar a getMarkersPOD()
-        let lugaresArray = await getPlaces();
+        let lugaresArray: any;
+        lugaresArray = await getMarkersPOD(session, webId!);
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
