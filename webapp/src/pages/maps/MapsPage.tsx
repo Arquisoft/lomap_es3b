@@ -27,20 +27,27 @@ function MapsPage(props: MapProps): JSX.Element {
     const [amigos, setAmigos] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(0);
+    const [onlyOnce, setOnlyOnce] = useState(true);
+
+
+    const { session } = useSession();
+
+    //De la session sacar el webId
+    const { webId } = session.info;
 
     const getMarkups = async () => {
-        //Sacar la session
-        const { session } = useSession();
-        
-        //De la session sacar el webId
-        const { webId } = session.info;
-        console.log(webId);
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray: any;
-        lugaresArray = await getMarkersPOD(session, webId!);
+        lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map");
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
+    }
+
+    if (session.info.isLoggedIn && onlyOnce) {
+        setOnlyOnce(false);
+        console.log(webId);
+        getMarkups();
     }
 
     /**
@@ -64,15 +71,12 @@ function MapsPage(props: MapProps): JSX.Element {
     }
 
     function filterByDistance(center: [number, number], radiusInner: number, radiusOuter: number, places: Place[]): Place[] {
-        
-        console.log(places);
         const [centerLat, centerLng] = center;
         const result = places.filter(place => {
             const { latitude, longitude } = place;
             const distance = calculateDistance(centerLat, centerLng, latitude, longitude);
             return distance >= radiusInner && distance <= radiusOuter;
         });
-        console.log(result);
         return result;
     }
 
@@ -165,13 +169,13 @@ function MapsPage(props: MapProps): JSX.Element {
         setCategorias(selectedOption);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
-      
+
     const handleAmigoChange = (selectedOption: string[]) => {
         console.log(`Amigo seleccionado: ${selectedOption}`);
         setAmigos(selectedOption);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
-      
+
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
@@ -215,10 +219,10 @@ function MapsPage(props: MapProps): JSX.Element {
 
                     {/*Contenido menusuperior*/}
                     <div className="left">
-                        <Filters 
-                        onCategoriaChange={handleCategoriaChange}
-                        onAmigoChange={handleAmigoChange}
-                        onMinDistanceChange={handleMinDistanceChange}
+                        <Filters
+                            onCategoriaChange={handleCategoriaChange}
+                            onAmigoChange={handleAmigoChange}
+                            onMinDistanceChange={handleMinDistanceChange}
                         />
                     </div>
 
@@ -228,9 +232,9 @@ function MapsPage(props: MapProps): JSX.Element {
                         {/*Mapa*/}
                         <div className="mapa">
                             <Map markers={filteredPlaces!}
-                            funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }} 
-                            funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }} 
-                            newMarker={newMarker} 
+                                funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }}
+                                funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }}
+                                newMarker={newMarker}
                             />
                         </div>
 
@@ -239,7 +243,7 @@ function MapsPage(props: MapProps): JSX.Element {
                             {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
-                                        <button id="closeModal" type="button" className="close" onClick={()=>setMostrarModal(false)} aria-label="Close">
+                                        <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
                                         <form id="formAñadirLugar" onSubmit={guardarDatos}>

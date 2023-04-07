@@ -3,7 +3,7 @@ import { saveFileInContainer } from "@inrupt/solid-client";
 import { MarkerDTO } from "../shared/shareddtypes";
 import { json } from "body-parser";
 import { writeFile } from 'fs/promises';
-import { getFile, isRawData, getContentType, getSourceUrl,getPodUrlAll  } from "@inrupt/solid-client";
+import { getFile, isRawData, getContentType, getSourceUrl,isContainer,getResourceInfo } from "@inrupt/solid-client";
 import {Place} from "../shared/shareddtypes";
 
 async function addMarkerPOD(session: Session, name:string, file: File, url:string){
@@ -23,17 +23,19 @@ export async function getMarkersPOD(session: Session, url:string): Promise<Place
 
     let lug: any;
     if(session.info.isLoggedIn){
-        const mypods = await getPodUrlAll(url, { fetch: fetch }); // aqui tengo las urls de TODAS las carpetas que hay en el pod
-
+      /** 
         let carpeta = ""; // busco la que almacena los lugares
         mypods.forEach((str) =>{
-            if(str.endsWith("/places/")){
+            if(str.endsWith("/map/")){
                 carpeta = str;
             }
         })
-
-        lug = await readFileFromPod(carpeta, session);  
+      */
+        lug = await readFileFromPod(url + "/marker.info", session);
+        console.log(lug);
     }
+
+    
     let arraySol: Place[] = [];
 
     if (lug) {
@@ -52,6 +54,7 @@ async function readFileFromPod(fileURL:string , session:Session) {
       );
 
       let fileText = await file.text()
+      console.log(fileText);
       let fileInfo = JSON.parse(fileText)
 
       let n = fileInfo.name;
