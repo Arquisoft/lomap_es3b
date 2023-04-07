@@ -39,7 +39,7 @@ function MapsPage(props: MapProps): JSX.Element {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray: any;
-        lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map");
+        lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
