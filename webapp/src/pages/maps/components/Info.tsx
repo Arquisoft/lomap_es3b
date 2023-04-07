@@ -1,10 +1,11 @@
 import React,{useState} from 'react';
 import Tab from './Tab';
 import Comment,{Comentario} from './Comment';
+import { Place } from '../../../shared/shareddtypes';
 
 
 type InfoProps = {
-
+    place:Place;
 };
 
 enum TabEnum { 
@@ -25,7 +26,7 @@ function Info(props: InfoProps): JSX.Element{
     switch(tab){
         //Contenido si el valor seleccionado es Información
         case TabEnum.Información:
-            contenido = ContenidoInformacion();
+            contenido = ContenidoInformacion(props.place);
             break;
         //Contenido si el valor seleccionado es Imágenes
         case TabEnum.Imágenes:
@@ -62,14 +63,14 @@ function Info(props: InfoProps): JSX.Element{
     );
 }
 
-function ContenidoInformacion():JSX.Element {
+function ContenidoInformacion(place:Place):JSX.Element {
     return (
         <>
             <div className="header">
                 <p>Información</p>
             </div>
             <div className="body">
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                <h3>{place.name}</h3>
             </div>
         </>
     );

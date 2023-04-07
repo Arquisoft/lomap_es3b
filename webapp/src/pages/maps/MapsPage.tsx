@@ -228,7 +228,7 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Información*/}
                         <div className="informacion">
-                            {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker && mostrarModal ?
+                            {selectedMarker && !newMarker ? <Info place={selectedMarker}/> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
