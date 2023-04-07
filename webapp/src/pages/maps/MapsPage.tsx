@@ -26,6 +26,9 @@ function MapsPage(props: MapProps): JSX.Element {
         setMarkers(lugaresArray);
     }
 
+    /**
+     * LLama a getMarkups para cargar los lugares desde la bd
+     */
     useEffect(() => {
         getMarkups();
     }, []);
@@ -58,6 +61,9 @@ function MapsPage(props: MapProps): JSX.Element {
         setSelectedMarker(p);
     }
 
+    /**
+     * Pone el marcador cuando se hace click en el mapa para mostrar
+     */
     function handleNewMarkerOnClick(m: L.Marker): void {
         setSelectedMarker(undefined);
         setNewMarker(m);
@@ -74,6 +80,12 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(p);
     }
 
+    /**
+     * Recoge el modal
+     * Coge de cada elemento del modal lo escrito por el usuario
+     * lo introduce en una constante Place (newPlace)
+     * reinicia el modal y lo manda a addMarker para guardarlo
+     */
     async function guardarDatos() {
         //abrir el modal
         let modal = document.getElementById("myModal");
@@ -101,6 +113,9 @@ function MapsPage(props: MapProps): JSX.Element {
     }
 
 
+    /**
+     * Vacía los valores del modal
+     */
     function reiniciarModal() {
         (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
         (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
