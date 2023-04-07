@@ -8,13 +8,11 @@ import { Place } from '../../../shared/shareddtypes';
 
 
 type MapProps = {
-    markers: Array<Place>;
-    funcNewMarker: (p:L.Marker) => void;
-    funcSelectedMarker: (p:Place) => void;
-    newMarker: L.Marker|undefined;
+    markers: Place[];
+    funcNewMarker: (p: L.Marker) => void;
+    funcSelectedMarker: (p: Place) => void;
+    newMarker: L.Marker | undefined;
 };
-
-
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
@@ -48,9 +46,8 @@ function Map(props: MapProps): JSX.Element {
                 map.addLayer(marker);
             },
         })
-    
-        return (
 
+        return (
             <>
 
             </>
@@ -58,28 +55,30 @@ function Map(props: MapProps): JSX.Element {
     }
 
     type markerProps = {
-        marker:Place
+        marker: Place
     }
 
-    const CustomMarker = function(propsM:markerProps) {
+    
+
+    const CustomMarker = function (propsM: markerProps) {
         const map = useMap()
 
-        return (<Marker 
+        return (<Marker
             key={propsM.marker.direction}
-            position={[propsM.marker.latitude,propsM.marker.longitude]}
+            position={[propsM.marker.latitude, propsM.marker.longitude]}
             icon={icon}
             eventHandlers={{
                 click: (e) => {
-                    if(props.newMarker){
+                    if (props.newMarker) {
                         map.removeLayer(props.newMarker!);
                     }
                     props.funcSelectedMarker(propsM.marker);
                 },
             }}
         >
-        <Popup>
-            {propsM.marker.direction}
-        </Popup>
+            <Popup>
+                {propsM.marker.direction}
+            </Popup>
         </Marker>
         );
     }
@@ -97,9 +96,9 @@ function Map(props: MapProps): JSX.Element {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <MapContent />
-                    
+
                     {Array.isArray(props.markers) && props.markers.map((marker) =>
-                        <CustomMarker marker={marker}/>
+                        <CustomMarker marker={marker} />
                     )}
                 </MapContainer>
             </div>
