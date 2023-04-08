@@ -27,7 +27,7 @@ export async function getMarkersPOD(session: Session, url:string): Promise<Place
 
         let carpeta = ""; // busco la que almacena los lugares
         mypods.forEach((str) =>{
-            if(str.endsWith("/places/")){
+            if(str.endsWith("/places/")){ // EL NOMBRE DE LA CARPETA DEBE ESTAR ESPECIFICADO
                 carpeta = str;
             }
         })
