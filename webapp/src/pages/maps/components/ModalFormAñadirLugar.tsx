@@ -1,15 +1,25 @@
 import React, { useState } from "react";
 import Dropdown from "./Dropdown";
-import { Place} from "../../../shared/shareddtypes";
-import { addMarker } from "../../../api/api";
+import { Place } from "../../../shared/shareddtypes";
+import { addMarkerPOD } from "../../../pods/Markers";
+import { useSession } from "@inrupt/solid-ui-react";
+
+import Combobox from "react-widgets/Combobox";
+import "react-widgets/styles.css";
+
+
 
 type FormProps = {
+    newPlace: Place | undefined;
+    rechargeMarkers: () => void;
 }
 
 
-function ModalFormAñadirLugar(props:FormProps):JSX.Element{
+function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
-    const [newPlace, setNewPlace] = useState<Place>();
+    const { session } = useSession();
+    const { webId } = session.info;
+
     const [categorias, setCategorias] = useState<string[]>([]);
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
@@ -19,7 +29,20 @@ function ModalFormAñadirLugar(props:FormProps):JSX.Element{
         'Biblioteca',
         'Monumento',
         'Restaurante',
-      ];
+    ];
+
+    async function guardarEnPOD(place: Place) {
+
+        let uniqueId = Date.now().toString(36) + Math.random().toString(36).substring(2);
+
+        var blob = new Blob([JSON.stringify(place)], { type: "aplication/json" });
+        var file = new File([blob], uniqueId + ".info", { type: blob.type });
+
+        var mapUrl = webId!.split("/profile")[0] + "/map/";
+
+        console.log("Lugar añadido");
+        await addMarkerPOD(session, file.name, file, mapUrl)
+    }
 
     async function guardarDatos() {
         //abrir el modal
@@ -31,42 +54,58 @@ function ModalFormAñadirLugar(props:FormProps):JSX.Element{
                 modal!.style.display = "none";
             }
         }
-    
+
         let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
         let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
-        let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
+        //let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
+        let categoria =  (document.getElementById("categoria_input") as HTMLInputElement).value;
+        let fotos = (document.getElementById("fotos") as HTMLInputElement).value;
+        console.log(fotos);
         if (nombreLugar != "") {
             modal!.style.display = "none";
-            newPlace!.name = nombreLugar;
-            newPlace!.direction = dirLugar;
-            newPlace!.comments = "";
-            newPlace!.photoLink = [];
+            props.newPlace!.name = nombreLugar;
+            props.newPlace!.direction = dirLugar;
+            props.newPlace!.category=categoria;
+            props.newPlace!.comments = "";
+            props.newPlace!.photoLink = [];
         }
-        reiniciarModal();
-        await addMarker(newPlace!);
+        //reiniciarModal();
+        console.log(props.newPlace!);
+        await guardarEnPOD(props.newPlace!);
     }
 
+    /*
     function reiniciarModal() {
         (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
         (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
         (document.getElementById("comentLugar") as HTMLInputElement).value = "";
     }
-    
+    */
 
-    
+
+
     return (
         <>
-
-            
-            <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={guardarDatos}>
+            <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={(e) => {
+                e.preventDefault();
+                guardarDatos();
+                props.rechargeMarkers();
+            }}>
                 <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
                 <label>Dirección: <input id="dirLugar" type="text" required></input></label>
                 <label>Descripción: <input id="descrpLugar" type="text"></input></label>
-                <label>Categoría:<Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange}/> </label>
+                <label>Categoría:
+                    <Combobox
+                        defaultValue={categories[0]}
+                        data={categories}
+                        name="categoria"
+                        id="categoria"
+                    />
+                </label>
                 <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
                 <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-            </form>            
-        
+            </form>
+
         </>
     )
 

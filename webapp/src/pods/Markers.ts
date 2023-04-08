@@ -1,24 +1,20 @@
 import { Session } from "@inrupt/solid-client-authn-browser";
-import { getSolidDataset, saveFileInContainer } from "@inrupt/solid-client";
-import { MarkerDTO } from "../shared/shareddtypes";
-import { json } from "body-parser";
-import { writeFile } from 'fs/promises';
-import { getFile, isRawData, getContentType, getSourceUrl, isContainer, getResourceInfo } from "@inrupt/solid-client";
+import { saveFileInContainer } from "@inrupt/solid-client";
+import { getFile, isRawData, getContentType, getSourceUrl} from "@inrupt/solid-client";
 import { Place } from "../shared/shareddtypes";
-import { number } from "yargs";
 
-async function addMarkerPOD(session: Session, name: string, file: File, url: string) {
-
-  try {
-    await saveFileInContainer(url, file, {
-      slug: file.name,
-      contentType: file.type,
-      fetch: session.fetch
-    });
-  } catch (error) {
-    console.log(error);
+export async function addMarkerPOD(session: Session, name:string, file: File, url:string){
+    
+    try{
+        await saveFileInContainer(url, file,{
+            slug: file.name,
+            contentType: file.type,
+            fetch: session.fetch
+        });
+    }catch(error){
+        console.log(error);
+    }
   }
-}
 
 export async function getMarkersPOD(session: Session, url: string): Promise<Place[]> {
   let arraySol: Place[] = [];
@@ -87,5 +83,3 @@ async function readFileFromPod(fileURL: string, session: Session) {
     return null;
   }
 }
-
-export default { addMarkerPOD, getMarkersPOD };

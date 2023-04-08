@@ -12,11 +12,3 @@ export type Place = {
     photoLink:string[];
     category:string;
 }
-
-export type MarkerDTO = {
-    id:string;
-    name:string;
-    latitude:number;
-    longitude:number;
-    category:string;
-}

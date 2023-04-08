@@ -1,15 +1,13 @@
 import { useSession } from '@inrupt/solid-ui-react';
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-import { getMarkersPOD } from '../../pods/Markers';
-import Button from 'react-bootstrap/esm/Button';
-import { addMarker, getPlaces } from "../../api/api";
-import { Place, MarkerDTO } from "../../shared/shareddtypes";
+import { addMarkerPOD, getMarkersPOD } from '../../pods/Markers';
+import { Place} from "../../shared/shareddtypes";
 
 
 
@@ -36,6 +34,7 @@ function MapsPage(props: MapProps): JSX.Element {
 
     //De la session sacar el webId
     const { webId } = session.info;
+    console.log(webId);
 
    
 
@@ -44,6 +43,9 @@ function MapsPage(props: MapProps): JSX.Element {
         //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray: any;
         lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
+        setSelectedMarker(undefined);
+        setNewPlace(undefined);
+        setNewMarker(undefined);
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
@@ -54,17 +56,10 @@ function MapsPage(props: MapProps): JSX.Element {
         getMarkups();
     }
 
-    /**
-     * LLama a getMarkups para cargar los lugares desde la bd
-     */
-    useEffect(() => {
-        getMarkups();
-    }, []);
-
     const centro: [number, number] = [43.35485, -5.85123]
 
     const filterPlaces = (places: Place[]) => {
-        if (categorias.length == 0) {
+        if (categorias.length === 0) {
             return places;
         } else {
             return places.filter((place) => {
@@ -126,15 +121,6 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(p);
     }
 
-    /**
-     * Vacía los valores del modal
-     */
-    function reiniciarModal() {
-        (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
-        (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
-        (document.getElementById("comentLugar") as HTMLInputElement).value = "";
-    }
-
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
         setCategorias(selectedOption);
@@ -156,28 +142,6 @@ function MapsPage(props: MapProps): JSX.Element {
             categorias);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
-
-    /*
-    const { session } = useSession();
-    const { webId } = session.info;
-    console.log(webId);
-
-
-    const markerPOD:MarkerDTO = {
-        id:"1",
-        name:"prueba",
-        latitude: 43,
-        longitude:-5.3,
-    }
-
-    var blob = new Blob([JSON.stringify(marker)],{type:"aplication/json"})
-
-    var file = new File([blob], "marker.info", {type: blob.type});
-
-    const handleOnClick = async () =>{
-        await addMarkerPOD(session,file.name,file,webId!);
-    }
-    */
 
     return (
         <>
@@ -215,13 +179,13 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Información*/}
                         <div className="informacion">
-                            {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker && mostrarModal ?
+                            {selectedMarker && !newMarker ? <Info place={selectedMarker}/> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <ModalFormAñadirLugar />
+                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={()=>{getMarkups();}}/>
                                     </div>
                                 </div> : <></>}
                         </div>
