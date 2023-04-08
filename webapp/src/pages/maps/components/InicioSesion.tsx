@@ -49,7 +49,6 @@ function InicioSesion(props: inicioProps): JSX.Element {
     } else {
         return (
             <>
-                <p>{session.info.sessionId}</p>
                 <LogoutButton onError={console.log} >
                     <Button>Logout</Button>
                 </LogoutButton>
