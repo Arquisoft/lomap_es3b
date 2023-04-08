@@ -15,7 +15,7 @@ type MinimumDistanceSliderProps = {
 export default function MinimumDistanceSlider(props:MinimumDistanceSliderProps) {
 
   // Estado interno del componente para guardar el valor del slider
-  const [value2, setValue2] = React.useState([20, 37]);
+  const [value2, setValue2] = React.useState([0, 30]);
 
   // Función que se ejecuta cada vez que cambia el valor del slider
   const handleChange2 = (event:any, newValue:number|number[], activeThumb:any) => {

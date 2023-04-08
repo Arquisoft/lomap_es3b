@@ -39,9 +39,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         var file = new File([blob], uniqueId + ".info", { type: blob.type });
 
         var mapUrl = webId!.split("/profile")[0] + "/map/";
-
-        console.log("Lugar añadido");
+        
         await addMarkerPOD(session, file.name, file, mapUrl)
+        console.log("Lugar añadido");
     }
 
     async function guardarDatos() {
@@ -86,9 +86,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
     return (
         <>
-            <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={(e) => {
+            <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={async (e) => {
                 e.preventDefault();
-                guardarDatos();
+                await guardarDatos();
                 props.rechargeMarkers();
             }}>
                 <label>Nombre: <input id="nombreLugar" type="text" required></input></label>

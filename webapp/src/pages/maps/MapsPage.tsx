@@ -26,7 +26,7 @@ function MapsPage(props: MapProps): JSX.Element {
     const [categorias, setCategorias] = useState<string[]>([]);
     const [amigos, setAmigos] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
-    const [maxDistance, setMaxDistance] = useState<number>(0);
+    const [maxDistance, setMaxDistance] = useState<number>(30);
     const [onlyOnce, setOnlyOnce] = useState(true);
 
 
