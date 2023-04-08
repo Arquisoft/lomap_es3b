@@ -29,6 +29,7 @@
     "react-leaflet": "^4.2.1",
     "react-scripts": "5.0.1",
     "react-slider": "2.0.4",
+    "react-widgets": "^5.8.4",
     "reactstrap": "^9.1.6",
     "semantic-ui-react": "^2.1.4",
     "styled-components": "^5.3.6",

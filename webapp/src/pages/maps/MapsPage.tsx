@@ -1,12 +1,14 @@
 import { useSession } from '@inrupt/solid-ui-react';
 import { useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
+import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
 import { addMarkerPOD, getMarkersPOD } from '../../pods/Markers';
 import { Place} from "../../shared/shareddtypes";
+
 
 
 type MapProps = {
@@ -34,11 +36,16 @@ function MapsPage(props: MapProps): JSX.Element {
     const { webId } = session.info;
     console.log(webId);
 
+   
+
     const getMarkups = async () => {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray: any;
         lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
+        setSelectedMarker(undefined);
+        setNewPlace(undefined);
+        setNewMarker(undefined);
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
@@ -114,49 +121,6 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(p);
     }
 
-    /**
-     * Recoge el modal
-     * Coge de cada elemento del modal lo escrito por el usuario
-     * lo introduce en una constante Place (newPlace)
-     * reinicia el modal y lo manda a addMarker para guardarlo
-     */
-    async function guardarDatos() {
-        //abrir el modal
-        let modal = document.getElementById("myModal");
-        //cerrar el modal al hacer click en cruz
-        let botonCerrar = document.getElementById("closeModal");
-        if (botonCerrar !== undefined && botonCerrar !== null) {
-            botonCerrar.onclick = function () {
-                modal!.style.display = "none";
-            }
-        }
-
-        let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
-        let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
-        let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
-        let commentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
-        if (nombreLugar !== "") {
-            modal!.style.display = "none";
-            newPlace!.name = nombreLugar;
-            newPlace!.direction = dirLugar;
-            newPlace!.comments = commentLugar;
-            newPlace!.photoLink = [];
-        }
-        reiniciarModal();
-        //await addMarker(newPlace!);
-        await guardarEnPOD(newPlace!);
-    }
-
-
-    /**
-     * Vacía los valores del modal
-     */
-    function reiniciarModal() {
-        (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
-        (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
-        (document.getElementById("comentLugar") as HTMLInputElement).value = "";
-    }
-
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
         setCategorias(selectedOption);
@@ -175,39 +139,6 @@ function MapsPage(props: MapProps): JSX.Element {
         setMaxDistance(selectedMaxDistance);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
-
-    async function guardarEnPOD(place: Place) {
-
-        let uniqueId = Date.now().toString(36) + Math.random().toString(36).substring(2);
-
-        var blob = new Blob([JSON.stringify(place)], { type: "aplication/json" });
-        var file = new File([blob], uniqueId + ".info", { type: blob.type});
-
-        var mapUrl = webId!.split("/profile")[0] + "/map/";
-
-        await addMarkerPOD(session, file.name, file, mapUrl)
-
-    }
-
-    /*
-    
-
-
-    const markerPOD:MarkerDTO = {
-        id:"1",
-        name:"prueba",
-        latitude: 43,
-        longitude:-5.3,
-    }
-
-    var blob = new Blob([JSON.stringify(marker)],{type:"aplication/json"})
-
-    var file = new File([blob], "marker.info", {type: blob.type});
-
-    const handleOnClick = async () =>{
-        await addMarkerPOD(session,file.name,file,webId!);
-    }
-    */
 
     return (
         <>
@@ -250,13 +181,7 @@ function MapsPage(props: MapProps): JSX.Element {
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <form id="formAñadirLugar" onSubmit={guardarDatos}>
-                                            <p>Nombre: <input id="nombreLugar" type="text"></input></p>
-                                            <p>Dirección: <input id="dirLugar" type="text"></input></p>
-                                            <p>Descripción: <input id="descrpLugar" type="text"></input></p>
-                                            <p>Comentario: <input id="comentLugar" type="text"></input></p>
-                                            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-                                        </form>
+                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={()=>{getMarkups();}}/>
                                     </div>
                                 </div> : <></>}
                         </div>
