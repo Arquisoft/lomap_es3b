@@ -1,6 +1,7 @@
 import { useSession } from '@inrupt/solid-ui-react';
 import React, { useEffect, useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
+import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
@@ -9,6 +10,7 @@ import { getMarkersPOD } from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place, MarkerDTO } from "../../shared/shareddtypes";
+
 
 
 type MapProps = {
@@ -34,6 +36,8 @@ function MapsPage(props: MapProps): JSX.Element {
 
     //De la session sacar el webId
     const { webId } = session.info;
+
+   
 
     const getMarkups = async () => {
 
@@ -121,39 +125,6 @@ function MapsPage(props: MapProps): JSX.Element {
         }
         setNewPlace(p);
     }
-
-    /**
-     * Recoge el modal
-     * Coge de cada elemento del modal lo escrito por el usuario
-     * lo introduce en una constante Place (newPlace)
-     * reinicia el modal y lo manda a addMarker para guardarlo
-     */
-    async function guardarDatos() {
-        //abrir el modal
-        let modal = document.getElementById("myModal");
-        //cerrar el modal al hacer click en cruz
-        let botonCerrar = document.getElementById("closeModal");
-        if (botonCerrar != undefined) {
-            botonCerrar.onclick = function () {
-                modal!.style.display = "none";
-            }
-        }
-
-        let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
-        let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
-        let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
-        let commentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
-        if (nombreLugar != "") {
-            modal!.style.display = "none";
-            newPlace!.name = nombreLugar;
-            newPlace!.direction = dirLugar;
-            newPlace!.comments = commentLugar;
-            newPlace!.photoLink = [];
-        }
-        reiniciarModal();
-        await addMarker(newPlace!);
-    }
-
 
     /**
      * Vacía los valores del modal
@@ -246,13 +217,7 @@ function MapsPage(props: MapProps): JSX.Element {
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <form id="formAñadirLugar" onSubmit={guardarDatos}>
-                                            <p>Nombre: <input id="nombreLugar" type="text"></input></p>
-                                            <p>Dirección: <input id="dirLugar" type="text"></input></p>
-                                            <p>Descripción: <input id="descrpLugar" type="text"></input></p>
-                                            <p>Comentario: <input id="comentLugar" type="text"></input></p>
-                                            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-                                        </form>
+                                        <ModalFormAñadirLugar />
                                     </div>
                                 </div> : <></>}
                         </div>
