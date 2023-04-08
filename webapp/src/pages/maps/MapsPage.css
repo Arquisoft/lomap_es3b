@@ -271,6 +271,15 @@ html{
     margin: 0px;
 }
 
+.filtros > .menu > button {
+    background-color: var(--orange200);
+    border-radius: 0px 8px 8px 0px;
+    border: 0px;
+    color: white;
+    padding: 0px;
+    margin-right: 4px;
+}
+
 .left {
     display:flex;
     flex-direction: column;
