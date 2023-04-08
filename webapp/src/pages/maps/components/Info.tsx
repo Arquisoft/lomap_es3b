@@ -71,6 +71,10 @@ function ContenidoInformacion(place:Place):JSX.Element {
             </div>
             <div className="body">
                 <h3>{place.name}</h3>
+                <p><b>Direccion:</b>{place.direction}</p>
+                <p><b>Categoría:</b>{place.category}</p>
+                <p><b>Latitud:</b>{place.latitude}</p>
+                <p><b>Longitud:</b>{place.longitude}</p>
             </div>
         </>
     );
