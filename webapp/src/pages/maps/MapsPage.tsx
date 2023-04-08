@@ -1,14 +1,16 @@
 import { useSession } from '@inrupt/solid-ui-react';
 import React, { useEffect, useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
+import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-import addMarkerPOD from '../../pods/Markers';
+import { getMarkersPOD } from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place, MarkerDTO } from "../../shared/shareddtypes";
+
 
 
 type MapProps = {
@@ -27,16 +29,34 @@ function MapsPage(props: MapProps): JSX.Element {
     const [amigos, setAmigos] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(0);
+    const [onlyOnce, setOnlyOnce] = useState(true);
+
+
+    const { session } = useSession();
+
+    //De la session sacar el webId
+    const { webId } = session.info;
+
+   
 
     const getMarkups = async () => {
-        //Sacar la session
-        //De la session sacar el webId
+
         //Asignar a un array el resultado de llamar a getMarkersPOD()
-        let lugaresArray = await getPlaces();
+        let lugaresArray: any;
+        lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
 
+    if (session.info.isLoggedIn && onlyOnce) {
+        setOnlyOnce(false);
+        console.log(webId);
+        getMarkups();
+    }
+
+    /**
+     * LLama a getMarkups para cargar los lugares desde la bd
+     */
     useEffect(() => {
         getMarkups();
     }, []);
@@ -55,15 +75,12 @@ function MapsPage(props: MapProps): JSX.Element {
     }
 
     function filterByDistance(center: [number, number], radiusInner: number, radiusOuter: number, places: Place[]): Place[] {
-        
-        console.log(places);
         const [centerLat, centerLng] = center;
         const result = places.filter(place => {
             const { latitude, longitude } = place;
             const distance = calculateDistance(centerLat, centerLng, latitude, longitude);
             return distance >= radiusInner && distance <= radiusOuter;
         });
-        console.log(result);
         return result;
     }
 
@@ -90,6 +107,9 @@ function MapsPage(props: MapProps): JSX.Element {
         setSelectedMarker(p);
     }
 
+    /**
+     * Pone el marcador cuando se hace click en el mapa para mostrar
+     */
     function handleNewMarkerOnClick(m: L.Marker): void {
         setSelectedMarker(undefined);
         setNewMarker(m);
@@ -106,33 +126,9 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(p);
     }
 
-    async function guardarDatos() {
-        //abrir el modal
-        let modal = document.getElementById("myModal");
-        //cerrar el modal al hacer click en cruz
-        let botonCerrar = document.getElementById("closeModal");
-        if (botonCerrar != undefined) {
-            botonCerrar.onclick = function () {
-                modal!.style.display = "none";
-            }
-        }
-
-        let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
-        let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
-        let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
-        let commentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
-        if (nombreLugar != "") {
-            modal!.style.display = "none";
-            newPlace!.name = nombreLugar;
-            newPlace!.direction = dirLugar;
-            newPlace!.comments = commentLugar;
-            newPlace!.photoLink = [];
-        }
-        reiniciarModal();
-        await addMarker(newPlace!);
-    }
-
-
+    /**
+     * Vacía los valores del modal
+     */
     function reiniciarModal() {
         (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
         (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
@@ -143,12 +139,12 @@ function MapsPage(props: MapProps): JSX.Element {
         console.log(`Categoría seleccionada: ${selectedOption}`);
         setCategorias(selectedOption);
     };
-      
+
     const handleAmigoChange = (selectedOption: string[]) => {
         console.log(`Amigo seleccionado: ${selectedOption}`);
         setAmigos(selectedOption);
     };
-      
+
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
@@ -211,9 +207,9 @@ function MapsPage(props: MapProps): JSX.Element {
                         {/*Mapa*/}
                         <div className="mapa">
                             <Map markers={filteredPlaces!}
-                            funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }} 
-                            funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }} 
-                            newMarker={newMarker} 
+                                funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); }}
+                                funcSelectedMarker={(m: Place) => { handleMarkerOnClick(m); }}
+                                newMarker={newMarker}
                             />
                         </div>
 
@@ -222,16 +218,10 @@ function MapsPage(props: MapProps): JSX.Element {
                             {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
-                                        <button id="closeModal" type="button" className="close" onClick={()=>setMostrarModal(false)} aria-label="Close">
+                                        <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <form id="formAñadirLugar" onSubmit={guardarDatos}>
-                                            <p>Nombre: <input id="nombreLugar" type="text"></input></p>
-                                            <p>Dirección: <input id="dirLugar" type="text"></input></p>
-                                            <p>Descripción: <input id="descrpLugar" type="text"></input></p>
-                                            <p>Comentario: <input id="comentLugar" type="text"></input></p>
-                                            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-                                        </form>
+                                        <ModalFormAñadirLugar />
                                     </div>
                                 </div> : <></>}
                         </div>

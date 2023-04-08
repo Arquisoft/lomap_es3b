@@ -26,6 +26,11 @@ export async function getPlaces():Promise<Place[]>{
     return response.json()
 }
 
+/**
+ * Añade a la base de datos el Place pasado
+ * Usando la direccion http://localhost:5000/api/db/add
+ * Lo pasa a Json y lo manda
+ */
 export async function addMarker(marker:Place):Promise<boolean>{
   const apiEndPoint= process.env.REACT_APP_API_URI || 'http://localhost:5000/api'
   console.log("Preparado para guardar lugar en api.ts de webapp");
