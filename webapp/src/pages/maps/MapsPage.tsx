@@ -143,6 +143,9 @@ function MapsPage(props: MapProps): JSX.Element {
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
 
+
+    console.log(selectedMarker);
+    
     return (
         <>
             <div className="mapspage">
