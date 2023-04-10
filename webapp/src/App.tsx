@@ -1,13 +1,16 @@
-import React from 'react';
+
+import {SessionProvider} from '@inrupt/solid-ui-react';
 import './App.css';
 import MapsPage from './pages/maps/MapsPage';
 
 function App(): JSX.Element {
 
   return (
-    <>
-      <MapsPage/>
-    </>
+    <SessionProvider sessionId="login-prueba" restorePreviousSession={true}>
+      <>
+        <MapsPage />
+      </>
+    </SessionProvider>
   );
 }
 

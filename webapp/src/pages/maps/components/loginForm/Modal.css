@@ -1,0 +1,36 @@
+.modal {
+    display:flex;
+    flex-direction: column;
+    position:fixed;
+    z-index: 2000;
+    left: auto;
+    top: 65px;
+    bottom: auto;
+    right: 10px;
+    width: 280px;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid var(--orange200); 
+    background-color: white;
+}
+
+.modal > button{
+  margin:8px 8px 5px auto;
+}
+
+.modal-content{
+  display:flex;
+  flex-direction: column;
+  margin: 8px;
+}
+
+.modal-content >label{
+  width: 100%;
+}
+
+.modal-content >input{
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+  

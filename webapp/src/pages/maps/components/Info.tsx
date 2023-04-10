@@ -1,10 +1,11 @@
 import React,{useState} from 'react';
 import Tab from './Tab';
 import Comment,{Comentario} from './Comment';
+import { Place } from '../../../shared/shareddtypes';
 
 
 type InfoProps = {
-
+    place:Place;
 };
 
 enum TabEnum { 
@@ -25,11 +26,11 @@ function Info(props: InfoProps): JSX.Element{
     switch(tab){
         //Contenido si el valor seleccionado es Información
         case TabEnum.Información:
-            contenido = ContenidoInformacion();
+            contenido = ContenidoInformacion(props.place);
             break;
         //Contenido si el valor seleccionado es Imágenes
         case TabEnum.Imágenes:
-            contenido = ContenidoImagenes();
+            contenido = ContenidoImagenes(props.place.photoLink);
             break;
         //Contenido si el valor seleccionado es Comentarios
         case TabEnum.Comentarios:
@@ -62,27 +63,32 @@ function Info(props: InfoProps): JSX.Element{
     );
 }
 
-function ContenidoInformacion():JSX.Element {
+function ContenidoInformacion(place:Place):JSX.Element {
     return (
         <>
             <div className="header">
                 <p>Información</p>
             </div>
             <div className="body">
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+                <h3>{place.name}</h3>
+                <p><b>Direccion:</b>{place.direction}</p>
+                <p><b>Categoría:</b>{place.category}</p>
+                <p><b>Latitud:</b>{place.latitude}</p>
+                <p><b>Longitud:</b>{place.longitude}</p>
             </div>
         </>
     );
 }
 
-function ContenidoImagenes():JSX.Element {
+function ContenidoImagenes(imgs:string[]):JSX.Element {
     return (
         <>
             <div className="header">
                 <p>Imágenes</p>
             </div>
             <div className="body">
-                <img src={"http://placekitten.com/300/300"} alt="Imagen Aleatoria" />
+                {imgs.map((item)=><img src={item} alt="Imagen Aleatoria" />)}
+                
             </div>            
         </>
     );

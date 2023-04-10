@@ -4,9 +4,11 @@ export type User = {
 }
 
 export type Place = {
+    name:string;
     direction:string;
     latitude:number;
     longitude:number;
     comments:string;
     photoLink:string[];
+    category:string;
 }
