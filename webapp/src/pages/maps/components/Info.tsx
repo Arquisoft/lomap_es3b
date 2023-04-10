@@ -30,7 +30,7 @@ function Info(props: InfoProps): JSX.Element{
             break;
         //Contenido si el valor seleccionado es Imágenes
         case TabEnum.Imágenes:
-            contenido = ContenidoImagenes();
+            contenido = ContenidoImagenes(props.place.photoLink);
             break;
         //Contenido si el valor seleccionado es Comentarios
         case TabEnum.Comentarios:
@@ -80,14 +80,15 @@ function ContenidoInformacion(place:Place):JSX.Element {
     );
 }
 
-function ContenidoImagenes():JSX.Element {
+function ContenidoImagenes(imgs:string[]):JSX.Element {
     return (
         <>
             <div className="header">
                 <p>Imágenes</p>
             </div>
             <div className="body">
-                <img src={"http://placekitten.com/300/300"} alt="Imagen Aleatoria" />
+                {imgs.map((item)=><img src={item} alt="Imagen Aleatoria" />)}
+                
             </div>            
         </>
     );
