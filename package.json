@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@inrupt/solid-client": "^1.27.0",
+    "cloudinary": "^1.35.0"
+  }
+}
