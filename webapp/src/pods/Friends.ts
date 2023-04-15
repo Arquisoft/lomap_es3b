@@ -7,40 +7,39 @@ import {
   getDecimal,addIri,setThing,saveSolidDatasetAt
   
 } from "@inrupt/solid-client";
-
 import { FOAF } from "@inrupt/vocab-common-rdf";
 
 
-async function getFriends(session: Session) {
-  // Obtener el perfil del usuario actual
+/**
+ * Devuelve un listado de amigos a partir de la session que esta iniciada
+ */
+export async function getFriends(session: Session): Promise<string[]> {
+  try {
+    // Obtener el perfil del usuario actual
+    const profileDataset = await getSolidDataset(session.info.webId!, {
+      fetch: session.fetch,
+    });
 
-  const profileDataset = await getSolidDataset(session.info.webId!, {
-    fetch: session.fetch,
-  });
+    if (!profileDataset) {
+      throw new Error("No se pudo obtener el recurso 'profile'");
+    }
 
-  if (!profileDataset) {
-    throw new Error("No se pudo obtener el recurso 'profile'");
+    const profileThing = getThing(profileDataset, session.info.webId!);
+
+    if (!profileThing) {
+      throw new Error("No se encontró el perfil de usuario en el recurso 'profile'");
+    }
+
+    const listFriends = getUrlAll(profileThing, FOAF.knows);
+
+    return listFriends;
+  } catch (error) {
+    console.error("Ocurrió un error al obtener la lista de amigos:", error);
+    throw error;
   }
-
-  // Obtener el enlace al archivo de control de acceso del perfil
-  const aclUrl = getUrlAll(
-    getThing(profileDataset, session.info.webId!),
-    "http://www.w3.org/ns/solid/acl#control"
-  )[0];
-
-  // Obtener el archivo de control de acceso
-  const aclDataset = await getSolidDataset(aclUrl, { fetch: session.fetch });
-
-  // Obtener la lista de amigos del archivo de control de acceso
-  const friendsThing = getThing(aclDataset, aclUrl + "#agentList");
-  const friends = getUrlAll(friendsThing!, "http://www.w3.org/ns/solid/acl#agent").map((friendUrl) =>
-    friendUrl.replace("solid://", "https://")
-  );
-
-  return friends;
 }
 
-async function getFriendData(session: Session, friendWebId: string) {
+export async function getFriendData(session: Session, friendWebId: string) {
   // Obtener el dataset del perfil del amigo
   const friendDataset = await getSolidDataset(friendWebId, { fetch: session.fetch });
 
@@ -67,7 +66,7 @@ async function getFriendData(session: Session, friendWebId: string) {
 }
 
 //Function that adds a new friend to the user's profile
-async function addNewFriend(webId: string, session: Session, friendWebId: string): Promise<void> {
+export async function addNewFriend(webId: string, session: Session, friendWebId: string): Promise<void> {
     // Obtener el conjunto de datos Solid del perfil
     const profileDataset = await getSolidDataset(webId);
 
@@ -83,7 +82,7 @@ async function addNewFriend(webId: string, session: Session, friendWebId: string
 }
 
 // Ejemplo de uso: NONONOONONONNONONONONO
-async function main() {
+async function ejemploDeUso() {
   const session = new Session();
   //await session.login();
 
@@ -97,4 +96,4 @@ async function main() {
   await session.logout();
 }
 
-main();
+export default {getFriends, addNewFriend, getFriendData};
