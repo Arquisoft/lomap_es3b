@@ -66,6 +66,7 @@ async function readFileFromPod(fileURL: string, session: Session) {
     let cate = fileInfo.category;
     let com = fileInfo.comments;
     let photoLink = fileInfo.photoLink;
+    let rat = fileInfo.rating;
 
     let p: Place = {
       name: n,
@@ -74,7 +75,8 @@ async function readFileFromPod(fileURL: string, session: Session) {
       longitude: lon,
       comments: com,
       photoLink: photoLink,
-      category: cate
+      category: cate,
+      rating: rat
     }
 
     console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);

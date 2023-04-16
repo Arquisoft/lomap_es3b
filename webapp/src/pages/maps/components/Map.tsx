@@ -31,7 +31,8 @@ function Map(props: MapProps): JSX.Element {
         longitude: -5.9247,
         comments: "",
         photoLink: [],
-        category: "Restaurante"
+        category: "Restaurante",
+        rating: 5.0
     }
 
     const MapContent = () => {

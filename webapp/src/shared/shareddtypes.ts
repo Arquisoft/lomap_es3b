@@ -11,6 +11,7 @@ export type Place = {
     comments:string;
     photoLink:string[];
     category:string;
+    rating: number;
 }
 
 export type MarkerDTO = {

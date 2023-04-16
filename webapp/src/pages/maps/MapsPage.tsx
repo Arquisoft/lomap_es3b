@@ -9,6 +9,8 @@ import { getMarkersPOD } from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place, MarkerDTO } from "../../shared/shareddtypes";
+import StarRatings from 'react-star-ratings';
+
 
 
 type MapProps = {
@@ -28,8 +30,6 @@ function MapsPage(props: MapProps): JSX.Element {
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(0);
     const [onlyOnce, setOnlyOnce] = useState(true);
-
-
     const { session } = useSession();
 
     //De la session sacar el webId
@@ -117,7 +117,8 @@ function MapsPage(props: MapProps): JSX.Element {
             longitude: m.getLatLng().lng,
             comments: "",
             photoLink: [],
-            category: ""
+            category: "",
+            rating: 0.0
         }
         setNewPlace(p);
     }
@@ -143,12 +144,15 @@ function MapsPage(props: MapProps): JSX.Element {
         let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
         let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
         let commentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
+        let puntuacion = parseInt((document.getElementById("rating") as HTMLInputElement).value, 10);
+
         if (nombreLugar != "") {
             modal!.style.display = "none";
             newPlace!.name = nombreLugar;
             newPlace!.direction = dirLugar;
             newPlace!.comments = commentLugar;
             newPlace!.photoLink = [];
+            newPlace!.rating = puntuacion;
         }
         reiniciarModal();
         await addMarker(newPlace!);
@@ -205,6 +209,9 @@ function MapsPage(props: MapProps): JSX.Element {
     }
     */
 
+    const [rating, setRating] = useState(0);
+
+
     return (
         <>
             <div className="mapspage">
@@ -251,7 +258,20 @@ function MapsPage(props: MapProps): JSX.Element {
                                             <p>Dirección: <input id="dirLugar" type="text"></input></p>
                                             <p>Descripción: <input id="descrpLugar" type="text"></input></p>
                                             <p>Comentario: <input id="comentLugar" type="text"></input></p>
-                                            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+                                            <StarRatings
+                                                rating={rating}
+                                                name="rating"
+                                                starRatedColor="orange"
+                                                starHoverColor="orange"
+                                                changeRating={setRating}
+                                                numberOfStars={5}
+                                                starDimension="30px"
+                                                starSpacing="5px"
+                                            />
+                                            <div>
+                                                <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+                                            </div>
+                                            
                                         </form>
                                     </div>
                                 </div> : <></>}

@@ -1,6 +1,12 @@
 {
   "dependencies": {
     "@inrupt/solid-client": "^1.27.0",
-    "cloudinary": "^1.35.0"
+    "cloudinary": "^1.35.0",
+    "ngx-bar-rating": "^5.0.0",
+    "react-rating-stars-component": "^2.2.0",
+    "react-star-ratings": "^2.3.0"
+  },
+  "devDependencies": {
+    "@types/react-star-ratings": "^2.3.0"
   }
 }

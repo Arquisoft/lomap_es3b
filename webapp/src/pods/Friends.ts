@@ -39,6 +39,7 @@ export async function getFriends(session: Session): Promise<string[]> {
   }
 }
 
+/** 
 export async function getFriendData(session: Session, friendWebId: string) {
   // Obtener el dataset del perfil del amigo
   const friendDataset = await getSolidDataset(friendWebId, { fetch: session.fetch });
@@ -64,6 +65,7 @@ export async function getFriendData(session: Session, friendWebId: string) {
 
   return places;
 }
+*/
 
 //Function that adds a new friend to the user's profile
 export async function addNewFriend(webId: string, session: Session, friendWebId: string): Promise<void> {
@@ -89,11 +91,11 @@ async function ejemploDeUso() {
   const friends = await getFriends(session);
 
   for (const friend of friends) {
-    const friendData = await getFriendData(session, friend);
-    console.log(`Lugares de ${friend}:`, friendData);
+    //const friendData = await getFriendData(session, friend);
+    //console.log(`Lugares de ${friend}:`, friendData);
   }
 
   await session.logout();
 }
 
-export default {getFriends, addNewFriend, getFriendData};
+export default {getFriends, addNewFriend};
