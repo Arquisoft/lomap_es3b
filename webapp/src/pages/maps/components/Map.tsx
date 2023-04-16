@@ -14,8 +14,8 @@ type MapProps = {
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
-    iconSize: new L.Point(50, 50),
-    iconAnchor: [25, 50],
+    iconSize: new L.Point(30, 30),
+    iconAnchor: [15, 30],
     className: 'leaflet-div-icon'
 });
 
@@ -27,13 +27,9 @@ function Map(props: MapProps): JSX.Element {
 
         const mapa = useMapEvents({
             click(e) {
-                if (props.newMarker) {
-                    mapa.removeLayer(props.newMarker);
-                }
                 var marker = new L.Marker([e.latlng.lat, e.latlng.lng]);
                 props.funcNewMarker(marker);
                 marker.setIcon(icon);
-                mapa.addLayer(marker);
             }
         });
 
@@ -59,16 +55,24 @@ function Map(props: MapProps): JSX.Element {
             case "Monumento":
                 icono = new L.Icon({
                     iconUrl: require('../../../assets/icono-monumento.png'),
-                    iconSize: new L.Point(50, 50),
-                    iconAnchor: [25, 25],
+                    iconSize: new L.Point(30, 30),
+                    iconAnchor: [15, 15],
                     className: 'leaflet-div-icon'
                 });
                 break;
             case "Biblioteca":
                 icono = new L.Icon({
                     iconUrl: require('../../../assets/icono-biblioteca.png'),
-                    iconSize: new L.Point(50, 50),
-                    iconAnchor: [25, 25],
+                    iconSize: new L.Point(30, 30),
+                    iconAnchor: [15, 15],
+                    className: 'leaflet-div-icon'
+                });
+                break;
+            case "Restaurante":
+                icono = new L.Icon({
+                    iconUrl: require('../../../assets/icono-restaurante.png'),
+                    iconSize: new L.Point(30, 30),
+                    iconAnchor: [15, 15],
                     className: 'leaflet-div-icon'
                 });
                 break;

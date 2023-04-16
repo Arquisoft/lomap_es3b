@@ -1,11 +1,10 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSession } from '@inrupt/solid-ui-react';
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Modal from './loginForm/Modal';
-import { LoginButton, SessionProvider, LogoutButton } from "@inrupt/solid-ui-react";
+import { LoginButton, LogoutButton } from "@inrupt/solid-ui-react";
 
 type inicioProps = {
 
@@ -14,8 +13,6 @@ type inicioProps = {
 function InicioSesion(props: inicioProps): JSX.Element {
 
     const { session } = useSession();
-
-    const [idp, setIdp] = useState("https://inrupt.net");
     const [showModal, setShowModal] = useState(false);
 
     function handleOpenModal() {
@@ -33,14 +30,19 @@ function InicioSesion(props: inicioProps): JSX.Element {
                 <Button onClick={handleOpenModal}>Log In</Button>
                 {showModal && (
                     <Modal handleClose={handleCloseModal}>
-                        <Form.Label htmlFor="usuario">Usuario</Form.Label>
-                        <Form.Control type="text" id="usuario" onChange={(e)=>setIdp(e.target.value)}></Form.Control>
                         <LoginButton
-                            oidcIssuer={idp}
+                            oidcIssuer={"https://inrupt.net"}
                             redirectUrl={window.location.href}
                             onError={console.log}
                         >
-                            <Button > Aceptar </Button>
+                            <Button > Login with Inrupt </Button>
+                        </LoginButton>
+                        <LoginButton
+                            oidcIssuer={"https://solidcommunity.net/"}
+                            redirectUrl={window.location.href}
+                            onError={console.log}
+                        >
+                            <Button > Login with SolidCommunity </Button>
                         </LoginButton>
                     </Modal>
                 )}

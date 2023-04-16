@@ -1,16 +1,13 @@
-import React, { useState } from "react";
-import Dropdown from "./Dropdown";
-import { Place } from "../../../shared/shareddtypes";
-import { addMarkerPOD } from "../../../pods/Markers";
+import { Place, MapType } from "../../../shared/shareddtypes";
+import { addMapPOD } from "../../../pods/Markers";
 import { useSession } from "@inrupt/solid-ui-react";
 
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
-import { uploadPhoto } from "../../../cloudinary/PhotoUpload";
-
 
 
 type FormProps = {
+    mapas: MapType[];
     newPlace: Place | undefined;
     rechargeMarkers: () => void;
 }
@@ -21,13 +18,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
     const { session } = useSession();
     const { webId } = session.info;
 
-    const [categorias, setCategorias] = useState<string[]>([]);
-    const handleCategoriaChange = (selectedOption: string[]) => {
-        console.log(`Categoría seleccionada: ${selectedOption}`);
-        setCategorias(selectedOption);
-    };
-
-    let urlImagenes:string[] = [];
+    let urlImagenes: string[] = [];
 
     const categories = [
         'Biblioteca',
@@ -35,17 +26,25 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         'Restaurante',
     ];
 
-    async function guardarEnPOD(place: Place) {
+    const maps = [
+        'MapaBase',
+        'MapaNuevo'
+    ]
+
+    async function guardarEnPOD(place: Place, mapa: MapType, mapName:string) {
 
         let uniqueId = Date.now().toString(36) + Math.random().toString(36).substring(2);
 
-        var blob = new Blob([JSON.stringify(place)], { type: "aplication/json" });
-        var file = new File([blob], uniqueId + ".info", { type: blob.type });
+        mapa.id = mapName;
+        mapa.map.push({id: uniqueId, place: place})
+
+        var blob = new Blob([JSON.stringify(mapa)], { type: "aplication/json" });
+        var file = new File([blob], mapName + ".info", { type: blob.type });
 
         var mapUrl = webId!.split("/profile")[0] + "/map/";
 
-        await addMarkerPOD(session, file.name, file, mapUrl)
-        console.log("Lugar añadido");
+        await addMapPOD(session, mapName, file, mapUrl)
+        console.log("Mapa actualizado");
     }
 
     async function guardarDatos() {
@@ -59,11 +58,17 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
             }
         }
 
+        //Recuperamos los datos del formulario
+
         let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
         let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
         //let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
         let categoria = (document.getElementById("categoria_input") as HTMLInputElement).value;
+        let mapaSelected = (document.getElementById("mapa_input") as HTMLInputElement).value
         let fotos = (document.getElementById("fotos") as HTMLInputElement).files;
+            
+        //Añadimos las fotos al repositorio de cloudinary
+
         if (fotos) {
             const formData = new FormData();
             for (let i = 0; i < fotos!.length; i++) {
@@ -81,56 +86,61 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                     .then((data) => {
                         urlImagenes.push(JSON.parse(data)["url"]);
                     });
+            }
+        }
+
+        if (nombreLugar !== "") {
+            modal!.style.display = "none";
+            props.newPlace!.name = nombreLugar;
+            props.newPlace!.direction = dirLugar;
+            props.newPlace!.category = categoria;
+            props.newPlace!.comments = "";
+            props.newPlace!.photoLink = urlImagenes;
+        }
+
+        var mapa = props.mapas.find((m) => m.id === mapaSelected);
+        if (mapa !== undefined && mapa !== null) {
+            await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+        }else{
+            mapa = {id:mapaSelected, map:[]}
+            await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
         }
     }
 
-    if (nombreLugar !== "") {
-        modal!.style.display = "none";
-        props.newPlace!.name = nombreLugar;
-        props.newPlace!.direction = dirLugar;
-        props.newPlace!.category = categoria;
-        props.newPlace!.comments = "";
-        props.newPlace!.photoLink = urlImagenes;
-    }
-    //reiniciarModal();
-    console.log(props.newPlace!);
-    await guardarEnPOD(props.newPlace!);
-}
-
-/*
-function reiniciarModal() {
-    (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
-    (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
-    (document.getElementById("comentLugar") as HTMLInputElement).value = "";
-}
-*/
 
 
+    return (
+        <>
+            <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={async (e) => {
+                e.preventDefault();
+                await guardarDatos();
+                props.rechargeMarkers();
+            }}>
+                <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
+                <label>Dirección: <input id="dirLugar" type="text" required></input></label>
+                <label>Descripción: <input id="descrpLugar" type="text"></input></label>
+                <label>Categoría:
+                    <Combobox
+                        defaultValue={categories[0]}
+                        data={categories}
+                        name="categoria"
+                        id="categoria"
+                    />
+                </label>
+                <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
+                <label>Mapa:
+                    <Combobox
+                        defaultValue={maps[0]}
+                        data={maps}
+                        name="mapa"
+                        id="mapa"
+                    />
+                </label>
+                <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+            </form>
 
-return (
-    <>
-        <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={async (e) => {
-            e.preventDefault();
-            await guardarDatos();
-            props.rechargeMarkers();
-        }}>
-            <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
-            <label>Dirección: <input id="dirLugar" type="text" required></input></label>
-            <label>Descripción: <input id="descrpLugar" type="text"></input></label>
-            <label>Categoría:
-                <Combobox
-                    defaultValue={categories[0]}
-                    data={categories}
-                    name="categoria"
-                    id="categoria"
-                />
-            </label>
-            <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
-            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-        </form>
-
-    </>
-)
+        </>
+    )
 
 }
 

@@ -6,8 +6,8 @@ import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-import { addMarkerPOD, getMarkersPOD } from '../../pods/Markers';
-import { Place} from "../../shared/shareddtypes";
+import { getMapsPOD } from '../../pods/Markers';
+import { Place, MapType} from "../../shared/shareddtypes";
 
 
 
@@ -18,6 +18,7 @@ type MapProps = {
 function MapsPage(props: MapProps): JSX.Element {
 
     const [markers, setMarkers] = useState<Array<Place>>();
+    const [maps, setMaps] = useState<Array<MapType>>([]);
     const [selectedMarker, setSelectedMarker] = useState<Place>();
     const [newMarker, setNewMarker] = useState<L.Marker>();
     const [newPlace, setNewPlace] = useState<Place>();
@@ -36,18 +37,32 @@ function MapsPage(props: MapProps): JSX.Element {
     const { webId } = session.info;
     console.log(webId);
 
-   
-
     const getMarkups = async () => {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
-        let lugaresArray: any;
-        lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
+        
         setSelectedMarker(undefined);
         setNewPlace(undefined);
         setNewMarker(undefined);
-        setMarkers(lugaresArray);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
+
+        let mapas: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0]+"/map/");
+
+        if(mapas.length === 0){
+            return;
+        }
+
+        setMaps(mapas);
+
+        let places: Place[] = [];
+
+        mapas.map((mapa)=>{
+            mapa.map.map((lugar)=>{
+                places.push(lugar.place);
+            })
+        })
+
+        setMarkers(places);
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(places)));
     }
 
     if (session.info.isLoggedIn && onlyOnce) {
@@ -188,7 +203,7 @@ function MapsPage(props: MapProps): JSX.Element {
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={()=>{getMarkups();}}/>
+                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={() => { getMarkups(); } } mapas={maps!}/>
                                     </div>
                                 </div> : <></>}
                         </div>

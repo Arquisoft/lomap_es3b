@@ -12,3 +12,13 @@ export type Place = {
     photoLink:string[];
     category:string;
 }
+
+export type PlacePOD = {
+    id: string;
+    place: Place;
+}
+
+export type MapType = {
+    id: string;
+    map: PlacePOD[];
+}
