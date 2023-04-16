@@ -154,6 +154,7 @@ function MapsPage(props: MapProps): JSX.Element {
             newPlace!.photoLink = [];
             newPlace!.rating = puntuacion;
         }
+        
         reiniciarModal();
         await addMarker(newPlace!);
     }
