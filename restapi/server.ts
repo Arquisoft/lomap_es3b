@@ -37,7 +37,8 @@ const lugarPrueba: Place = {
     longitude: 16.45876,
     comments:"Buen sitio para vivir",
     photoLink:[],
-    category:"Monumento"
+    category:"Monumento",
+    rating:3.0
 }
 //connectToDatabase();
 // guardarLugar(lugarPrueba);

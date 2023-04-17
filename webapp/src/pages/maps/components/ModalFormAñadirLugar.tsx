@@ -7,6 +7,7 @@ import { useSession } from "@inrupt/solid-ui-react";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import { uploadPhoto } from "../../../cloudinary/PhotoUpload";
+import StarRatings from 'react-star-ratings';
 
 
 
@@ -20,6 +21,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
     const { session } = useSession();
     const { webId } = session.info;
+    const [rating, setRating] = useState(0);
 
     const [categorias, setCategorias] = useState<string[]>([]);
     const handleCategoriaChange = (selectedOption: string[]) => {
@@ -27,7 +29,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         setCategorias(selectedOption);
     };
 
-    let urlImagenes:string[] = [];
+    let urlImagenes: string[] = [];
 
     const categories = [
         'Biblioteca',
@@ -64,6 +66,8 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         //let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
         let categoria = (document.getElementById("categoria_input") as HTMLInputElement).value;
         let fotos = (document.getElementById("fotos") as HTMLInputElement).files;
+        let puntuacion = parseInt((document.getElementById("rating") as HTMLInputElement).value, 10);
+
         if (fotos) {
             const formData = new FormData();
             for (let i = 0; i < fotos!.length; i++) {
@@ -81,56 +85,68 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                     .then((data) => {
                         urlImagenes.push(JSON.parse(data)["url"]);
                     });
+            }
         }
+
+        if (nombreLugar !== "") {
+            modal!.style.display = "none";
+            props.newPlace!.name = nombreLugar;
+            props.newPlace!.direction = dirLugar;
+            props.newPlace!.category = categoria;
+            props.newPlace!.comments = "";
+            props.newPlace!.photoLink = urlImagenes;
+            props.newPlace!.rating = puntuacion;
+
+        }
+        //reiniciarModal();
+        console.log(props.newPlace!);
+        await guardarEnPOD(props.newPlace!);
     }
 
-    if (nombreLugar !== "") {
-        modal!.style.display = "none";
-        props.newPlace!.name = nombreLugar;
-        props.newPlace!.direction = dirLugar;
-        props.newPlace!.category = categoria;
-        props.newPlace!.comments = "";
-        props.newPlace!.photoLink = urlImagenes;
+    /*
+    function reiniciarModal() {
+        (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
+        (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
+        (document.getElementById("comentLugar") as HTMLInputElement).value = "";
     }
-    //reiniciarModal();
-    console.log(props.newPlace!);
-    await guardarEnPOD(props.newPlace!);
-}
-
-/*
-function reiniciarModal() {
-    (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
-    (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
-    (document.getElementById("comentLugar") as HTMLInputElement).value = "";
-}
-*/
+    */
 
 
 
-return (
-    <>
-        <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={async (e) => {
-            e.preventDefault();
-            await guardarDatos();
-            props.rechargeMarkers();
-        }}>
-            <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
-            <label>Dirección: <input id="dirLugar" type="text" required></input></label>
-            <label>Descripción: <input id="descrpLugar" type="text"></input></label>
-            <label>Categoría:
-                <Combobox
-                    defaultValue={categories[0]}
-                    data={categories}
-                    name="categoria"
-                    id="categoria"
+    return (
+        <>
+            <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={async (e) => {
+                e.preventDefault();
+                await guardarDatos();
+                props.rechargeMarkers();
+            }}>
+                <StarRatings
+                    rating={rating}
+                    name="rating"
+                    starRatedColor="orange"
+                    starHoverColor="orange"
+                    changeRating={setRating}
+                    numberOfStars={5}
+                    starDimension="30px"
+                    starSpacing="5px"
                 />
-            </label>
-            <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
-            <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-        </form>
+                <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
+                <label>Dirección: <input id="dirLugar" type="text" required></input></label>
+                <label>Descripción: <input id="descrpLugar" type="text"></input></label>
+                <label>Categoría:
+                    <Combobox
+                        defaultValue={categories[0]}
+                        data={categories}
+                        name="categoria"
+                        id="categoria"
+                    />
+                </label>
+                <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
+                <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+            </form>
 
-    </>
-)
+        </>
+    )
 
 }
 

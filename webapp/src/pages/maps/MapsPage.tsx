@@ -6,8 +6,14 @@ import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-import { addMarkerPOD, getMarkersPOD } from '../../pods/Markers';
-import { Place} from "../../shared/shareddtypes";
+
+import { getMarkersPOD } from '../../pods/Markers';
+import Button from 'react-bootstrap/esm/Button';
+import { addMarker, getPlaces } from "../../api/api";
+import { Place } from "../../shared/shareddtypes";
+import StarRatings from 'react-star-ratings';
+
+
 
 
 
@@ -28,8 +34,6 @@ function MapsPage(props: MapProps): JSX.Element {
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(30);
     const [onlyOnce, setOnlyOnce] = useState(true);
-
-
     const { session } = useSession();
 
     //De la session sacar el webId
@@ -116,10 +120,12 @@ function MapsPage(props: MapProps): JSX.Element {
             longitude: m.getLatLng().lng,
             comments: "",
             photoLink: [],
-            category: ""
+            category: "",
+            rating: 0.0
         }
         setNewPlace(p);
     }
+
 
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
@@ -142,6 +148,8 @@ function MapsPage(props: MapProps): JSX.Element {
             categorias);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
+
+
 
 
     console.log(selectedMarker);
@@ -188,6 +196,7 @@ function MapsPage(props: MapProps): JSX.Element {
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
+
                                         <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={()=>{getMarkups();}}/>
                                     </div>
                                 </div> : <></>}
