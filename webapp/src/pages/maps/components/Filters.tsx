@@ -4,7 +4,7 @@ import "../../../styles.css";
 import React, { useEffect, useState } from "react";
 import { useSession } from "@inrupt/solid-ui-react";
 import type {Friend} from "../../../pods/Friends";
-import { getFriends } from  "../components/Friends/FriendsPods";
+import { getFriends, getLocations } from  "../components/Friends/FriendsPods";
 
 type Props = {
   onCategoriaChange: (selectedOption: string[]) => void;
@@ -36,7 +36,7 @@ export default function Filters({onCategoriaChange, onAmigoChange, onMinDistance
         return friendsPromise;
       });
       console.log("Mis amigos: ");
-      
+      getLocations(aux);
       aux.forEach(friend => {
         friendsNames.push(friend.name);
       });

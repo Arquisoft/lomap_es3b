@@ -59,6 +59,13 @@ export async function getFriends(webId:string) {
   return friends;
 }
 
+export async function getLocations(amigos: Friend[]) {
+  amigos.forEach(amigo => {
+    const rutaDataset = amigo.webId + "map/";
+    console.log("getLocation --> ruta location: ", rutaDataset);
+  });
+}
+
 export async function getLocation(session:Session, idLocation:string){
   console.log("Entrando en getLocation");
   //Si no estamo en sesión retornamos null
