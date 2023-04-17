@@ -1,6 +1,10 @@
 import Dropdown from "./Dropdown";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import "../../../styles.css";
+import React, { useEffect, useState } from "react";
+import { useSession } from "@inrupt/solid-ui-react";
+import type {Friend} from "../../../pods/Friends";
+import { getFriends, getLocations } from  "../components/Friends/FriendsPods";
 
 type Props = {
   onCategoriaChange: (selectedOption: string[]) => void;
@@ -17,12 +21,29 @@ export default function Filters({onCategoriaChange, onAmigoChange, onMinDistance
     'Restaurante',
   ];
 
-  const friends = [
-    'Eloy',
-    'Miguel',
-    'Lara',
-    'Luis Manuel',
-  ];
+  const friendsNames: string[] = [];
+
+  const { session } = useSession();
+  const [friends, setFriends] = useState<Friend[]>([]);
+
+  useEffect(() => {
+    handleFriends();
+  }, [friends]);
+
+  const handleFriends = async () => {
+    if (session.info.webId != undefined && session.info.webId != "") {
+      let aux = await getFriends(session.info.webId).then((friendsPromise) => {
+        return friendsPromise;
+      });
+      console.log("Mis amigos: ");
+      getLocations(aux);
+      aux.forEach(friend => {
+        friendsNames.push(friend.name);
+      });
+      console.log(friendsNames);
+      setFriends(aux);
+    } else setFriends([]);
+  };
 
   const handleCategoriaChange = (selectedOption: string[]) => {
     onCategoriaChange(selectedOption);
@@ -47,7 +68,7 @@ export default function Filters({onCategoriaChange, onAmigoChange, onMinDistance
       </div>
       <div className="menu">
         <Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange}/>
-        <Dropdown items={friends} dropdownTitle="Amigos" onChange={handleAmigoChange} />
+        <Dropdown items={friendsNames} dropdownTitle="Amigos" onChange={handleAmigoChange} />
         <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
         <button onClick={handleButtonClick}>Aplicar filtros</button>
       </div>
