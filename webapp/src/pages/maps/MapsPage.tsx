@@ -10,7 +10,7 @@ import './MapsPage.css';
 import { getMarkersPOD } from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
-import { Place, MarkerDTO } from "../../shared/shareddtypes";
+import { Place } from "../../shared/shareddtypes";
 import StarRatings from 'react-star-ratings';
 
 
@@ -150,7 +150,6 @@ function MapsPage(props: MapProps): JSX.Element {
     };
 
 
-    const [rating, setRating] = useState(0);
 
 
     console.log(selectedMarker);
