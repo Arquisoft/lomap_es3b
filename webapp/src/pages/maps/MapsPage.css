@@ -271,6 +271,15 @@ html{
     margin: 0px;
 }
 
+.filtros > .menu > button {
+    background-color: var(--orange200);
+    border-radius: 0px 8px 8px 0px;
+    border: 0px;
+    color: white;
+    padding: 0px;
+    margin-right: 4px;
+}
+
 .left {
     display:flex;
     flex-direction: column;
@@ -316,6 +325,8 @@ html{
   }
 
   
+
+  
   /* The Close Button */
   .close {
     color: #fefefe;
@@ -326,11 +337,19 @@ html{
     margin-bottom:1rem;
   }
   
-  #formAñadirLugar>input {
+  .formAñadirLugar>label {
     width: 100%;
     padding: 5px 15px;
     margin: 5px 0;
+    display:block;
+    
  }
+
+ .formAñadirLugar>label>input {
+    width: 100%;
+    margin: 5px 0;
+ }
+
 
   .enviar{
     color: #fefefe;

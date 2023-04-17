@@ -14,10 +14,3 @@ export type Place = {
     rating: number;
 }
 
-export type MarkerDTO = {
-    id:string;
-    name:string;
-    latitude:number;
-    longitude:number;
-    category:string;
-}

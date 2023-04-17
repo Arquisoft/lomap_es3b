@@ -1,15 +1,19 @@
 import { useSession } from '@inrupt/solid-ui-react';
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
+import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
+
 import { getMarkersPOD } from '../../pods/Markers';
 import Button from 'react-bootstrap/esm/Button';
 import { addMarker, getPlaces } from "../../api/api";
 import { Place, MarkerDTO } from "../../shared/shareddtypes";
 import StarRatings from 'react-star-ratings';
+
+
 
 
 
@@ -28,18 +32,24 @@ function MapsPage(props: MapProps): JSX.Element {
     const [categorias, setCategorias] = useState<string[]>([]);
     const [amigos, setAmigos] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
-    const [maxDistance, setMaxDistance] = useState<number>(0);
+    const [maxDistance, setMaxDistance] = useState<number>(30);
     const [onlyOnce, setOnlyOnce] = useState(true);
     const { session } = useSession();
 
     //De la session sacar el webId
     const { webId } = session.info;
+    console.log(webId);
+
+   
 
     const getMarkups = async () => {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
         let lugaresArray: any;
         lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
+        setSelectedMarker(undefined);
+        setNewPlace(undefined);
+        setNewMarker(undefined);
         setMarkers(lugaresArray);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
     }
@@ -50,17 +60,10 @@ function MapsPage(props: MapProps): JSX.Element {
         getMarkups();
     }
 
-    /**
-     * LLama a getMarkups para cargar los lugares desde la bd
-     */
-    useEffect(() => {
-        getMarkups();
-    }, []);
-
     const centro: [number, number] = [43.35485, -5.85123]
 
     const filterPlaces = (places: Place[]) => {
-        if (categorias.length == 0) {
+        if (categorias.length === 0) {
             return places;
         } else {
             return places.filter((place) => {
@@ -123,96 +126,35 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(p);
     }
 
-    /**
-     * Recoge el modal
-     * Coge de cada elemento del modal lo escrito por el usuario
-     * lo introduce en una constante Place (newPlace)
-     * reinicia el modal y lo manda a addMarker para guardarlo
-     */
-    async function guardarDatos() {
-        //abrir el modal
-        let modal = document.getElementById("myModal");
-        //cerrar el modal al hacer click en cruz
-        let botonCerrar = document.getElementById("closeModal");
-        if (botonCerrar != undefined) {
-            botonCerrar.onclick = function () {
-                modal!.style.display = "none";
-            }
-        }
-
-        let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
-        let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
-        let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
-        let commentLugar = (document.getElementById("comentLugar") as HTMLInputElement).value;
-        let puntuacion = parseInt((document.getElementById("rating") as HTMLInputElement).value, 10);
-
-        if (nombreLugar != "") {
-            modal!.style.display = "none";
-            newPlace!.name = nombreLugar;
-            newPlace!.direction = dirLugar;
-            newPlace!.comments = commentLugar;
-            newPlace!.photoLink = [];
-            newPlace!.rating = puntuacion;
-        }
-        
-        reiniciarModal();
-        await addMarker(newPlace!);
-    }
-
-
-    /**
-     * Vacía los valores del modal
-     */
-    function reiniciarModal() {
-        (document.getElementById("nombreLugar") as HTMLInputElement).value = "";
-        (document.getElementById("descrpLugar") as HTMLInputElement).value = "";
-        (document.getElementById("comentLugar") as HTMLInputElement).value = "";
-    }
 
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
         setCategorias(selectedOption);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
 
     const handleAmigoChange = (selectedOption: string[]) => {
         console.log(`Amigo seleccionado: ${selectedOption}`);
         setAmigos(selectedOption);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
 
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
         setMaxDistance(selectedMaxDistance);
+    };
+
+    const handleButtonClick = () => {
+        console.log("Monstrando todos los puntos entre " + minDistance + " y " + maxDistance + " que entren en las categorias " +
+            categorias);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
 
-    /*
-    const { session } = useSession();
-    const { webId } = session.info;
-    console.log(webId);
-
-
-    const markerPOD:MarkerDTO = {
-        id:"1",
-        name:"prueba",
-        latitude: 43,
-        longitude:-5.3,
-    }
-
-    var blob = new Blob([JSON.stringify(marker)],{type:"aplication/json"})
-
-    var file = new File([blob], "marker.info", {type: blob.type});
-
-    const handleOnClick = async () =>{
-        await addMarkerPOD(session,file.name,file,webId!);
-    }
-    */
 
     const [rating, setRating] = useState(0);
 
 
+    console.log(selectedMarker);
+    
     return (
         <>
             <div className="mapspage">
@@ -227,10 +169,11 @@ function MapsPage(props: MapProps): JSX.Element {
 
                     {/*Contenido menusuperior*/}
                     <div className="left">
-                        <Filters
-                            onCategoriaChange={handleCategoriaChange}
-                            onAmigoChange={handleAmigoChange}
-                            onMinDistanceChange={handleMinDistanceChange}
+                        <Filters 
+                        onCategoriaChange={handleCategoriaChange}
+                        onAmigoChange={handleAmigoChange}
+                        onMinDistanceChange={handleMinDistanceChange}
+                        onButtonClick={handleButtonClick}
                         />
                     </div>
 
@@ -248,32 +191,14 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Información*/}
                         <div className="informacion">
-                            {selectedMarker && !newMarker ? <Info /> : !selectedMarker && newMarker && mostrarModal ?
+                            {selectedMarker && !newMarker ? <Info place={selectedMarker}/> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
                                         <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <form id="formAñadirLugar" onSubmit={guardarDatos}>
-                                            <p>Nombre: <input id="nombreLugar" type="text"></input></p>
-                                            <p>Dirección: <input id="dirLugar" type="text"></input></p>
-                                            <p>Descripción: <input id="descrpLugar" type="text"></input></p>
-                                            <p>Comentario: <input id="comentLugar" type="text"></input></p>
-                                            <StarRatings
-                                                rating={rating}
-                                                name="rating"
-                                                starRatedColor="orange"
-                                                starHoverColor="orange"
-                                                changeRating={setRating}
-                                                numberOfStars={5}
-                                                starDimension="30px"
-                                                starSpacing="5px"
-                                            />
-                                            <div>
-                                                <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
-                                            </div>
-                                            
-                                        </form>
+
+                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={()=>{getMarkups();}}/>
                                     </div>
                                 </div> : <></>}
                         </div>

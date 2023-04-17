@@ -2,8 +2,6 @@ import L from "leaflet";
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import { Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { getPlaces, addMarker } from '../../../api/api';
-import React, { useState, useEffect } from 'react';
 import { Place } from '../../../shared/shareddtypes';
 
 
@@ -23,17 +21,6 @@ const icon = new L.Icon({
 
 function Map(props: MapProps): JSX.Element {
 
-
-    const defaultPlace: Place = {
-        name: "Ronda 14",
-        direction: "Aviles",
-        latitude: 43.5580,
-        longitude: -5.9247,
-        comments: "",
-        photoLink: [],
-        category: "Restaurante",
-        rating: 5.0
-    }
 
     const MapContent = () => {
         const map = useMapEvents({

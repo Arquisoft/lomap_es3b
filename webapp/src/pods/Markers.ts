@@ -1,14 +1,22 @@
 import { Session } from "@inrupt/solid-client-authn-browser";
-import { getSolidDataset, saveFileInContainer } from "@inrupt/solid-client";
-import { MarkerDTO } from "../shared/shareddtypes";
-import { json } from "body-parser";
-import { writeFile } from 'fs/promises';
-import { getFile, isRawData, getContentType, getSourceUrl, isContainer, getResourceInfo } from "@inrupt/solid-client";
+import { createContainerAt, saveFileInContainer } from "@inrupt/solid-client";
+import { getFile, isRawData, getContentType, getSourceUrl } from "@inrupt/solid-client";
 import { Place } from "../shared/shareddtypes";
-import { number } from "yargs";
 
-async function addMarkerPOD(session: Session, name: string, file: File, url: string) {
-
+export async function addMarkerPOD(session: Session, name: string, file: File, url: string) {
+  try {
+    const fet = session.fetch;
+    try{
+      const file = await getFile(
+        url,               // File in Pod to Read
+        { fetch: fet }       // fetch from authenticated session
+      );
+    }catch(error){
+      var result = await createContainerAt(url, { fetch: fet });
+      console.log(result);
+    }
+  } catch (error) {
+  }
   try {
     await saveFileInContainer(url, file, {
       slug: file.name,
@@ -21,31 +29,31 @@ async function addMarkerPOD(session: Session, name: string, file: File, url: str
 }
 
 export async function getMarkersPOD(session: Session, url: string): Promise<Place[]> {
-  let arraySol: Place[] = [];
-  let lug: any;
-  if (session.info.isLoggedIn) {
+    let arraySol: Place[] = [];
+    let lug: any;
+    if (session.info.isLoggedIn) {
 
-    //Buscamos los elementos hijos del contenedor
-    const fet = session.fetch;
-    const file = await getFile(
-      url,               // File in Pod to Read
-      { fetch: fet }       // fetch from authenticated session
-    );
+      //Buscamos los elementos hijos del contenedor
+      const fet = session.fetch;
+      const file = await getFile(
+        url,               // File in Pod to Read
+        { fetch: fet }       // fetch from authenticated session
+      );
 
-    let fileText = await file.text()
+      let fileText = await file.text()
 
-    var hijosCarpetaMap = fileText.split("ldp:contains")[1].split(";")[0].replaceAll(">","").replaceAll("<","").replaceAll(" ","").split(",");
-    
-    for(var i = 0; i<hijosCarpetaMap.length; i++){
-      lug = await readFileFromPod(url + hijosCarpetaMap[i], session);
-      if (lug) {
-        arraySol.push(lug);
+      var hijosCarpetaMap = fileText.split("ldp:contains")[1].split(";")[0].replaceAll(">", "").replaceAll("<", "").replaceAll(" ", "").split(",");
+
+      for (var i = 0; i < hijosCarpetaMap.length; i++) {
+        lug = await readFileFromPod(url + hijosCarpetaMap[i], session);
+        if (lug) {
+          arraySol.push(lug);
+        }
       }
     }
-  }
 
-  console.log(arraySol);
-  return Promise.resolve(arraySol);
+    console.log(arraySol);
+    return Promise.resolve(arraySol);
 }
 
 async function readFileFromPod(fileURL: string, session: Session) {
@@ -89,5 +97,3 @@ async function readFileFromPod(fileURL: string, session: Session) {
     return null;
   }
 }
-
-export default { addMarkerPOD, getMarkersPOD };
