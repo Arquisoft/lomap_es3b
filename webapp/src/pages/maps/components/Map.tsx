@@ -21,8 +21,6 @@ const icon = new L.Icon({
 
 function Map(props: MapProps): JSX.Element {
 
-
-
     const MapContent = () => {
 
         const mapa = useMapEvents({

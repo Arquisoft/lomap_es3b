@@ -1,9 +1,11 @@
 import { Place, MapType } from "../../../shared/shareddtypes";
 import { addMapPOD } from "../../../pods/Markers";
 import { useSession } from "@inrupt/solid-ui-react";
+import { useState } from "react";
 
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
+import StarRatings from 'react-star-ratings';
 
 
 type FormProps = {
@@ -17,6 +19,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
     const { session } = useSession();
     const { webId } = session.info;
+    const [rating, setRating] = useState(0);
 
     let urlImagenes: string[] = [];
 
@@ -66,8 +69,8 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         let categoria = (document.getElementById("categoria_input") as HTMLInputElement).value;
         let mapaSelected = (document.getElementById("mapa_input") as HTMLInputElement).value
         let fotos = (document.getElementById("fotos") as HTMLInputElement).files;
-            
-        //Añadimos las fotos al repositorio de cloudinary
+
+        let puntuacion = parseInt((document.getElementById("rating") as HTMLInputElement).value, 10);
 
         if (fotos) {
             const formData = new FormData();
@@ -96,6 +99,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
             props.newPlace!.category = categoria;
             props.newPlace!.comments = "";
             props.newPlace!.photoLink = urlImagenes;
+            props.newPlace!.rating = puntuacion;
         }
 
         var mapa = props.mapas.find((m) => m.id === mapaSelected);
@@ -107,8 +111,6 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         }
     }
 
-
-
     return (
         <>
             <form id="formAñadirLugar" className='formAñadirLugar' onSubmit={async (e) => {
@@ -116,6 +118,17 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 await guardarDatos();
                 props.rechargeMarkers();
             }}>
+
+                <StarRatings
+                    rating={rating}
+                    name="rating"
+                    starRatedColor="orange"
+                    starHoverColor="orange"
+                    changeRating={setRating}
+                    numberOfStars={5}
+                    starDimension="30px"
+                    starSpacing="5px"
+                />
                 <label>Nombre: <input id="nombreLugar" type="text" className="inputForm" required></input></label>
                 <label>Dirección: <input id="dirLugar" type="text" className="inputForm" required></input></label>
                 <label>Descripción: <input id="descrpLugar" type="text" className="inputForm"></input></label>
@@ -136,6 +149,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                         id="mapa"
                     />
                 </label>
+
                 <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
             </form>
 

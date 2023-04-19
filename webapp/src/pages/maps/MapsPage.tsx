@@ -9,8 +9,6 @@ import './MapsPage.css';
 import { getMapsPOD } from '../../pods/Markers';
 import { Place, MapType } from "../../shared/shareddtypes";
 
-
-
 type MapProps = {
 
 };
@@ -29,8 +27,6 @@ function MapsPage(props: MapProps): JSX.Element {
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(30);
     const [onlyOnce, setOnlyOnce] = useState(true);
-
-
     const { session } = useSession();
 
     //De la session sacar el webId
@@ -142,11 +138,13 @@ function MapsPage(props: MapProps): JSX.Element {
                 longitude: m.getLatLng().lng,
                 comments: "",
                 photoLink: [],
-                category: ""
+                category: "",
+                rating: 0.0
             }
             setNewPlace(p);
         }
     }
+
 
     const handleCategoriaChange = (selectedOption: string[]) => {
         console.log(`Categoría seleccionada: ${selectedOption}`);
@@ -169,6 +167,8 @@ function MapsPage(props: MapProps): JSX.Element {
             categorias);
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
     };
+
+
 
 
     console.log(selectedMarker);
