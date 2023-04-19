@@ -1,5 +1,5 @@
 import { useSession } from '@inrupt/solid-ui-react';
-import { useState } from "react";
+import { useState} from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
@@ -7,7 +7,7 @@ import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
 import { getMapsPOD } from '../../pods/Markers';
-import { Place, MapType} from "../../shared/shareddtypes";
+import { Place, MapType } from "../../shared/shareddtypes";
 
 
 
@@ -40,14 +40,14 @@ function MapsPage(props: MapProps): JSX.Element {
     const getMarkups = async () => {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
-        
+
         setSelectedMarker(undefined);
         setNewPlace(undefined);
         setNewMarker(undefined);
 
-        let mapas: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0]+"/map/");
+        let mapas: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/map/");
 
-        if(mapas.length === 0){
+        if (mapas.length === 0) {
             return;
         }
 
@@ -55,8 +55,8 @@ function MapsPage(props: MapProps): JSX.Element {
 
         let places: Place[] = [];
 
-        mapas.map((mapa)=>{
-            mapa.map.map((lugar)=>{
+        mapas.map((mapa) => {
+            mapa.map.map((lugar) => {
                 places.push(lugar.place);
             })
         })
@@ -71,16 +71,26 @@ function MapsPage(props: MapProps): JSX.Element {
         getMarkups();
     }
 
+    session.onLogout(()=>{
+        setMaps([]); 
+        setMarkers([])
+        setFilteredPlaces([]);;
+    })
+
     const centro: [number, number] = [43.35485, -5.85123]
 
     const filterPlaces = (places: Place[]) => {
-        if (categorias.length === 0) {
-            return places;
+        if (places !== undefined && places !== null) {
+            if (categorias.length === 0) {
+                return places;
+            } else {
+                return places.filter((place) => {
+                    const categoryMatch = categorias.includes(place.category);
+                    return categoryMatch;
+                });
+            }
         } else {
-            return places.filter((place) => {
-                const categoryMatch = categorias.includes(place.category);
-                return categoryMatch;
-            });
+            return [];
         }
     }
 
@@ -121,19 +131,21 @@ function MapsPage(props: MapProps): JSX.Element {
      * Pone el marcador cuando se hace click en el mapa para mostrar
      */
     function handleNewMarkerOnClick(m: L.Marker): void {
-        setSelectedMarker(undefined);
-        setNewMarker(m);
-        setMostrarModal(true);
-        let p: Place = {
-            name: "",
-            direction: "",
-            latitude: m.getLatLng().lat,
-            longitude: m.getLatLng().lng,
-            comments: "",
-            photoLink: [],
-            category: ""
+        if (session.info.isLoggedIn) {
+            setSelectedMarker(undefined);
+            setNewMarker(m);
+            setMostrarModal(true);
+            let p: Place = {
+                name: "",
+                direction: "",
+                latitude: m.getLatLng().lat,
+                longitude: m.getLatLng().lng,
+                comments: "",
+                photoLink: [],
+                category: ""
+            }
+            setNewPlace(p);
         }
-        setNewPlace(p);
     }
 
     const handleCategoriaChange = (selectedOption: string[]) => {
@@ -160,7 +172,7 @@ function MapsPage(props: MapProps): JSX.Element {
 
 
     console.log(selectedMarker);
-    
+
     return (
         <>
             <div className="mapspage">
@@ -175,11 +187,11 @@ function MapsPage(props: MapProps): JSX.Element {
 
                     {/*Contenido menusuperior*/}
                     <div className="left">
-                        <Filters 
-                        onCategoriaChange={handleCategoriaChange}
-                        onAmigoChange={handleAmigoChange}
-                        onMinDistanceChange={handleMinDistanceChange}
-                        onButtonClick={handleButtonClick}
+                        <Filters
+                            onCategoriaChange={handleCategoriaChange}
+                            onAmigoChange={handleAmigoChange}
+                            onMinDistanceChange={handleMinDistanceChange}
+                            onButtonClick={handleButtonClick}
                         />
                     </div>
 
@@ -197,13 +209,13 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Información*/}
                         <div className="informacion">
-                            {selectedMarker && !newMarker ? <Info place={selectedMarker}/> : !selectedMarker && newMarker && mostrarModal ?
+                            {selectedMarker && !newMarker ? <Info place={selectedMarker} /> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
-                                        <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
+                                        <button id="closeModal" type="button" className="close btn btn-primary" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={() => { getMarkups(); } } mapas={maps!}/>
+                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={() => { getMarkups(); }} mapas={maps!} />
                                     </div>
                                 </div> : <></>}
                         </div>

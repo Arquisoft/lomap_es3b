@@ -116,9 +116,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 await guardarDatos();
                 props.rechargeMarkers();
             }}>
-                <label>Nombre: <input id="nombreLugar" type="text" required></input></label>
-                <label>Dirección: <input id="dirLugar" type="text" required></input></label>
-                <label>Descripción: <input id="descrpLugar" type="text"></input></label>
+                <label>Nombre: <input id="nombreLugar" type="text" className="inputForm" required></input></label>
+                <label>Dirección: <input id="dirLugar" type="text" className="inputForm" required></input></label>
+                <label>Descripción: <input id="descrpLugar" type="text" className="inputForm"></input></label>
                 <label>Categoría:
                     <Combobox
                         defaultValue={categories[0]}

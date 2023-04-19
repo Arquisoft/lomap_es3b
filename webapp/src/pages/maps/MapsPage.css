@@ -231,6 +231,13 @@ html{
     margin-right: 4px;
 }
 
+.inputForm{
+    width: 100%;
+    border-radius: 8px;
+    min-height: 38px;
+    border: #ccc 1px solid;
+}
+
 .buscador > input {
     width: 100%;
     border-radius: 8px 0px 0px 8px;
@@ -245,17 +252,11 @@ html{
     border: var(--orange200) 2px solid;
 }
 
-.filtros > .menu {
-    display:flex;
-    flex-direction: column;
-}
-
 .filtros {
     background-color: white;
     border-radius: 8px;
     height: 100%;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.447);
-    margin: 10px 0px 10px 10px;
 }
 
 .filtros > .header {
@@ -271,18 +272,52 @@ html{
     margin: 0px;
 }
 
+.filtros > .menu {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filtros > .menu > div{
+    margin:0px 8px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filtros > .menu > .slider{
+    margin:0px 16px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.filtros > .menu > .slider > div{
+    margin: 0px 3px;
+}
+
+.css-7vij4e{
+    width: auto !important;
+    padding-top: 0px !important;
+}
+
+
+
 .filtros > .menu > button {
     background-color: var(--orange200);
-    border-radius: 0px 8px 8px 0px;
-    border: 0px;
-    color: white;
-    padding: 0px;
-    margin-right: 4px;
+    border-color: var(--orange200);
+    margin:0px 16px;
+}
+
+.filtros > .menu > button:hover {
+    background-color:#0b5ed7;
+    border-color:#0b5ed7 ;
 }
 
 .left {
     display:flex;
     flex-direction: column;
+    padding: 10px 0px 10px 10px;
 }
 
 .navigationmenu{
@@ -342,6 +377,7 @@ html{
     padding: 5px 15px;
     margin: 5px 0;
     display:block;
+    z-index: 1100;
     
  }
 

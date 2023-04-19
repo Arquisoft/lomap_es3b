@@ -1,5 +1,6 @@
 import Dropdown from "./Dropdown";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../../styles.css";
 
 type Props = {
@@ -48,8 +49,11 @@ export default function Filters({onCategoriaChange, onAmigoChange, onMinDistance
       <div className="menu">
         <Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange}/>
         <Dropdown items={friends} dropdownTitle="Amigos" onChange={handleAmigoChange} />
-        <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
-        <button onClick={handleButtonClick}>Aplicar filtros</button>
+        <div className="slider">
+          <label>Distancia(Km):</label>
+          <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
+        </div>
+        <button type="button" onClick={handleButtonClick} className="btn btn-primary">Aplicar filtros</button>
       </div>
     </div>
   );

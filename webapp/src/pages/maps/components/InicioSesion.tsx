@@ -52,7 +52,7 @@ function InicioSesion(props: inicioProps): JSX.Element {
         return (
             <>
                 <LogoutButton onError={console.log} >
-                    <Button>Logout</Button>
+                    <Button onClick={()=>{}}>Logout</Button>
                 </LogoutButton>
             </>
         );
