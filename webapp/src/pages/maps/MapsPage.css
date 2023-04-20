@@ -1,75 +1,74 @@
-
-:root{
+:root {
     --grey200: #e9e9e9;
     --grey300: #5d5d5d;
     --grey400: #333333;
 
-    --orange100:#e88c53;
-    --orange200:#c3713b;
-    --orange300:#4e3928;
+    --orange100: #e88c53;
+    --orange200: #c3713b;
+    --orange300: #4e3928;
 }
 
-html{
+html {
     background-color: rgb(227, 227, 227);
 }
 
-.mapspage{
+.mapspage {
     height: 100%;
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
-.contenido{
+.contenido {
     display: flex;
     flex-direction: row;
     height: 100%;
-    overflow:hidden;
+    overflow: hidden;
 }
 
-.contenido > .central {
+.contenido>.central {
     display: flex;
     flex-direction: column;
     width: 100%;
-    overflow-x:auto;
+    overflow-x: auto;
 }
 
-.imagen > img{
+.imagen>img {
     width: 48px;
     height: 48px;
     border-radius: 50%;
 }
 
-.info{
+.info {
     display: flex;
     flex-direction: column;
     padding: 10px;
 }
 
-@media(min-width:800px){}
+@media(min-width:800px) {}
 
-.info > .menu{
+.info>.menu {
     background-color: var(--orange100);
     display: grid;
-    grid-auto-columns: minmax(0px,1fr);
+    grid-auto-columns: minmax(0px, 1fr);
     grid-auto-flow: column;
     height: 50px;
     width: 100%;
     border-radius: 8px;
     margin: 10px 0px;
-    gap:2px;
+    gap: 2px;
     grid-auto-rows: max-content;
     height: auto;
 }
 
-.tab{
-    display:flex;
+.tab {
+    display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: nowrap;
     background-color: var(--orange200);
-    color:white;
+    color: white;
 }
 
 .tab:first-of-type {
@@ -80,11 +79,11 @@ html{
     border-radius: 0px 8px 8px 0px;
 }
 
-.tab:hover{
+.tab:hover {
     background-color: var(--orange300);
 }
 
-.tab > p {
+.tab>p {
     font-size: 1rem;
     margin: 1vh 5px;
     font-weight: bold;
@@ -93,20 +92,20 @@ html{
     text-overflow: ellipsis;
 }
 
-.info > .content{
+.info>.content {
     border-radius: 8px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.447);
 }
 
-.info > .content > .header{
-    background-color:var(--orange200);
+.info>.content>.header {
+    background-color: var(--orange200);
     border-radius: 8px 8px 0px 0px;
     padding: 0px 8px;
 }
 
-.info > .content > .header > p {
+.info>.content>.header>p {
     font-size: 1rem;
     margin: 1vh 5px;
     white-space: nowrap;
@@ -115,18 +114,18 @@ html{
     color: white;
 }
 
-.info > .content > .body{
-    width:100%;
+.info>.content>.body {
+    width: 100%;
     background-color: white;
     border-radius: 0px 0px 8px 8px;
     padding: 8px;
-    display:flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.info > .content > .body > button{
+.info>.content>.body>button {
     background-color: var(--orange200);
     border: none;
     border-radius: 8px;
@@ -137,15 +136,15 @@ html{
     margin-bottom: 10px;
 }
 
-.info > .content > .body > button:hover{
+.info>.content>.body>button:hover {
     background-color: var(--orange300);
 }
 
-.info > .content > .body > button > p{
+.info>.content>.body>button>p {
     margin: 1vh 5px;
 }
 
-.comentario{
+.comentario {
     width: min(100% - 15px, 840px);
     margin: 10px;
     display: flex;
@@ -153,43 +152,43 @@ html{
     border-radius: 8px;
 }
 
-.comentario > div{
+.comentario>div {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.comentario > div > .cabecera {
+.comentario>div>.cabecera {
     display: flex;
     flex-direction: row;
     background-color: var(--orange200);
     border-radius: 8px 8px 0px 0px;
 }
 
-.comentario > div > .cabecera > .usuario{  
-    margin-left: 8px; 
+.comentario>div>.cabecera>.usuario {
+    margin-left: 8px;
     font-size: 0.95rem;
     font-weight: bold;
     color: white;
 }
 
-.comentario > div > .cabecera > .fecha{  
-    margin-right: 8px; 
+.comentario>div>.cabecera>.fecha {
+    margin-right: 8px;
     font-size: 0.8rem;
     color: var(--grey200);
-    display:flex;
+    display: flex;
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
 }
 
-.comentario > div > .cabecera p{
+.comentario>div>.cabecera p {
     margin: 1vh 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.comentario > div > .contenido{
+.comentario>div>.contenido {
     color: black;
     display: flex;
     background-color: var(--grey200);
@@ -197,24 +196,24 @@ html{
     padding: 0px 8px;
 }
 
-.mapa{
+.mapa {
     border-radius: 8px;
 }
 
-.map{
+.map {
     width: calc(100% - 20px);
     display: flex;
     flex-direction: column;
     margin: 0px 8px;
-    z-index:1; 
+    z-index: 1;
 }
 
-.leaflet-div-icon{
+.leaflet-div-icon {
     background-color: transparent;
     border: none;
 }
 
-.buscador{
+.buscador {
     width: calc(100% - 16px);
     margin: 10px 8px;
     display: flex;
@@ -222,7 +221,7 @@ html{
     border-radius: 8px 8px 8px 8px;
 }
 
-.buscador > button {
+.buscador>button {
     background-color: var(--orange200);
     border-radius: 0px 8px 8px 0px;
     border: 0px;
@@ -231,24 +230,24 @@ html{
     margin-right: 4px;
 }
 
-.inputForm{
+.inputForm {
     width: 100%;
     border-radius: 8px;
     min-height: 38px;
     border: #ccc 1px solid;
 }
 
-.buscador > input {
+.buscador>input {
     width: 100%;
     border-radius: 8px 0px 0px 8px;
     border: var(--orange200) 2px solid;
 }
 
-.leaflet-container{
+.leaflet-container {
     width: 100%;
     height: 400px;
     margin-inline: auto;
-    border-radius:8px;
+    border-radius: 8px;
     border: var(--orange200) 2px solid;
 }
 
@@ -259,69 +258,69 @@ html{
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.447);
 }
 
-.filtros > .header {
+.filtros>.header {
     background-color: var(--orange200);
     color: white;
     border-radius: 8px 8px 0px 0px;
 }
 
-.filtros > .header > p {
+.filtros>.header>p {
     font-size: 0.95rem;
     font-weight: bold;
     padding: 1vh 5px;
     margin: 0px;
 }
 
-.filtros > .menu {
-    display:flex;
+.filtros>.menu {
+    display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.filtros > .menu > div{
-    margin:0px 8px;
-    display:flex;
+.filtros>.menu>div {
+    margin: 0px 8px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.filtros > .menu > .slider{
-    margin:0px 16px;
-    display:flex;
+.filtros>.menu>.slider {
+    margin: 0px 16px;
+    display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.filtros > .menu > .slider > div{
+.filtros>.menu>.slider>div {
     margin: 0px 3px;
 }
 
-.css-7vij4e{
+.css-7vij4e {
     width: auto !important;
     padding-top: 0px !important;
 }
 
 
 
-.filtros > .menu > button {
+.filtros>.menu>button {
     background-color: var(--orange200);
     border-color: var(--orange200);
-    margin:0px 16px;
+    margin: 0px 16px;
 }
 
-.filtros > .menu > button:hover {
-    background-color:#0b5ed7;
-    border-color:#0b5ed7 ;
+.filtros>.menu>button:hover {
+    background-color: #0b5ed7;
+    border-color: #0b5ed7;
 }
 
 .left {
-    display:flex;
+    display: flex;
     flex-direction: column;
     padding: 10px 0px 10px 10px;
 }
 
-.navigationmenu{
-    display:flex;
+.navigationmenu {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-content: center;
@@ -329,8 +328,8 @@ html{
     padding: 5px 10px;
 }
 
-.inicioSesion{
-    display:flex;
+.inicioSesion {
+    display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
@@ -338,16 +337,23 @@ html{
 }
 
 .modal {
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1000;
+    /* Sit on top */
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
 
 /* Modal Content */
 .modal-content {
@@ -356,40 +362,113 @@ html{
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-    
-  }
 
-  
+}
 
-  
-  /* The Close Button */
-  .close {
+
+
+
+/* The Close Button */
+.close {
     color: #fefefe;
     float: right;
     font-size: 20px;
     font-weight: bold;
     background-color: var(--orange200);
-    margin-bottom:1rem;
-  }
-  
-  .formAñadirLugar>label {
+    margin-bottom: 1rem;
+}
+
+.formAñadirLugar>label {
     width: 100%;
     padding: 5px 15px;
     margin: 5px 0;
-    display:block;
+    display: block;
     z-index: 1100;
-    
- }
 
- .formAñadirLugar>label>input {
+}
+
+.formAñadirLugar>label>input {
     width: 100%;
     margin: 5px 0;
- }
+}
 
 
-  .enviar{
+.enviar {
     color: #fefefe;
     float: right;
     font-weight: bold;
     background-color: var(--orange200);
-  }
+}
+
+
+.amigos {
+    margin-top: 10px;
+    background-color: white;
+    border-radius: 8px;
+    height: 100%;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.447);
+}
+
+.amigos > .header {
+    background-color: var(--orange200);
+    color: white;
+    border-radius: 8px 8px 0px 0px;
+}
+
+.amigos > .header > p {
+    font-size: 0.95rem;
+    font-weight: bold;
+    padding: 1vh 5px;
+    margin: 0px;
+}
+
+.amigos > .content {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+
+}
+
+.amigo {
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    background-color: #e9e9e9;
+    border:2px solid var(--orange200);
+    max-width: 135px;
+    justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    min-height: 40px;
+    margin-top: 8px;
+    gap:8px;
+}
+
+.amigo > p {
+    padding: 0;
+    margin:auto;
+    margin-left:8px
+}
+
+.amigo > button {
+    border: none;
+    border-radius: 50%;
+    
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+    box-shadow:inset 0 10px 15px rgba(255,255,255,.35), 
+            inset 0 -10px 15px rgba(0,0,0,.05), 
+            inset 10px 0 15px rgba(0,0,0,.05), 
+            inset -10px 0 15px rgba(0,0,0,.05),
+            0 5px 20px rgba(0,0,0,.1);
+}
+
+.amigo > button.red{
+    background-color: rgb(174, 26, 26);
+}
+
+.amigo > button.green{
+    background-color: rgb(26, 174, 43);
+}

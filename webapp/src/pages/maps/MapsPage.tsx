@@ -1,5 +1,5 @@
 import { useSession } from '@inrupt/solid-ui-react';
-import { useState} from "react";
+import { useState } from "react";
 import NavigationMenu from "./components/NavigationMenu";
 import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
@@ -7,7 +7,9 @@ import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
 import { getMapsPOD } from '../../pods/Markers';
-import { Place, MapType } from "../../shared/shareddtypes";
+import { Place, MapType, Friend } from "../../shared/shareddtypes";
+import { getFriends, getLocations } from './components/Friends/FriendsPods';
+import Amigos from './components/Amigos';
 
 type MapProps = {
 
@@ -23,7 +25,9 @@ function MapsPage(props: MapProps): JSX.Element {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [filteredPlaces, setFilteredPlaces] = useState<Array<Place>>();
     const [categorias, setCategorias] = useState<string[]>([]);
+    const [friends, setFriends] = useState<Friend[]>([]);
     const [amigos, setAmigos] = useState<string[]>([]);
+    const [mapas, setMapas] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(30);
     const [onlyOnce, setOnlyOnce] = useState(true);
@@ -33,6 +37,28 @@ function MapsPage(props: MapProps): JSX.Element {
     const { webId } = session.info;
     console.log(webId);
 
+
+    const getAmigos = async () => {
+        if (session.info.webId !== undefined && session.info.webId !== "") {
+            let aux = await getFriends(webId!).then((friendsPromise) => {
+                return friendsPromise;
+            });
+            console.log("Mis amigos: ");
+
+            let amigosNames:string[] = [];
+            getLocations(aux);
+            aux.forEach(friend => {
+                amigosNames.push(friend.name);
+            });
+            
+            setAmigos(amigosNames);
+            setFriends(aux);
+        }else{
+            setAmigos([]);
+            setFriends([]);
+        };
+    };
+
     const getMarkups = async () => {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
@@ -41,20 +67,29 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(undefined);
         setNewMarker(undefined);
 
-        let mapas: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/map/");
+        let mapasa: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/map/");
 
-        if (mapas.length === 0) {
+        if (mapasa.length === 0) {
             return;
         }
 
-        setMaps(mapas);
+        
+        setMaps(mapasa);
 
         let places: Place[] = [];
 
-        mapas.map((mapa) => {
-            mapa.map.map((lugar) => {
-                places.push(lugar.place);
-            })
+        mapasa.map((mapa) => {
+            if (mapas.length === 0) {
+                mapa.map.map((lugar) => {
+                    places.push(lugar.place);
+                })
+            } else {
+                if (mapas.includes(mapa.id)) {
+                    mapa.map.map((lugar) => {
+                        places.push(lugar.place);
+                    })
+                }
+            }
         })
 
         setMarkers(places);
@@ -65,11 +100,14 @@ function MapsPage(props: MapProps): JSX.Element {
         setOnlyOnce(false);
         console.log(webId);
         getMarkups();
+        getAmigos();
     }
 
-    session.onLogout(()=>{
-        setMaps([]); 
-        setMarkers([])
+    session.onLogout(() => {
+        setMaps([]);
+        setMarkers([]);
+        setAmigos([]);
+        setFriends([]);
         setFilteredPlaces([]);;
     })
 
@@ -156,6 +194,11 @@ function MapsPage(props: MapProps): JSX.Element {
         setAmigos(selectedOption);
     };
 
+    const handleMapaChange = (selectedOption: string[]) => {
+        console.log(`Mapa seleccionado: ${selectedOption}`);
+        setMapas(selectedOption);
+    };
+
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
@@ -165,7 +208,25 @@ function MapsPage(props: MapProps): JSX.Element {
     const handleButtonClick = () => {
         console.log("Monstrando todos los puntos entre " + minDistance + " y " + maxDistance + " que entren en las categorias " +
             categorias);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
+
+        let places: Place[] = [];
+
+        maps.map((mapa) => {
+            if (mapas.length === 0) {
+                mapa.map.map((lugar) => {
+                    places.push(lugar.place);
+                })
+            } else {
+                if (mapas.includes(mapa.id)) {
+                    mapa.map.map((lugar) => {
+                        places.push(lugar.place);
+                    })
+                }
+            }
+
+        })
+
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(places)));
     };
 
 
@@ -188,11 +249,15 @@ function MapsPage(props: MapProps): JSX.Element {
                     {/*Contenido menusuperior*/}
                     <div className="left">
                         <Filters
+                            mapas={maps.map((elem) => elem.id)}
+                            friends={amigos}
                             onCategoriaChange={handleCategoriaChange}
                             onAmigoChange={handleAmigoChange}
+                            onMapaChange={handleMapaChange}
                             onMinDistanceChange={handleMinDistanceChange}
                             onButtonClick={handleButtonClick}
                         />
+                        <Amigos friends={friends} />
                     </div>
 
                     {/*Contenido central */}

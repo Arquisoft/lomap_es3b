@@ -1,4 +1,4 @@
-import type { Friend, Location} from "../../../../pods/Friends";
+import type { Friend, Location } from "../../../../shared/shareddtypes";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
