@@ -1,4 +1,3 @@
-import Friends from "../../../pods/Friends";
 import { Friend } from "../../../shared/shareddtypes";
 import Amigo from "./Amigo";
 
@@ -16,7 +15,7 @@ function Amigos({friends}: AmigosProps): JSX.Element {
                 </div>
                 <div className="content">
                     {
-                        friends.map((friend) => <Amigo name={friend.name}/>)
+                        friends.map((friend) => <Amigo name={friend.name} webId={friend.webId}/>)
                     }
                 </div>
             </div>

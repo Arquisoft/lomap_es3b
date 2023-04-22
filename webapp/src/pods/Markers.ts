@@ -89,29 +89,6 @@ async function readFileFromPod(fileURL: string, session: Session, name:string):P
     let fileText = await file.text()
     let fileInfo = JSON.parse(fileText)
 
-    
-    /** 
-    let n = fileInfo.name;
-    let d = fileInfo.direction;
-    let lat = Number(fileInfo.latitude);
-    let lon = Number(fileInfo.longitude);
-    let cate = fileInfo.category;
-    let com = fileInfo.comments;
-    let photoLink = fileInfo.photoLink;
-    let rat = fileInfo.rating;
-
-    let p: Place = {
-      name: n,
-      direction: d,
-      latitude: lat,
-      longitude: lon,
-      comments: com,
-      photoLink: photoLink,
-      category: cate,
-      rating: rat
-    }
-    */
-
     console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);
     console.log(`The file is ${isRawData(file) ? "not " : ""}a dataset.`);
 
