@@ -1,101 +1,121 @@
-import { Session } from "@inrupt/solid-client-authn-browser";
+import type { Friend, Location, MapType } from "../shared/shareddtypes";
+import { fetch, Session } from "@inrupt/solid-client-authn-browser";
+
 import {
-  getSolidDataset,
-  getSourceUrl,
+  Thing,
   getThing,
+  getSolidDataset,
   getUrlAll,
-  getDecimal,addIri,setThing,saveSolidDatasetAt
-  
+  getStringNoLocale,
+  getFile,
+  getContentType,
+  isRawData,
+  getSourceUrl
+
 } from "@inrupt/solid-client";
-import { FOAF } from "@inrupt/vocab-common-rdf";
+
+import { FOAF } from "@inrupt/vocab-common-rdf"
+
+export async function getUserProfile(webID: string) {
+  let profile = webID.split("#")[0];
+  let dataSet = await getSolidDataset(profile, { fetch: fetch });
+  return getThing(dataSet, webID) as Thing;
+}
+
+export async function getFriends(webId: string) {
+
+  let friendURLs = getUrlAll(await getUserProfile(webId), FOAF.knows);
+  let friends: Friend[] = [];
+
+  for (let friend of friendURLs) {
+    // This solution is very ugly, might need some fixing later...
+    if (friend.split("/profile/card").length == 1)
+      friend += "profile/card#me";
+
+    let name = getStringNoLocale(
+      await getUserProfile(friend),
+      FOAF.name
+    ) as string;
+
+    if (friend && friend != webId)
+      friends.push({
+        name: name,
+        webId: friend.split("profile/card#me")[0]
+      });
+
+  }
+  return friends;
+}
 
 
-/**
- * Devuelve un listado de amigos a partir de la session que esta iniciada
- */
-export async function getFriends(session: Session): Promise<string[]> {
+export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Promise<MapType[]> {
+  let mapas: MapType[] = [];
+  let map: MapType;
+
+  for (let i = 0; i < friends.length; i++) {
+    
+    if (session.info.isLoggedIn) {
+
+      const fet = session.fetch;
+
+      try {
+
+        let file = await getFile(
+          friends[i].webId + "map/",               
+          { fetch: fet }       
+        )
+
+        let fileText = await file.text()
+        console.log(fileText);
+
+        //Buscamos los mapas guardados
+
+        var nombreMapas: string[] = []
+
+        if (fileText.includes("ldp:contains")) {
+          nombreMapas = fileText.split("ldp:contains")[1].split(";")[0].replaceAll(">", "").replaceAll("<", "").replaceAll(" ", "").split(",");
+        }
+
+        if (nombreMapas.length === 0) {
+          return [];
+        } else {
+          for (var j = 0; j < nombreMapas.length; j++) {
+            map = await readFileFromPod(friends[i].webId + "map/" + nombreMapas[j], session, nombreMapas[j]);
+            if (map) {
+              mapas.push(map);
+            }
+          }
+        }
+      } catch (err) {
+        console.log("No tienes permisos de lectura de este POD o bien no existe la carpeta");
+        console.log(err);
+      }
+    }
+  }
+
+  console.log(mapas);
+  
+  return Promise.resolve(mapas);
+}
+
+async function readFileFromPod(fileURL: string, session: Session, name: string): Promise<MapType> {
   try {
-    // Obtener el perfil del usuario actual
-    const profileDataset = await getSolidDataset(session.info.webId!, {
-      fetch: session.fetch,
-    });
+    const fet = session.fetch;
+    const file = await getFile(
+      fileURL,               // File in Pod to Read
+      { fetch: fet }       // fetch from authenticated session
+    );
 
-    if (!profileDataset) {
-      throw new Error("No se pudo obtener el recurso 'profile'");
-    }
+    let fileText = await file.text()
+    let fileInfo = JSON.parse(fileText)
 
-    const profileThing = getThing(profileDataset, session.info.webId!);
+    console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);
+    console.log(`The file is ${isRawData(file) ? "not " : ""}a dataset.`);
 
-    if (!profileThing) {
-      throw new Error("No se encontró el perfil de usuario en el recurso 'profile'");
-    }
+    return fileInfo;
 
-    const listFriends = getUrlAll(profileThing, FOAF.knows);
-
-    return listFriends;
-  } catch (error) {
-    console.error("Ocurrió un error al obtener la lista de amigos:", error);
-    throw error;
+  } catch (err) {
+    console.log(err);
+    return Promise.reject();
   }
 }
-
-/** 
-export async function getFriendData(session: Session, friendWebId: string) {
-  // Obtener el dataset del perfil del amigo
-  const friendDataset = await getSolidDataset(friendWebId, { fetch: session.fetch });
-
-  // Obtener la ubicación del archivo de datos de los lugares del amigo
-  const friendProfile = getThing(friendDataset, friendWebId);
-  const friendPlacesUrl = getUrlAll(friendProfile!, "https://schema.org/dataFeed")[0];
-
-  // Obtener el dataset de los lugares del amigo
-  const friendPlacesDataset = await getSolidDataset(friendPlacesUrl, { fetch: session.fetch });
-
-  // Obtener los lugares del amigo
-  const friendPlaces = getThing(friendPlacesDataset, friendPlacesUrl);
-  const places = getUrlAll(friendPlaces!, "https://schema.org/itemListElement").map((placeUrl) => {
-    const place = getThing(friendPlacesDataset, placeUrl);
-    return {
-      name: place?.getString("https://schema.org/name")!,
-      description: place?.getString("https://schema.org/description") || "",
-      latitude: getDecimal(place?.getLiteral("https://schema.org/latitude")),
-      longitude: getDecimal(place?.getLiteral("https://schema.org/longitude")),
-    };
-  });
-
-  return places;
-}
-*/
-
-//Function that adds a new friend to the user's profile
-export async function addNewFriend(webId: string, session: Session, friendWebId: string): Promise<void> {
-    // Obtener el conjunto de datos Solid del perfil
-    const profileDataset = await getSolidDataset(webId);
-
-    const thing = getThing(profileDataset, webId);
-
-    const updatedThing = addIri(thing!, FOAF.knows, friendWebId);
-
-    const updatedProfileDataset = setThing(profileDataset, updatedThing);
-
-    await saveSolidDatasetAt(webId, updatedProfileDataset, {
-        fetch: session.fetch,
-    });
-}
-
-// Ejemplo de uso: NONONOONONONNONONONONO
-async function ejemploDeUso() {
-  const session = new Session();
-  //await session.login();
-
-  const friends = await getFriends(session);
-
-  for (const friend of friends) {
-    //const friendData = await getFriendData(session, friend);
-    //console.log(`Lugares de ${friend}:`, friendData);
-  }
-
-  await session.logout();
-}
-
-export default {getFriends, addNewFriend};

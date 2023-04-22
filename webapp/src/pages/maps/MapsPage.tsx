@@ -8,7 +8,7 @@ import Map from "./components/Map";
 import './MapsPage.css';
 import { getMapsPOD } from '../../pods/Markers';
 import { Place, MapType, Friend } from "../../shared/shareddtypes";
-import { getFriends, getLocations } from './components/Friends/FriendsPods';
+import { getFriends, getFriendsMapsPOD } from '../../pods/Friends';
 import Amigos from './components/Amigos';
 
 type MapProps = {
@@ -46,13 +46,16 @@ function MapsPage(props: MapProps): JSX.Element {
             console.log("Mis amigos: ");
 
             let amigosNames:string[] = [];
-            getLocations(aux);
+
             aux.forEach(friend => {
                 amigosNames.push(friend.name);
             });
             
             setAmigos(amigosNames);
             setFriends(aux);
+
+            let mapasAmigos = await getFriendsMapsPOD(session,aux);
+            console.log(mapasAmigos);
         }else{
             setAmigos([]);
             setFriends([]);
