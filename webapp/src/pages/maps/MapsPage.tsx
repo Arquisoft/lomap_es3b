@@ -6,16 +6,10 @@ import Filters from "./components/Filters";
 import Info from "./components/Info";
 import Map from "./components/Map";
 import './MapsPage.css';
-
-import { getMarkersPOD } from '../../pods/Markers';
-import Button from 'react-bootstrap/esm/Button';
-import { addMarker, getPlaces } from "../../api/api";
-import { Place } from "../../shared/shareddtypes";
-import StarRatings from 'react-star-ratings';
-
-
-
-
+import { getMapsPOD } from '../../pods/Markers';
+import { Place, MapType, Friend } from "../../shared/shareddtypes";
+import { getFriends, getFriendsMapsPOD } from '../../pods/Friends';
+import Amigos from './components/Amigos';
 
 type MapProps = {
 
@@ -24,13 +18,16 @@ type MapProps = {
 function MapsPage(props: MapProps): JSX.Element {
 
     const [markers, setMarkers] = useState<Array<Place>>();
+    const [maps, setMaps] = useState<Array<MapType>>([]);
     const [selectedMarker, setSelectedMarker] = useState<Place>();
     const [newMarker, setNewMarker] = useState<L.Marker>();
     const [newPlace, setNewPlace] = useState<Place>();
     const [mostrarModal, setMostrarModal] = useState(false);
     const [filteredPlaces, setFilteredPlaces] = useState<Array<Place>>();
     const [categorias, setCategorias] = useState<string[]>([]);
+    const [friends, setFriends] = useState<Friend[]>([]);
     const [amigos, setAmigos] = useState<string[]>([]);
+    const [mapas, setMapas] = useState<string[]>([]);
     const [minDistance, setMinDistance] = useState<number>(0);
     const [maxDistance, setMaxDistance] = useState<number>(30);
     const [onlyOnce, setOnlyOnce] = useState(true);
@@ -40,36 +37,122 @@ function MapsPage(props: MapProps): JSX.Element {
     const { webId } = session.info;
     console.log(webId);
 
-   
+
+    const getAmigos = async () => {
+        if (session.info.webId !== undefined && session.info.webId !== "") {
+            let aux = await getFriends(webId!).then((friendsPromise) => {
+                return friendsPromise;
+            });
+            console.log("Mis amigos: ");
+
+            let amigosNames: string[] = [];
+
+            aux.forEach(friend => {
+                amigosNames.push(friend.name);
+            });
+
+            setAmigos(amigosNames);
+            setFriends(aux);
+
+            let mapasAmigos = await getFriendsMapsPOD(session, aux);
+
+
+            let mapasNuevos = maps;
+
+            mapasAmigos.map((m) => mapasNuevos.push(m))
+            setMaps(mapasNuevos);
+
+
+            let places: Place[] = [];
+
+            mapasNuevos.map((mapa) => {
+                if (mapas.length === 0) {
+                    mapa.map.map((lugar) => {
+                        places.push(lugar.place);
+                    })
+                } else {
+                    if (mapas.includes(mapa.id)) {
+                        mapa.map.map((lugar) => {
+                            places.push(lugar.place);
+                        })
+                    }
+                }
+            })
+
+            setMarkers(places);
+            setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(places)));
+        } else {
+            setAmigos([]);
+            setFriends([]);
+        };
+    };
 
     const getMarkups = async () => {
 
         //Asignar a un array el resultado de llamar a getMarkersPOD()
-        let lugaresArray: any;
-        lugaresArray = await getMarkersPOD(session, webId!.split("/profile")[0]+"/map/");
+
         setSelectedMarker(undefined);
         setNewPlace(undefined);
         setNewMarker(undefined);
-        setMarkers(lugaresArray);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(lugaresArray)));
+
+        let mapasa: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/public/map/");
+
+        if (mapasa.length === 0) {
+            return;
+        }
+
+
+        setMaps(mapasa);
+
+        let places: Place[] = [];
+
+        mapasa.map((mapa) => {
+            if (mapas.length === 0) {
+                mapa.map.map((lugar) => {
+                    places.push(lugar.place);
+                })
+            } else {
+                if (mapas.includes(mapa.id)) {
+                    mapa.map.map((lugar) => {
+                        places.push(lugar.place);
+                    })
+                }
+            }
+        })
+
+        setMarkers(places);
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(places)));
     }
 
     if (session.info.isLoggedIn && onlyOnce) {
         setOnlyOnce(false);
         console.log(webId);
         getMarkups();
+        getAmigos();
     }
+
+    session.onLogout(() => {
+        setMaps([]);
+        setMarkers([]);
+        setAmigos([]);
+        setFriends([]);
+        setFilteredPlaces([]);;
+    })
 
     const centro: [number, number] = [43.35485, -5.85123]
 
     const filterPlaces = (places: Place[]) => {
-        if (categorias.length === 0) {
-            return places;
+        if (places !== undefined && places !== null) {
+            if (categorias.length === 0) {
+                return places;
+            } else {
+                return places.filter((place) => {
+                    const categoryMatch = categorias.includes(place.category);
+                    return categoryMatch;
+                });
+            }
         } else {
-            return places.filter((place) => {
-                const categoryMatch = categorias.includes(place.category);
-                return categoryMatch;
-            });
+            return [];
         }
     }
 
@@ -110,20 +193,22 @@ function MapsPage(props: MapProps): JSX.Element {
      * Pone el marcador cuando se hace click en el mapa para mostrar
      */
     function handleNewMarkerOnClick(m: L.Marker): void {
-        setSelectedMarker(undefined);
-        setNewMarker(m);
-        setMostrarModal(true);
-        let p: Place = {
-            name: "",
-            direction: "",
-            latitude: m.getLatLng().lat,
-            longitude: m.getLatLng().lng,
-            comments: "",
-            photoLink: [],
-            category: "",
-            rating: 0.0
+        if (session.info.isLoggedIn) {
+            setSelectedMarker(undefined);
+            setNewMarker(m);
+            setMostrarModal(true);
+            let p: Place = {
+                name: "",
+                direction: "",
+                latitude: m.getLatLng().lat,
+                longitude: m.getLatLng().lng,
+                comments: "",
+                photoLink: [],
+                category: "",
+                rating: 0.0
+            }
+            setNewPlace(p);
         }
-        setNewPlace(p);
     }
 
 
@@ -137,6 +222,11 @@ function MapsPage(props: MapProps): JSX.Element {
         setAmigos(selectedOption);
     };
 
+    const handleMapaChange = (selectedOption: string[]) => {
+        console.log(`Mapa seleccionado: ${selectedOption}`);
+        setMapas(selectedOption);
+    };
+
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
         console.log(`Distancia seleccionada: ${selectedMinDistance} y ${selectedMaxDistance}`);
         setMinDistance(selectedMinDistance);
@@ -146,14 +236,32 @@ function MapsPage(props: MapProps): JSX.Element {
     const handleButtonClick = () => {
         console.log("Monstrando todos los puntos entre " + minDistance + " y " + maxDistance + " que entren en las categorias " +
             categorias);
-        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(markers!)));
+
+        let places: Place[] = [];
+
+        maps.map((mapa) => {
+            if (mapas.length === 0) {
+                mapa.map.map((lugar) => {
+                    places.push(lugar.place);
+                })
+            } else {
+                if (mapas.includes(mapa.id)) {
+                    mapa.map.map((lugar) => {
+                        places.push(lugar.place);
+                    })
+                }
+            }
+
+        })
+
+        setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(places)));
     };
 
 
 
 
     console.log(selectedMarker);
-    
+
     return (
         <>
             <div className="mapspage">
@@ -168,12 +276,16 @@ function MapsPage(props: MapProps): JSX.Element {
 
                     {/*Contenido menusuperior*/}
                     <div className="left">
-                        <Filters 
-                        onCategoriaChange={handleCategoriaChange}
-                        onAmigoChange={handleAmigoChange}
-                        onMinDistanceChange={handleMinDistanceChange}
-                        onButtonClick={handleButtonClick}
+                        <Filters
+                            mapas={maps.map((elem) => elem.id)}
+                            friends={amigos}
+                            onCategoriaChange={handleCategoriaChange}
+                            onAmigoChange={handleAmigoChange}
+                            onMapaChange={handleMapaChange}
+                            onMinDistanceChange={handleMinDistanceChange}
+                            onButtonClick={handleButtonClick}
                         />
+                        <Amigos friends={friends} />
                     </div>
 
                     {/*Contenido central */}
@@ -190,14 +302,13 @@ function MapsPage(props: MapProps): JSX.Element {
 
                         {/*Información*/}
                         <div className="informacion">
-                            {selectedMarker && !newMarker ? <Info place={selectedMarker}/> : !selectedMarker && newMarker && mostrarModal ?
+                            {selectedMarker && !newMarker ? <Info place={selectedMarker} /> : !selectedMarker && newMarker && mostrarModal ?
                                 <div id="myModal" className="modal">
                                     <div className="modal-content">
-                                        <button id="closeModal" type="button" className="close" onClick={() => setMostrarModal(false)} aria-label="Close">
+                                        <button id="closeModal" type="button" className="close btn btn-primary" onClick={() => setMostrarModal(false)} aria-label="Close">
                                             <span>&times;</span>
                                         </button>
-
-                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={()=>{getMarkups();}}/>
+                                        <ModalFormAñadirLugar newPlace={newPlace} rechargeMarkers={() => { getMarkups(); }} mapas={maps!} />
                                     </div>
                                 </div> : <></>}
                         </div>

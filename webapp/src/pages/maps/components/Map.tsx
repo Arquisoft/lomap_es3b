@@ -14,26 +14,22 @@ type MapProps = {
 
 const icon = new L.Icon({
     iconUrl: require('../../../assets/marker-icon.png'),
-    iconSize: new L.Point(50, 50),
-    iconAnchor: [25, 50],
+    iconSize: new L.Point(30, 30),
+    iconAnchor: [15, 30],
     className: 'leaflet-div-icon'
 });
 
 function Map(props: MapProps): JSX.Element {
 
-
     const MapContent = () => {
-        const map = useMapEvents({
+
+        const mapa = useMapEvents({
             click(e) {
-                if (props.newMarker) {
-                    map.removeLayer(props.newMarker);
-                }
                 var marker = new L.Marker([e.latlng.lat, e.latlng.lng]);
                 props.funcNewMarker(marker);
                 marker.setIcon(icon);
-                map.addLayer(marker);
-            },
-        })
+            }
+        });
 
         return (
             <>
@@ -46,15 +42,47 @@ function Map(props: MapProps): JSX.Element {
         marker: Place
     }
 
-    
+
 
     const CustomMarker = function (propsM: markerProps) {
         const map = useMap()
 
+        let icono = undefined;
+
+        switch (propsM.marker.category) {
+            case "Monumento":
+                icono = new L.Icon({
+                    iconUrl: require('../../../assets/icono-monumento.png'),
+                    iconSize: new L.Point(30, 30),
+                    iconAnchor: [15, 15],
+                    className: 'leaflet-div-icon'
+                });
+                break;
+            case "Biblioteca":
+                icono = new L.Icon({
+                    iconUrl: require('../../../assets/icono-biblioteca.png'),
+                    iconSize: new L.Point(30, 30),
+                    iconAnchor: [15, 15],
+                    className: 'leaflet-div-icon'
+                });
+                break;
+            case "Restaurante":
+                icono = new L.Icon({
+                    iconUrl: require('../../../assets/icono-restaurante.png'),
+                    iconSize: new L.Point(30, 30),
+                    iconAnchor: [15, 15],
+                    className: 'leaflet-div-icon'
+                });
+                break;
+            default:
+                icono = icon;
+                break;
+        }
+
         return (<Marker
             key={propsM.marker.direction}
             position={[propsM.marker.latitude, propsM.marker.longitude]}
-            icon={icon}
+            icon={icono}
             eventHandlers={{
                 click: (e) => {
                     if (props.newMarker) {
