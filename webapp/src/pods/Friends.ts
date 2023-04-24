@@ -61,7 +61,7 @@ export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Pr
       try {
 
         let file = await getFile(
-          friends[i].webId + "map/",               
+          friends[i].webId + "public/map/",               
           { fetch: fet }       
         )
 
@@ -80,7 +80,7 @@ export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Pr
           return [];
         } else {
           for (var j = 0; j < nombreMapas.length; j++) {
-            map = await readFileFromPod(friends[i].webId + "map/" + nombreMapas[j], session, nombreMapas[j]);
+            map = await readFileFromPod(friends[i].webId + "/public/map/" + nombreMapas[j], session, nombreMapas[j]);
             if (map) {
               mapas.push(map);
             }

@@ -45,18 +45,43 @@ function MapsPage(props: MapProps): JSX.Element {
             });
             console.log("Mis amigos: ");
 
-            let amigosNames:string[] = [];
+            let amigosNames: string[] = [];
 
             aux.forEach(friend => {
                 amigosNames.push(friend.name);
             });
-            
+
             setAmigos(amigosNames);
             setFriends(aux);
 
-            let mapasAmigos = await getFriendsMapsPOD(session,aux);
-            console.log(mapasAmigos);
-        }else{
+            let mapasAmigos = await getFriendsMapsPOD(session, aux);
+
+
+            let mapasNuevos = maps;
+
+            mapasAmigos.map((m) => mapasNuevos.push(m))
+            setMaps(mapasNuevos);
+
+
+            let places: Place[] = [];
+
+            mapasNuevos.map((mapa) => {
+                if (mapas.length === 0) {
+                    mapa.map.map((lugar) => {
+                        places.push(lugar.place);
+                    })
+                } else {
+                    if (mapas.includes(mapa.id)) {
+                        mapa.map.map((lugar) => {
+                            places.push(lugar.place);
+                        })
+                    }
+                }
+            })
+
+            setMarkers(places);
+            setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterPlaces(places)));
+        } else {
             setAmigos([]);
             setFriends([]);
         };
@@ -70,13 +95,13 @@ function MapsPage(props: MapProps): JSX.Element {
         setNewPlace(undefined);
         setNewMarker(undefined);
 
-        let mapasa: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/map/");
+        let mapasa: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/public/map/");
 
         if (mapasa.length === 0) {
             return;
         }
 
-        
+
         setMaps(mapasa);
 
         let places: Place[] = [];

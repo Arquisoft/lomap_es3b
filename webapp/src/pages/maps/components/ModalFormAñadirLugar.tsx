@@ -44,7 +44,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         var blob = new Blob([JSON.stringify(mapa)], { type: "aplication/json" });
         var file = new File([blob], mapName + ".info", { type: blob.type });
 
-        var mapUrl = webId!.split("/profile")[0] + "/map/";
+        var mapUrl = webId!.split("/profile")[0] + "/public/map/";
 
         await addMapPOD(session, mapName, file, mapUrl)
         console.log("Mapa actualizado");
@@ -70,7 +70,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         let mapaSelected = (document.getElementById("mapa_input") as HTMLInputElement).value
         let fotos = (document.getElementById("fotos") as HTMLInputElement).files;
 
-        let puntuacion = parseInt((document.getElementById("rating") as HTMLInputElement).value, 10);
+        let puntuacion = rating;
 
         if (fotos) {
             const formData = new FormData();

@@ -28,7 +28,7 @@ function Amigo({ name, webId }: AmigoProps): JSX.Element {
     const getAmigoAccess = async () => {
 
         // Fetch the SolidDataset and its associated ACLs, if available:
-        const myDatasetWithAcl = await getSolidDatasetWithAcl(session.info.webId!.split("/profile")[0] + "/map/", { fetch: session.fetch });
+        const myDatasetWithAcl = await getSolidDatasetWithAcl(session.info.webId!.split("/profile")[0] + "/public/map/", { fetch: session.fetch });
 
         const permisos = getAgentAccess(myDatasetWithAcl, webId)
         
@@ -49,7 +49,7 @@ function Amigo({ name, webId }: AmigoProps): JSX.Element {
 
     async function changePermissions(friendWebId: string) {
         // Fetch the SolidDataset and its associated ACLs, if available:
-        const myDatasetWithAcl = await getSolidDatasetWithAcl(session.info.webId!.split("/profile")[0] + "/map/", { fetch: session.fetch });
+        const myDatasetWithAcl = await getSolidDatasetWithAcl(session.info.webId!.split("/profile")[0] + "/public/map/", { fetch: session.fetch });
 
         // Obtain the SolidDataset's own ACL, if available,
         // or initialise a new one, if possible:
