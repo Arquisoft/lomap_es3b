@@ -3,7 +3,7 @@ import express, { Application } from 'express';
 import * as http from 'http';
 import bp from 'body-parser';
 import cors from 'cors';
-import api from '../routes/api';
+import api from './routes/api';
 import { MongoClient } from 'mongodb';
 
 
