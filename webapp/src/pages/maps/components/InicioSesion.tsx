@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSession } from '@inrupt/solid-ui-react';
 import {  useState } from "react";
 import Modal from './loginForm/Modal';

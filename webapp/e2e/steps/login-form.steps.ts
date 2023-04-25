@@ -4,7 +4,6 @@ import puppeteer from "puppeteer";
 const feature = loadFeature('./features/login-form.feature');
 
 let page: puppeteer.Page;
-let inruptPage: puppeteer.Page;
 let browser: puppeteer.Browser;
 
 defineFeature(feature, test => {
