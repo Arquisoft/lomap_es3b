@@ -1,4 +1,4 @@
-import { Place, MapType } from "../../../shared/shareddtypes";
+import { Place, MapType, CommentType } from "../../../shared/shareddtypes";
 import { addMapPOD } from "../../../pods/Markers";
 import { useSession } from "@inrupt/solid-ui-react";
 import { useState } from "react";
@@ -6,6 +6,8 @@ import { useState } from "react";
 import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
+import { getProfileName } from "../../../pods/Profile";
+
 
 
 type FormProps = {
@@ -34,12 +36,17 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         'MapaNuevo'
     ]
 
-    async function guardarEnPOD(place: Place, mapa: MapType, mapName:string) {
+    async function guardarEnPOD(place: Place, mapa: MapType, mapName: string) {
 
         let uniqueId = Date.now().toString(36) + Math.random().toString(36).substring(2);
 
         mapa.id = mapName;
-        mapa.map.push({id: uniqueId, place: place})
+
+        mapa.map.push({
+            id: uniqueId,
+            place: place,
+            owner: mapa.owner,
+        })
 
         var blob = new Blob([JSON.stringify(mapa)], { type: "aplication/json" });
         var file = new File([blob], mapName + ".info", { type: blob.type });
@@ -65,10 +72,24 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
         let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
         let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
-        //let descrpLugar = (document.getElementById("descrpLugar") as HTMLInputElement).value;
+        let comentarioLugar = (document.getElementById("commentLugar") as HTMLInputElement).value;
         let categoria = (document.getElementById("categoria_input") as HTMLInputElement).value;
         let mapaSelected = (document.getElementById("mapa_input") as HTMLInputElement).value
         let fotos = (document.getElementById("fotos") as HTMLInputElement).files;
+
+        let idComentario = crypto.randomUUID();
+
+        let name = await getProfileName(webId!);
+
+        let comentario: CommentType ={
+            id: idComentario,
+            webId: webId!,
+            name: name,
+            date: new Date(),
+            text: comentarioLugar
+        }
+
+        console.log(comentario.date);
 
         let puntuacion = rating;
 
@@ -97,16 +118,21 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
             props.newPlace!.name = nombreLugar;
             props.newPlace!.direction = dirLugar;
             props.newPlace!.category = categoria;
-            props.newPlace!.comments = "";
+            if(!comentarioLugar){
+                props.newPlace!.comments = [];
+            }else{
+                props.newPlace!.comments = [comentario];
+            }
             props.newPlace!.photoLink = urlImagenes;
             props.newPlace!.rating = puntuacion;
         }
 
-        var mapa = props.mapas.find((m) => m.id === mapaSelected);
+        var mapa = props.mapas.find((m) => m.id === mapaSelected && m.owner === webId?.split("profile")[0]);
+        
         if (mapa !== undefined && mapa !== null) {
             await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
-        }else{
-            mapa = {id:mapaSelected, map:[]}
+        } else {
+            mapa = { id: mapaSelected, map: [], owner:webId!.split("profile")[0] }
             await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
         }
     }
@@ -131,7 +157,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 />
                 <label>Nombre: <input id="nombreLugar" type="text" className="inputForm" required></input></label>
                 <label>Dirección: <input id="dirLugar" type="text" className="inputForm" required></input></label>
-                <label>Descripción: <input id="descrpLugar" type="text" className="inputForm"></input></label>
+                <label>Comentario: <input id="commentLugar" type="text" className="inputForm"></input></label>
                 <label>Categoría:
                     <Combobox
                         defaultValue={categories[0]}
@@ -140,7 +166,6 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                         id="categoria"
                     />
                 </label>
-                <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
                 <label>Mapa:
                     <Combobox
                         defaultValue={maps[0]}
@@ -149,7 +174,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                         id="mapa"
                     />
                 </label>
-
+                <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
                 <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
             </form>
 

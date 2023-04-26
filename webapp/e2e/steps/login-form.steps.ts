@@ -6,6 +6,12 @@ const feature = loadFeature('./features/login-form.feature');
 let page: puppeteer.Page;
 let browser: puppeteer.Browser;
 
+function delay(time:number) {
+  return new Promise(function(resolve) { 
+      setTimeout(resolve, time)
+  });
+}
+
 defineFeature(feature, test => {
   
   beforeAll(async () => {
@@ -18,7 +24,7 @@ defineFeature(feature, test => {
       .goto("http://localhost:3000", {
         waitUntil: "networkidle0",
       })
-      .catch(() => {});
+      .catch((err) => {console.log(err)});
   });
 
   test('The user is not logged in the site', ({given,when,then}) => {
@@ -32,23 +38,36 @@ defineFeature(feature, test => {
     });
 
     when('I fill the button of Login and redirect to inrupt and fullfill the form and press submit', async () => {
-      await expect(page).toClick('button', {text:'Login'})
 
-      await expect(page).toFillForm('form[class="login-up-form"]',{
-        username: username,
-        password: password
-      })
-      /*
-        await expect(page).toFillForm('form[name="register"]', {
-        username: username,
-        email: email,
-      })
-      */
-      await expect(page).toClick('button', { text: 'Log In' })
+      //Esperamos hasta que aparezca el boton de Log In
+      await expect(page).toMatchElement('button', { text: 'Log In' });
+      await expect(page).toClick('button', {text:'Log In'});
+
+      //Esperamos a que aparezca el modal de inicio de sesion
+      await expect(page).toMatchElement('button', { text: 'Login with Inrupt' });
+      await expect(page).toClick('button', {text:'Login with Inrupt'});
+      
+      //Rellenamos el formulario de inicio de sesion de inrupt y le damos a log in
+      let userInput = await page.waitForSelector('input[name="username"]');
+      await userInput?.type(username);
+
+      let passInput = await page.waitForSelector('input[name="password"]');
+      await passInput?.type(password);
+
+      await expect(page).toClick('button', { text: 'Log In' });
     });
 
-    then('The session isLoggedIn is true', async () => {
+    then('The user is logged in and then he log out', async () => {
+
+      await delay(5000);
       
+      //Esperamos a que se inicie sesion y que se cambie el boton al de Log Out
+      await expect(page).toMatchElement('button', { text: 'Log Out' });
+      await expect(page).toClick('button', { text: 'Log Out' });
+
+      //Esperamos a que se desconecte del POD
+      await expect(page).toMatchElement('button', { text: 'Log In' });
+
     });
   })
 

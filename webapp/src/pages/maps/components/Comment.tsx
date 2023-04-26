@@ -1,16 +1,17 @@
 import React from 'react';
-
-type Comentario = {
-    usuario: String;
-    fecha: Date;
-    contenido: String;
-}
+import { useState } from 'react';
+import { CommentType } from '../../../shared/shareddtypes';
+import moment from 'moment'
+import { getProfileName } from '../../../pods/Profile';
 
 type CommentProps = {
-    comentario: Comentario;
+    comment: CommentType;
 }
 
 function Comment(props: CommentProps): JSX.Element {
+
+    let fecha = new Date(props.comment.date);
+    console.log(fecha);
 
     return (
         <>
@@ -18,14 +19,14 @@ function Comment(props: CommentProps): JSX.Element {
                 <div>
                     <div className="cabecera">
                         <div className="usuario">
-                            <p>{props.comentario.usuario}</p>
+                            <p>{props.comment.name}</p>
                         </div>
                         <div className="fecha">
-                            <p>{props.comentario.fecha.toDateString()}</p>
+                            <p>{moment().format("MMM Do YYYY")}</p>
                         </div>
                     </div>
                     <div className="contenido">
-                        <p>{props.comentario.contenido}</p>
+                        <p>{props.comment.text}</p>
                     </div>
                 </div>
             </div>
@@ -33,5 +34,4 @@ function Comment(props: CommentProps): JSX.Element {
     );
 }
 
-export type { Comentario };
 export default Comment;
