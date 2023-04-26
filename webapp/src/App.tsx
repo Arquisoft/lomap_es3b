@@ -1,7 +1,8 @@
 
 import {SessionProvider} from '@inrupt/solid-ui-react';
-import './App.css';
 import MapsPage from './pages/maps/MapsPage';
+
+import './App.css';
 
 function App(): JSX.Element {
 
