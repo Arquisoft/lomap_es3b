@@ -1,4 +1,4 @@
-import type { Friend, Location, MapType } from "../shared/shareddtypes";
+import type { Friend, MapType } from "../shared/shareddtypes";
 import { fetch, Session } from "@inrupt/solid-client-authn-browser";
 
 import {
@@ -10,7 +10,9 @@ import {
   getFile,
   getContentType,
   isRawData,
-  getSourceUrl
+  getSourceUrl,
+  getSolidDatasetWithAcl,
+  getAgentAccess
 
 } from "@inrupt/solid-client";
 
@@ -51,18 +53,16 @@ export async function getFriends(webId: string) {
 export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Promise<MapType[]> {
   let mapas: MapType[] = [];
   let map: MapType;
+  if (session.info.isLoggedIn) {
 
-  for (let i = 0; i < friends.length; i++) {
-    
-    if (session.info.isLoggedIn) {
+    const fet = session.fetch;
 
-      const fet = session.fetch;
+    for (let i = 0; i < friends.length; i++) {
 
       try {
-
         let file = await getFile(
-          friends[i].webId + "public/map/",               
-          { fetch: fet }       
+          friends[i].webId + "public/map/",
+          { fetch: fet }
         )
 
         let fileText = await file.text()
@@ -94,7 +94,7 @@ export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Pr
   }
 
   console.log(mapas);
-  
+
   return Promise.resolve(mapas);
 }
 

@@ -28,31 +28,31 @@ function InicioSesion(props: inicioProps): JSX.Element {
         return (
             <>
                 <Button onClick={handleOpenModal}>Log In</Button>
-                {showModal && (
+                {showModal ?
                     <Modal handleClose={handleCloseModal}>
                         <LoginButton
                             oidcIssuer={"https://inrupt.net"}
                             redirectUrl={window.location.href}
                             onError={console.log}
                         >
-                            <Button > Login with Inrupt </Button>
+                            <Button name="inrupt"> Login with Inrupt </Button>
                         </LoginButton>
                         <LoginButton
                             oidcIssuer={"https://solidcommunity.net/"}
                             redirectUrl={window.location.href}
                             onError={console.log}
                         >
-                            <Button > Login with SolidCommunity </Button>
+                            <Button name="solidcommunity"> Login with SolidCommunity </Button>
                         </LoginButton>
-                    </Modal>
-                )}
+                    </Modal>:<></>
+                }
             </>
         );
     } else {
         return (
             <>
                 <LogoutButton onError={console.log} >
-                    <Button onClick={()=>{}}>Logout</Button>
+                    <Button onClick={()=>{}}>Log Out</Button>
                 </LogoutButton>
             </>
         );
