@@ -29,7 +29,9 @@ app.listen(port, ():void => {
     console.error('Error occured: ' + error.message);
 });
 
- 
+/**
+ * 
+
 const lugarPrueba: Place = {
     name:"Prueba con categoria 2",
     direction:"Antuna Branka Simica 18",
@@ -39,7 +41,7 @@ const lugarPrueba: Place = {
     photoLink:[],
     category:"Monumento",
     rating:3.0
-}
+}*/
 //connectToDatabase();
 // guardarLugar(lugarPrueba);
 //nuevoComentario2(lugarPrueba, "Un sitio genial");
