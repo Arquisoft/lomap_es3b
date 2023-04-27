@@ -4,6 +4,7 @@ import { defaults } from 'jest-config';
 
 const config: Config = {
     moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
+    testEnvironment:"jsdom",
     transformIgnorePatterns: [
         "node_modules/(@inrupt|jose)"
     ],
