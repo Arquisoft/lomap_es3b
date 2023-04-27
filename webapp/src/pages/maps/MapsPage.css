@@ -103,6 +103,9 @@ html {
     background-color: var(--orange200);
     border-radius: 8px 8px 0px 0px;
     padding: 0px 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .info>.content>.header>p {
@@ -112,6 +115,12 @@ html {
     overflow: hidden;
     text-overflow: ellipsis;
     color: white;
+}
+
+.info>.content>.header>.star-ratings {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
 }
 
 .info>.content>.body {
@@ -161,6 +170,7 @@ html {
 .comentario>div>.cabecera {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     background-color: var(--orange200);
     border-radius: 8px 8px 0px 0px;
 }

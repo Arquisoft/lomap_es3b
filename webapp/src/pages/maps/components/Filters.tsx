@@ -2,12 +2,12 @@ import Dropdown from "./Dropdown";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../../styles.css";
-import React, { useEffect, useState } from "react";
-import { useSession } from "@inrupt/solid-ui-react";
+import React, { useState } from "react";
+import { Friend, MapType } from "../../../shared/shareddtypes";
 
 type Props = {
-  mapas:string[];
-  friends:string[];
+  mapas:MapType[];
+  friends:Friend[];
   onCategoriaChange: (selectedOption: string[]) => void;
   onAmigoChange: (selectedOption: string[]) => void;
   onMapaChange: (selectedOption:string[])=> void;
@@ -22,10 +22,6 @@ export default function Filters({mapas, friends ,onCategoriaChange, onAmigoChang
     'Monumento',
     'Restaurante',
   ];
-
-  const friendsNames: string[] = [];
-
-  const { session } = useSession();
 
   const handleCategoriaChange = (selectedOption: string[]) => {
     onCategoriaChange(selectedOption);
@@ -54,8 +50,8 @@ export default function Filters({mapas, friends ,onCategoriaChange, onAmigoChang
       </div>
       <div className="menu">
         <Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange}/>        
-        <Dropdown items={friends} dropdownTitle="Amigos" onChange={handleAmigoChange} />
-        <Dropdown items={mapas} dropdownTitle="Mapas" onChange={handleMapaChange} />
+        <Dropdown items={friends.map((friend)=>friend.name)} dropdownTitle="Amigos" onChange={handleAmigoChange} />
+        <Dropdown items={mapas.map((mapa)=>mapa.id)} dropdownTitle="Mapas" onChange={handleMapaChange} />
         <div className="slider">
           <label>Distancia(Km):</label>
           <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>

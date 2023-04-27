@@ -8,7 +8,7 @@ export type Place = {
     direction:string;
     latitude:number;
     longitude:number;
-    comments:string;
+    comments:CommentType[];
     photoLink:string[];
     category:string;
     rating: number;
@@ -16,11 +16,13 @@ export type Place = {
 
 export type PlacePOD = {
     id: string;
+    owner: string;
     place: Place;
 }
 
 export type MapType = {
     id: string;
+    owner: string;
     map: PlacePOD[];
 }
 
@@ -29,12 +31,10 @@ export type Friend = {
     webId : string,
 }
 
-export type Location = {
-    id?: string;
-    name: string,
-    category: string,
-    comments?: string,
-    latitud?: number,
-    longitud?: number,
-    score?: number
+export type CommentType = {
+    id: string,
+    name : string,
+    webId: string,
+    date : Date,
+    text : string,
 }
