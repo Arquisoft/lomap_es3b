@@ -23,6 +23,7 @@
     "bootstrap": "^5.2.3",
     "cloudinary": "^1.35.0",
     "csbbust": "1.0.1",
+    "jest": "^29.5.0",
     "jest-environment-jsdom": "^29.5.0",
     "latest": "^0.2.0",
     "leaflet": "^1.9.3",
