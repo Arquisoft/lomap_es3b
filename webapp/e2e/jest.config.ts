@@ -1,10 +1,15 @@
-export default {
+
+import type {Config} from 'jest';
+
+const config:Config = {
     transform: {
-        "^.+\\.tsx?$": "ts-jest"
+        "^.+\\.ts?$": "ts-jest"
     },
     testMatch: ["**/steps/*.ts"],
-    moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-    moduleNameMapper:{"^uuid$": "uuid"},
+    moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node", "css", "jpg"],
+    moduleNameMapper: { "^uuid$": "uuid" },
     preset: "jest-puppeteer",
     testTimeout: 30000
 }
+
+export default config;

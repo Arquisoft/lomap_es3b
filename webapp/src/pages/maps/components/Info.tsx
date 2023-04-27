@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
 import Tab from './Tab';
-import Comment,{Comentario} from './Comment';
-import { Place } from '../../../shared/shareddtypes';
-
+import Comment  from './Comment';
+import { PlacePOD, CommentType} from '../../../shared/shareddtypes';
+import StarRatings from 'react-star-ratings';
 
 type InfoProps = {
-    place:Place;
+    place:PlacePOD;
 };
 
 enum TabEnum { 
@@ -30,11 +30,11 @@ function Info(props: InfoProps): JSX.Element{
             break;
         //Contenido si el valor seleccionado es Imágenes
         case TabEnum.Imágenes:
-            contenido = ContenidoImagenes(props.place.photoLink);
+            contenido = ContenidoImagenes(props.place.place.photoLink);
             break;
         //Contenido si el valor seleccionado es Comentarios
         case TabEnum.Comentarios:
-            contenido = ContenidoComentarios(num, setNum);
+            contenido = ContenidoComentarios(num, setNum, props.place.place.comments);
             break;
         //Contenido por defecto
         default:
@@ -63,18 +63,24 @@ function Info(props: InfoProps): JSX.Element{
     );
 }
 
-function ContenidoInformacion(place:Place):JSX.Element {
+function ContenidoInformacion(place:PlacePOD):JSX.Element {
     return (
         <>
             <div className="header">
                 <p>Información</p>
+                <StarRatings 
+                    rating={place.place.rating}
+                    starDimension="30px"
+                    starSpacing='1px'
+                    starRatedColor="orange"
+                />
             </div>
             <div className="body">
-                <h3>{place.name}</h3>
-                <p><b>Direccion:</b>{place.direction}</p>
-                <p><b>Categoría:</b>{place.category}</p>
-                <p><b>Latitud:</b>{place.latitude}</p>
-                <p><b>Longitud:</b>{place.longitude}</p>
+                <h3>{place.place.name}</h3>
+                <p><b>Direccion:</b>{place.place.direction}</p>
+                <p><b>Categoría:</b>{place.place.category}</p>
+                <p><b>Latitud:</b>{place.place.latitude}</p>
+                <p><b>Longitud:</b>{place.place.longitude}</p>
             </div>
         </>
     );
@@ -94,20 +100,9 @@ function ContenidoImagenes(imgs:string[]):JSX.Element {
     );
 }
 
-function ContenidoComentarios(num:any, setNum:any):JSX.Element {
+function ContenidoComentarios(num:any, setNum:any, comments: CommentType[]):JSX.Element {    
 
-    
-
-    let com:Comentario ={
-        usuario:"Usuario de prueba",
-        fecha:new Date(),
-        contenido:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-    }
-    
-
-    let comentarios = [{key:1,comentario:com}, {key:2,comentario:com},{key:3,comentario:com},{key:4,comentario:com},{key:5,comentario:com}, {key:6,comentario:com}];
-
-    let comentariosAMostrar = comentarios.slice(0,num);
+    let comentariosAMostrar = comments.slice(0,num);
 
     return (
         <>
@@ -116,7 +111,7 @@ function ContenidoComentarios(num:any, setNum:any):JSX.Element {
             </div>
             <div className="body">
                 {comentariosAMostrar.map((item) => (
-                    <Comment comentario={item.comentario}/>
+                    <Comment comment={item}/>
                 ))}
                 <button className="more" onClick={()=>{setNum(num+2)}}>
                     <p>Mas Comentarios</p>

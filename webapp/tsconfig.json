@@ -21,6 +21,7 @@
     "jsx": "react-jsx"
   },
   "include": [
-    "src","e2e"
-, "pages/maps/Prueba.tsx"  ]
+    "src",
+    "e2e"
+  ]
 }

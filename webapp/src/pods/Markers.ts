@@ -1,22 +1,29 @@
 import { Session } from "@inrupt/solid-client-authn-browser";
 import { createContainerAt, saveFileInContainer } from "@inrupt/solid-client";
 import { getFile, isRawData, getContentType, getSourceUrl } from "@inrupt/solid-client";
-import { Place } from "../shared/shareddtypes";
+import { MapType} from "../shared/shareddtypes";
 
-export async function addMarkerPOD(session: Session, name: string, file: File, url: string) {
+export async function addMapPOD(session: Session, name: string, file: File, url: string) {
   try {
+
+    //Comprobamos si existe la carpeta de mapas en el POD
     const fet = session.fetch;
     try{
-      const file = await getFile(
-        url,               // File in Pod to Read
-        { fetch: fet }       // fetch from authenticated session
+      var container = await getFile(
+        url,
+        { fetch: fet }
       );
     }catch(error){
+      
+      //En el caso de que la carpeta no exista la creamos para poder añadir los nuevos mapas
       var result = await createContainerAt(url, { fetch: fet });
       console.log(result);
     }
   } catch (error) {
+    console.log(error)
   }
+
+  //Una vez que o bien la carpeta existe o bien la hemos creado añadimos el nuevo mapa o el mapa modificado
   try {
     await saveFileInContainer(url, file, {
       slug: file.name,
@@ -28,9 +35,9 @@ export async function addMarkerPOD(session: Session, name: string, file: File, u
   }
 }
 
-export async function getMarkersPOD(session: Session, url: string): Promise<Place[]> {
-    let arraySol: Place[] = [];
-    let lug: any;
+export async function getMapsPOD(session: Session, url: string): Promise<MapType[]> {
+    let mapas:MapType[]=[];
+    let map: MapType;
     if (session.info.isLoggedIn) {
 
       //Buscamos los elementos hijos del contenedor
@@ -41,22 +48,37 @@ export async function getMarkersPOD(session: Session, url: string): Promise<Plac
       );
 
       let fileText = await file.text()
+      console.log(fileText);
 
-      var hijosCarpetaMap = fileText.split("ldp:contains")[1].split(";")[0].replaceAll(">", "").replaceAll("<", "").replaceAll(" ", "").split(",");
+      //Buscamos los mapas guardados
 
-      for (var i = 0; i < hijosCarpetaMap.length; i++) {
-        lug = await readFileFromPod(url + hijosCarpetaMap[i], session);
-        if (lug) {
-          arraySol.push(lug);
+      var nombreMapas:string[] = []
+
+      if(fileText.includes("ldp:contains")){
+        nombreMapas = fileText.split("ldp:contains")[1].split(";")[0].replaceAll(">", "").replaceAll("<", "").replaceAll(" ", "").split(",");
+      }
+      
+
+      //Si no hay ningun mapa devolvemos directamente un array vacio
+      //En el caso de que exista algun mapa entonces cojemos y sacamos la informacion de cada mapa y lo añadimos a la lista de mapas a devolver
+
+      if(nombreMapas.length === 0){
+        return [];
+      }else{
+        for (var i = 0; i < nombreMapas.length; i++) {
+          map = await readFileFromPod(url + nombreMapas[i], session, nombreMapas[i]);
+          if (map) {
+            mapas.push(map);
+          }
         }
       }
     }
 
-    console.log(arraySol);
-    return Promise.resolve(arraySol);
+    console.log(mapas);
+    return Promise.resolve(mapas);
 }
 
-async function readFileFromPod(fileURL: string, session: Session) {
+async function readFileFromPod(fileURL: string, session: Session, name:string):Promise<MapType> {
   try {
     const fet = session.fetch;
     const file = await getFile(
@@ -65,33 +87,15 @@ async function readFileFromPod(fileURL: string, session: Session) {
     );
 
     let fileText = await file.text()
-    let fileInfo = JSON.parse(fileText)
-
-    let n = fileInfo.name;
-    let d = fileInfo.direction;
-    let lat = Number(fileInfo.latitude);
-    let lon = Number(fileInfo.longitude);
-    let cate = fileInfo.category;
-    let com = fileInfo.comments;
-    let photoLink = fileInfo.photoLink;
-
-    let p: Place = {
-      name: n,
-      direction: d,
-      latitude: lat,
-      longitude: lon,
-      comments: com,
-      photoLink: photoLink,
-      category: cate
-    }
+    let fileInfo = JSON.parse(fileText);
 
     console.log(`Fetched a ${getContentType(file)} file from ${getSourceUrl(file)}.`);
     console.log(`The file is ${isRawData(file) ? "not " : ""}a dataset.`);
 
-    return p;
+    return fileInfo;
 
   } catch (err) {
     console.log(err);
-    return null;
+    return Promise.reject();
   }
 }

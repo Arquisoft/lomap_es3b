@@ -82,7 +82,8 @@ api.post(
     let comments = req.body.comments;
     let photoLink = req.body.photoLink;
     let cat = req.body.category;
-    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:comments, photoLink:photoLink, category:cat};
+    let rat = req.body.rating;
+    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:comments, photoLink:photoLink, category:cat, rating:rat};
     
     guardarLugar(place);
 
