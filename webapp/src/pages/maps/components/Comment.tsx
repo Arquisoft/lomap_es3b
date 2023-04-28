@@ -8,9 +8,6 @@ type CommentProps = {
 
 function Comment(props: CommentProps): JSX.Element {
 
-    let fecha = new Date(props.comment.date);
-    console.log(fecha);
-
     return (
         <>
             <div className="comentario">

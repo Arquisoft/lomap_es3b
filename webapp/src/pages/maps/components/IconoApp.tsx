@@ -5,7 +5,7 @@ type ImageProp = {
 
 };
 
-function Image(props: ImageProp): JSX.Element {
+function IconoApp(props: ImageProp): JSX.Element {
     return (
         <>
             <div className="imagen">
@@ -15,4 +15,4 @@ function Image(props: ImageProp): JSX.Element {
     );
 }
 
-export default Image;
+export default IconoApp;
