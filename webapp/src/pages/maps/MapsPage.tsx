@@ -251,9 +251,24 @@ const handleAmigoChange = (selectedOption: string[]) => {
 const handleMapaChange = (selectedOption: string[]) => {
     console.log(`Mapa seleccionado: ${selectedOption}`);
 
+    var nombres = new Array<string>();
+    var nombrePropietario = new Array<string>();
+
+    selectedOption.forEach(mapa => {
+        var nomrbes = mapa.split("-")
+        nombres.push(nomrbes[0]);
+        nombrePropietario.push(nomrbes[1]);
+    });
+
+    console.log(`Mapa seleccionado: ${nombres}`);
+
+    console.log(maps);
+
     let selectedMaps = maps.filter((mapa) =>{
-        return selectedOption.includes(mapa.id);
+        return nombres.includes(mapa.id) && nombrePropietario.includes(mapa.ownerName);
     })
+
+    console.log(selectedMaps);
 
     if(selectedOption.length===0){
         setFilteredMaps(maps);

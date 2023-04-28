@@ -87,6 +87,18 @@ function ContenidoInformacion(place:PlacePOD):JSX.Element {
 }
 
 function ContenidoImagenes(imgs:string[]):JSX.Element {
+    if (imgs.length === 0) {
+        return (
+          <>
+            <div className="header">
+              <p>Imágenes</p>
+            </div>
+            <div className="body">
+              <p>No hay imágenes para este lugar</p>
+            </div>
+          </>
+        );
+      }
     return (
         <>
             <div className="header">
@@ -100,7 +112,20 @@ function ContenidoImagenes(imgs:string[]):JSX.Element {
     );
 }
 
-function ContenidoComentarios(num:any, setNum:any, comments: CommentType[]):JSX.Element {    
+function ContenidoComentarios(num:any, setNum:any, comments: CommentType[]):JSX.Element {   
+    
+    if (comments.length == 0) {
+        return (
+            <>
+              <div className="header">
+                <p>Imágenes</p>
+              </div>
+              <div className="body">
+                <p>No hay comentarios</p>
+              </div>
+            </>
+          );
+    }
 
     let comentariosAMostrar = comments.slice(0,num);
 
