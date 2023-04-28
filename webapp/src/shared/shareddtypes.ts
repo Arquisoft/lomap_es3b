@@ -38,3 +38,9 @@ export type CommentType = {
     date : Date,
     text : string,
 }
+
+export type Imagen = {
+    título: String;
+    imagen: String;
+    fecha: Date;
+}
