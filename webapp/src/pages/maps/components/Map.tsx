@@ -30,7 +30,7 @@ function Map(props: MapProps): JSX.Element {
 
     const MapContent = () => {
 
-        const mapa = useMapEvents({
+        useMapEvents({
             click(e) {
                 var marker = new L.Marker([e.latlng.lat, e.latlng.lng]);
                 props.funcNewMarker(marker);

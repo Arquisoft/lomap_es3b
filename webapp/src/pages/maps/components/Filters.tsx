@@ -2,7 +2,6 @@ import Dropdown from "./Dropdown";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../../styles.css";
-import React, { useState } from "react";
 import { Friend, MapType } from "../../../shared/shareddtypes";
 
 type Props = {

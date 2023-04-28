@@ -1,8 +1,6 @@
 import React from 'react';
-import { useState } from 'react';
 import { CommentType } from '../../../shared/shareddtypes';
-import moment from 'moment'
-import { getProfileName } from '../../../pods/Profile';
+import moment from 'moment';
 
 type CommentProps = {
     comment: CommentType;
