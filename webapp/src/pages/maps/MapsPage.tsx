@@ -16,8 +16,6 @@ type MapProps = {
 };
 
 function MapsPage(props: MapProps): JSX.Element {
-
-    const [markers, setMarkers] = useState<Array<PlacePOD>>([]);
     const [filteredFriends, setFilteredFriends] = useState<Array<Friend>>([]);
     const [maps, setMaps] = useState<Array<MapType>>([]);
     const [selectedMarker, setSelectedMarker] = useState<PlacePOD>();
@@ -69,11 +67,9 @@ function MapsPage(props: MapProps): JSX.Element {
         mapasPropios.map((mapa) => {
             if (!containsMap(mapasTotales,mapa)) {
                 mapasTotales.push(mapa);
-
-                mapa.map.map((place)=>{
-                    placesTotales.push(place);
-                })
+                mapa.map.map((place)=>placesTotales.push(place));
             }
+            return null;
         })
 
         console.log("Sacamos los amigos")
@@ -92,8 +88,10 @@ function MapsPage(props: MapProps): JSX.Element {
 
                 mapa.map.map((place)=>{
                     placesTotales.push(place);
+                    return null;
                 })
             }
+            return null;
         });
 
 
@@ -107,8 +105,6 @@ function MapsPage(props: MapProps): JSX.Element {
     setFilteredFriends([]);
 
     //Establecemos los lugares
-    setMarkers(placesTotales);
-
     setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterByFriends(filterByCategory(placesTotales))));
 }
 
@@ -120,7 +116,6 @@ if (session.info.isLoggedIn && onlyOnce) {
 
 session.onLogout(() => {
     setMaps([]);
-    setMarkers([]);
     setFriends([]);
     setFilteredPlaces([]);;
 })
@@ -278,7 +273,8 @@ const handleButtonClick = () => {
     console.log(filteredMaps);
 
     filteredMaps.map((mapa) => {
-        mapa.map.map((place) => filteredMapPlaces.push(place))
+        mapa.map.map((place) => filteredMapPlaces.push(place));
+        return null;
     });
 
     console.log(filteredMapPlaces);

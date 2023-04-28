@@ -10,9 +10,7 @@ import {
   getFile,
   getContentType,
   isRawData,
-  getSourceUrl,
-  getSolidDatasetWithAcl,
-  getAgentAccess
+  getSourceUrl
 
 } from "@inrupt/solid-client";
 
@@ -31,7 +29,7 @@ export async function getFriends(webId: string) {
 
   for (let friend of friendURLs) {
     // This solution is very ugly, might need some fixing later...
-    if (friend.split("/profile/card").length == 1)
+    if (friend.split("/profile/card").length === 1)
       friend += "profile/card#me";
 
     let name = getStringNoLocale(
@@ -39,7 +37,7 @@ export async function getFriends(webId: string) {
       FOAF.name
     ) as string;
 
-    if (friend && friend != webId)
+    if (friend && friend !== webId)
       friends.push({
         name: name,
         webId: friend.split("profile/card#me")[0]
