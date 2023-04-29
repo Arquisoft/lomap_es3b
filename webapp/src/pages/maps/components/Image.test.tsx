@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Image from './Image';
@@ -16,7 +12,7 @@ test('Render Icono App', () => {
         fecha: new Date()
     }
 
-    const { getByRole } = render(<Image imagen={imagen}/>);
-    const imageElement = getByRole('imagen');
+    render(<Image imagen={imagen}/>);
+    const imageElement = screen.getByRole('img');
     expect(imageElement).toBeInTheDocument();
 });

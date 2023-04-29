@@ -1,12 +1,7 @@
-/**
- * @jest-environment jsdom
- */
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import MinimumDistanceSlider from './MinimumDistanceSlider';
-import '@testing-library/jest-dom'
-import { fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 
 let onChange: (selectedMinDistance: number, selectedMaxDistance: number) => void;
 test('Render Icono App', () => {
@@ -16,8 +11,8 @@ test('Render Icono App', () => {
       onChange
     };
 
-    const { getByRole }=render(<MinimumDistanceSlider {...props}/>);
-    const sliderElement = getByRole('slider');
+    render(<MinimumDistanceSlider {...props}/>);
+    const sliderElement = screen.getByText("Distancia(Km):");
     expect(sliderElement).toBeInTheDocument();
 
 });

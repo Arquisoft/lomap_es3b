@@ -52,7 +52,6 @@ export default function Filters({mapas, friends ,onCategoriaChange, onAmigoChang
         <Dropdown items={friends.map((friend)=>friend.name)} dropdownTitle="Amigos" onChange={handleAmigoChange} />
         <Dropdown items={mapas.map((mapa)=>mapa.id)} dropdownTitle="Mapas" onChange={handleMapaChange} />
         <div className="slider">
-          <label>Distancia(Km):</label>
           <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
         </div>
         <button type="button" onClick={handleButtonClick} className="btn btn-primary">Aplicar filtros</button>
