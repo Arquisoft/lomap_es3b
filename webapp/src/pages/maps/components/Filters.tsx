@@ -2,7 +2,6 @@ import Dropdown from "./Dropdown";
 import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../../styles.css";
-import React, { useState } from "react";
 import { Friend, MapType } from "../../../shared/shareddtypes";
 import { getProfileName } from "../../../pods/Profile";
 
@@ -54,7 +53,6 @@ export default function Filters({mapas, friends ,onCategoriaChange, onAmigoChang
         <Dropdown items={friends.map((friend)=>friend.name)} dropdownTitle="Amigos" onChange={handleAmigoChange} />
         <Dropdown items={mapas.map((mapa)=>mapa.id + "-" + mapa.ownerName)} dropdownTitle="Mapas" onChange={handleMapaChange} />
         <div className="slider">
-          <label>Distancia(Km):</label>
           <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
         </div>
         <button type="button" onClick={handleButtonClick} className="btn btn-primary">Aplicar filtros</button>

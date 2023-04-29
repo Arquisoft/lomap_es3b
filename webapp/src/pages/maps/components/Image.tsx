@@ -1,10 +1,6 @@
 import React from 'react';
+import { Imagen } from '../../../shared/shareddtypes';
 
-type Imagen = {
-    título: String;
-    imagen: String;
-    fecha: Date;
-}
 
 type ImageProps = {
     imagen: Imagen;

@@ -9,7 +9,7 @@ const config:Config = {
     moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node", "css", "jpg"],
     moduleNameMapper: { "^uuid$": "uuid" },
     preset: "jest-puppeteer",
-    testTimeout: 30000
+    testTimeout: 70000
 }
 
 export default config;

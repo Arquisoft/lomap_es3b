@@ -9,7 +9,7 @@ export async function addMapPOD(session: Session, name: string, file: File, url:
     //Comprobamos si existe la carpeta de mapas en el POD
     const fet = session.fetch;
     try{
-      var container = await getFile(
+      await getFile(
         url,
         { fetch: fet }
       );
