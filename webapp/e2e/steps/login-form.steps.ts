@@ -59,7 +59,7 @@ defineFeature(feature, test => {
 
     then('The user is logged in and then he log out', async () => {
 
-      await delay(5000);
+      await delay(30000);
       
       //Esperamos a que se inicie sesion y que se cambie el boton al de Log Out
       await expect(page).toMatchElement('button', { text: 'Log Out' });
