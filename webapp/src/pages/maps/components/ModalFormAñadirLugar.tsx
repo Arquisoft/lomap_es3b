@@ -7,6 +7,7 @@ import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
+import { randomUUID } from "crypto";
 
 
 
@@ -38,7 +39,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
     async function guardarEnPOD(place: Place, mapa: MapType, mapName: string) {
 
-        let uniqueId = Date.now().toString(36) + Math.random().toString(36).substring(2);
+        let uniqueId = crypto.randomUUID();
 
         mapa.id = mapName;
 
