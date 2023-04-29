@@ -4,7 +4,7 @@ import NavigationMenu from "./components/NavigationMenu";
 import ModalFormAñadirLugar from "./components/ModalFormAñadirLugar"
 import Filters from "./components/Filters";
 import Info from "./components/Info";
-import Map from "./components/Map";
+import Mapa from "./components/Mapa";
 import './MapsPage.css';
 import { getMapsPOD } from '../../pods/Markers';
 import { PlacePOD, Place, MapType, Friend } from "../../shared/shareddtypes";
@@ -269,9 +269,8 @@ const handleButtonClick = () => {
 
     console.log(filteredMaps);
 
-    filteredMaps.map((mapa) => {
-        mapa.map.map((place) => filteredMapPlaces.push(place));
-        return null;
+    filteredMaps.forEach((mapa) => {
+        mapa.map.forEach((place) => filteredMapPlaces.push(place));
     });
 
     console.log(filteredMapPlaces);
@@ -310,7 +309,7 @@ return (
 
                     {/*Mapa*/}
                     <div className="mapa">
-                        <Map markers={filteredPlaces!}
+                        <Mapa markers={filteredPlaces!}
                         funcNewMarker={(m: L.Marker) => { handleNewMarkerOnClick(m); } }
                         funcSelectedMarker={(m: PlacePOD) => { handleMarkerOnClick(m); } }
                         newMarker={newMarker} selectedMarker={selectedMarker}/>

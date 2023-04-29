@@ -24,7 +24,7 @@ const icon = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
-function Map(props: MapProps): JSX.Element {
+function Mapa(props: MapProps): JSX.Element {
 
     const [showMarkers, setShowMarkers] = useState(true);
 
@@ -143,4 +143,4 @@ function Map(props: MapProps): JSX.Element {
     );
 }
 
-export default Map;
+export default Mapa;

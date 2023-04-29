@@ -7,8 +7,6 @@ import Combobox from "react-widgets/Combobox";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
-import { randomUUID } from "crypto";
-
 
 
 type FormProps = {
