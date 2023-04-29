@@ -114,7 +114,7 @@ function ContenidoImagenes(imgs:string[]):JSX.Element {
 
 function ContenidoComentarios(num:any, setNum:any, comments: CommentType[]):JSX.Element {   
     
-    if (comments.length == 0) {
+    if (comments.length === 0) {
         return (
             <>
               <div className="header">

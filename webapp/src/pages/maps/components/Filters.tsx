@@ -3,7 +3,6 @@ import MinimumDistanceSlider from "./MinimumDistanceSlider";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../../styles.css";
 import { Friend, MapType } from "../../../shared/shareddtypes";
-import { getProfileName } from "../../../pods/Profile";
 
 type Props = {
   mapas:MapType[];
