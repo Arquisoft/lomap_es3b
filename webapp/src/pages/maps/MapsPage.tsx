@@ -64,12 +64,11 @@ function MapsPage(props: MapProps): JSX.Element {
         //Sacamos nuestros mapas
         let mapasPropios: MapType[] = await getMapsPOD(session, webId!.split("/profile")[0] + "/public/map/");
 
-        mapasPropios.map((mapa) => {
+        mapasPropios.forEach((mapa) => {
             if (!containsMap(mapasTotales,mapa)) {
                 mapasTotales.push(mapa);
-                mapa.map.map((place)=>placesTotales.push(place));
+                mapa.map.forEach((place)=>placesTotales.push(place));
             }
-            return null;
         })
 
         console.log("Sacamos los amigos")
@@ -82,16 +81,14 @@ function MapsPage(props: MapProps): JSX.Element {
         //Sacamos los mapas de los amigos
         let mapasAmigos = await getFriendsMapsPOD(session, amigos);
 
-        mapasAmigos.map((mapa) => {
+        mapasAmigos.forEach((mapa) => {
             if (!containsMap(mapasTotales,mapa)) {
                 mapasTotales.push(mapa);
 
-                mapa.map.map((place)=>{
+                mapa.map.forEach((place)=>{
                     placesTotales.push(place);
-                    return null;
                 })
             }
-            return null;
         });
 
 
