@@ -1,0 +1,10 @@
+{
+  "simulation": "SimulacionLargaHastaFallo",
+  "simulationId": "simulacionlargahastafallo-20230429163656492",
+  "start": 1682786221471,
+  "description": "",
+  "scenarios": ["SimulacionLargaHastaFallo"],
+  "assertions": [
+
+  ]
+}

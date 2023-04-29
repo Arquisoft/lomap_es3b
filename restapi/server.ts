@@ -26,16 +26,6 @@ app.listen(port, ():void => {
 });
 
 
-const lugarPrueba: Place = {
-    name:"Prueba con categoria 2",
-    direction:"Antuna Branka Simica 18",
-    latitude: 43.50642,
-    longitude: 16.45876,
-    comments:[],
-    photoLink:[],
-    category:"Monumento",
-    rating:3.0
-}
 //connectToDatabase();
 // guardarLugar(lugarPrueba);
 //nuevoComentario2(lugarPrueba, "Un sitio genial");
