@@ -7,7 +7,7 @@ const config: Config = {
         "^.+\\.ts?$": "ts-jest"
     },
     collectCoverage: true,
-    collectCoverageFrom:["api.ts, config.ts, rplaces.ts"],
+    collectCoverageFrom:["api.ts, config.ts"],
     moduleFileExtensions: [...defaults.moduleFileExtensions, 'mts'],
 };
 
