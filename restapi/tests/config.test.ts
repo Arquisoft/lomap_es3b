@@ -5,7 +5,6 @@ const { MongoClient } = require('mongodb');
 const { guardarLugar, connectToDatabase, borrarLugar2 } = require('../database/config'); // Es necesario importar la función que queremos probar
 const {Place} = require('../../webapp/src/shared/shareddtypes');
 
-
 // Creamos los test unitarios
 describe('guardarLugar', () => {
   test('Debe guardar un lugar en la base de datos', async () => {
@@ -33,10 +32,6 @@ describe('guardarLugar', () => {
 });
 
 describe('borrarLugar', () => {
-
-    beforeAll(async () => {
-        connectToDatabase();
-    });
   
     it('should delete a place from the database', async () => {
       // Insert a test place into the database
