@@ -54,14 +54,14 @@ function Dropdown(props:DropdownProps):JSX.Element {
   return (
     <div>
       <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-name-label">{props.dropdownTitle}</InputLabel>
+        <InputLabel id={"dropdown-" + props.dropdownTitle + "-label"}>{props.dropdownTitle}</InputLabel>
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
+          labelId={"dropdown-" + props.dropdownTitle + "-label"}
+          id={"dropdown-" + props.dropdownTitle} 
           multiple
           value={personName}
           onChange={handleChange}
-          input={<OutlinedInput label="Name" />}
+          input={<OutlinedInput label={props.dropdownTitle} />}
           MenuProps={MenuProps}
         >
           {props.items.map((name) => (

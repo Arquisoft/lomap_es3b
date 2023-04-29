@@ -1,9 +1,9 @@
 import L from "leaflet";
 import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Place, PlacePOD } from '../../../shared/shareddtypes';
-import { useEffect, useState } from "react";
+import { PlacePOD } from '../../../shared/shareddtypes';
+import { useState } from "react";
 import IconoRestaurante from "../../../assets/icono-restaurante.svg";
 import IconoMonumento from "../../../assets/icono-monumento.svg";
 import IconoBiblioteca from "../../../assets/icono-biblioteca.svg";
@@ -24,13 +24,13 @@ const icon = new L.Icon({
     className: 'leaflet-div-icon'
 });
 
-function Map(props: MapProps): JSX.Element {
+function Mapa(props: MapProps): JSX.Element {
 
     const [showMarkers, setShowMarkers] = useState(true);
 
     const MapContent = () => {
 
-        const mapa = useMapEvents({
+        useMapEvents({
             click(e) {
                 var marker = new L.Marker([e.latlng.lat, e.latlng.lng]);
                 props.funcNewMarker(marker);
@@ -143,4 +143,4 @@ function Map(props: MapProps): JSX.Element {
     );
 }
 
-export default Map;
+export default Mapa;

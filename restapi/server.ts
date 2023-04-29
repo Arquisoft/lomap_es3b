@@ -4,15 +4,11 @@ import bp from 'body-parser';
 import promBundle from 'express-prom-bundle';
 import api from "./routes/api"; 
 import {Place} from '../webapp/src/shared/shareddtypes';
-import { guardarLugar, connectToDatabase, borrarLugar, borrarLugar2, nuevoComentario2 } from "./database/config";
-
 
 require ('dotenv').config();
 
 const app: Application = express();
 const port: number = 5000;
-
-//const {connectToDatabase} = require("./database/config.ts")
 
 const metricsMiddleware:RequestHandler = promBundle({includeMethod: true});
 app.use(metricsMiddleware);
@@ -29,7 +25,6 @@ app.listen(port, ():void => {
     console.error('Error occured: ' + error.message);
 });
 
- 
 
 //connectToDatabase();
 // guardarLugar(lugarPrueba);

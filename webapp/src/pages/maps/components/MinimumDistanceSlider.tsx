@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 
 // Valor mínimo de distancia entre los dos puntos del slider
-const minDistance = 10;
+const minDistance = 1;
 
 // Props de la clase MinimumDistanceSlider
 type MinimumDistanceSliderProps = {
@@ -58,18 +58,16 @@ export default function MinimumDistanceSlider(props:MinimumDistanceSliderProps) 
 
   // Renderizar el slider
   return (
-    <Box sx={{ width: 300, paddingTop: 3 }}>
+    <Box id="slider" sx={{ width: 300, paddingTop: 3 }}>
+      <label>Distancia(Km):</label>
       <Slider
-        aria-label="Temperature"
+        getAriaLabel={() => 'Distancia'}
         defaultValue={50}
         valueLabelDisplay="auto"
-        step={10}
-        marks
         min={0}
         max={100}
         value={value2}
         onChange={handleChange2}
-        disableSwap
       />
     </Box>
   );
