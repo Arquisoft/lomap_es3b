@@ -12,7 +12,6 @@ import {
     setAgentResourceAccess,
     getAgentAccess
 } from "@inrupt/solid-client";
-import { read } from "fs";
 
 type AmigoProps = {
     name: string,
@@ -45,7 +44,7 @@ function Amigo({ name, webId }: AmigoProps): JSX.Element {
 
     useEffect(() => {
         getAmigoAccess();
-    }, []);
+    });
 
     async function changePermissions(friendWebId: string) {
         // Fetch the SolidDataset and its associated ACLs, if available:

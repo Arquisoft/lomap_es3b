@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Tab from './Tab';
@@ -16,7 +12,7 @@ test('Render Icono App', () => {
         onClick
     }
 
-    const { getByRole } = render(<Tab {...props}/>);
-    const tab = getByRole('tab');
+    render(<Tab {...props}/>);
+    const tab = screen.getByText(props.title);
     expect(tab).toBeInTheDocument();
 });

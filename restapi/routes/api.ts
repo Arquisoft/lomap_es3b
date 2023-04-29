@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from 'express';
-import {check} from 'express-validator';
+import {body, check} from 'express-validator';
 import { cogerLugares, guardarLugar } from '../database/config';
 import {Place} from '../../webapp/src/shared/shareddtypes';
 
@@ -14,16 +14,6 @@ interface User {
     email: string;
 }
 
-/** 
-export interface Place {
-  name: String;
-  longitude: number;
-  latitude: number;
-  direction: String;
-  comments: String;
-  photo: String;
-}
-*/
 
 //This is not a restapi as it mantains state but it is here for
 //simplicity. A database should be used instead.
@@ -54,8 +44,8 @@ api.get(
 
 api.post(
   "/users/add",[
-    check('name').isLength({ min: 1 }).trim().escape(),
-    check('email').isEmail().normalizeEmail(),
+    body('name').isLength({ min: 1 }).trim().escape(),
+    body('email').isEmail().normalizeEmail(),
   ],
   async (req: Request, res: Response): Promise<Response> => {
     let name = req.body.name;
@@ -68,14 +58,13 @@ api.post(
 
 api.post(
   "/db/add",
-  [
-    check('longitude').isLength({ min: 1 }),
-    check('latitude').isLength ({ min: 1 }) 
-  ],
-
   async (req: Request, res: Response): Promise<Response> => {
-    console.log("LLegamos a api.ts de la restapi");
     let name = req.body.name;
+
+    if(!req.body.longitude || !req.body.latitude){
+      return res.sendStatus(400);
+    }
+
     let longitud = req.body.longitude;
     let latitud = req.body.latitude;
     let direccion = req.body.direction;
@@ -85,11 +74,13 @@ api.post(
     let rat = req.body.rating;
     let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:comments, photoLink:photoLink, category:cat, rating:rat};
     
-    guardarLugar(place);
-
+    try {
+      await guardarLugar(place);
+    }catch(err){
+      return res.sendStatus(400);
+    }
     return res.sendStatus(200);
   }
-
 )
 
 api.get('/place/:place', (req:Request, res:Response) => {

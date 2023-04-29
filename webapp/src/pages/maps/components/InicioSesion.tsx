@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSession } from '@inrupt/solid-ui-react';
-import {  useState } from "react";
+import { useState } from "react";
 import Modal from './loginForm/Modal';
 import { LoginButton, LogoutButton } from "@inrupt/solid-ui-react";
 
@@ -44,16 +44,19 @@ function InicioSesion(props: inicioProps): JSX.Element {
                         >
                             <Button name="solidcommunity"> Login with SolidCommunity </Button>
                         </LoginButton>
-                    </Modal>:<></>
+                    </Modal> : <></>
                 }
             </>
         );
     } else {
         return (
             <>
-                <LogoutButton onError={console.log} >
-                    <Button onClick={()=>{}}>Log Out</Button>
-                </LogoutButton>
+                <div>
+                    <LogoutButton onError={console.log} >
+                        <Button onClick={() => { }}>Log Out</Button>
+                    </LogoutButton>
+                </div>
+
             </>
         );
     }
