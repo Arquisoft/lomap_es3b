@@ -1,0 +1,10 @@
+{
+  "simulation": "SimulacionCortaHastaFallo",
+  "simulationId": "simulacioncortahastafallo-20230429154510013",
+  "start": 1682783114819,
+  "description": "Prueba de carga con pocos usuarios a ver si da fallo",
+  "scenarios": ["SimulacionCortaHastaFallo"],
+  "assertions": [
+
+  ]
+}

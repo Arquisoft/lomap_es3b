@@ -1,11 +1,10 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useSession } from '@inrupt/solid-ui-react';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from './loginForm/Modal';
-import { LoginButton, SessionProvider, LogoutButton } from "@inrupt/solid-ui-react";
+import { LoginButton, LogoutButton } from "@inrupt/solid-ui-react";
 
 type inicioProps = {
 
@@ -14,8 +13,6 @@ type inicioProps = {
 function InicioSesion(props: inicioProps): JSX.Element {
 
     const { session } = useSession();
-
-    const [idp, setIdp] = useState("https://inrupt.net");
     const [showModal, setShowModal] = useState(false);
 
     function handleOpenModal() {
@@ -31,27 +28,35 @@ function InicioSesion(props: inicioProps): JSX.Element {
         return (
             <>
                 <Button onClick={handleOpenModal}>Log In</Button>
-                {showModal && (
+                {showModal ?
                     <Modal handleClose={handleCloseModal}>
-                        <Form.Label htmlFor="usuario">Usuario</Form.Label>
-                        <Form.Control type="text" id="usuario" onChange={(e)=>setIdp(e.target.value)}></Form.Control>
                         <LoginButton
-                            oidcIssuer={idp}
+                            oidcIssuer={"https://inrupt.net"}
                             redirectUrl={window.location.href}
                             onError={console.log}
                         >
-                            <Button > Aceptar </Button>
+                            <Button name="inrupt"> Login with Inrupt </Button>
                         </LoginButton>
-                    </Modal>
-                )}
+                        <LoginButton
+                            oidcIssuer={"https://solidcommunity.net/"}
+                            redirectUrl={window.location.href}
+                            onError={console.log}
+                        >
+                            <Button name="solidcommunity"> Login with SolidCommunity </Button>
+                        </LoginButton>
+                    </Modal> : <></>
+                }
             </>
         );
     } else {
         return (
             <>
-                <LogoutButton onError={console.log} >
-                    <Button>Logout</Button>
-                </LogoutButton>
+                <div>
+                    <LogoutButton onError={console.log} >
+                        <Button onClick={() => { }}>Log Out</Button>
+                    </LogoutButton>
+                </div>
+
             </>
         );
     }
