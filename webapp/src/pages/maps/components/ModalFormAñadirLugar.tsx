@@ -4,6 +4,7 @@ import { useSession } from "@inrupt/solid-ui-react";
 import { useState } from "react";
 
 import Combobox from "react-widgets/Combobox";
+import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
@@ -33,12 +34,19 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         'Biblioteca',
         'Monumento',
         'Restaurante',
+        'Tienda',
+        'Parking'
     ];
 
-    const maps = [
-        'MapaBase',
-        'MapaNuevo'
-    ]
+    const maps: string[] = [];
+
+    props.mapas.forEach((mapa) => {
+        console.log(session.info.webId!)
+        console.log(mapa.owner)
+        if(mapa.owner === session.info.webId!.split("profile")[0]){
+            maps.push(mapa.id)
+        }
+    })
 
     async function guardarEnPOD(place: Place, mapa: MapType, mapName: string) {
 
@@ -91,7 +99,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         let nombreLugar = (document.getElementById("nombreLugar") as HTMLInputElement).value;
         let dirLugar = (document.getElementById("dirLugar") as HTMLInputElement).value;
         let comentarioLugar = (document.getElementById("commentLugar") as HTMLInputElement).value;
-        let categoria = (document.getElementById("categoria_input") as HTMLInputElement).value;
+        let categoria = (document.getElementsByName("categoria")[0] as HTMLInputElement).value;
         let mapaSelected = (document.getElementById("mapa_input") as HTMLInputElement).value
         let fotos = (document.getElementById("fotos") as HTMLInputElement).files;
 
@@ -99,7 +107,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
 
         let name = await getProfileName(webId!);
 
-        let comentario: CommentType ={
+        let comentario: CommentType = {
             id: idComentario,
             webId: webId!,
             name: name,
@@ -136,9 +144,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
             props.newPlace!.name = nombreLugar;
             props.newPlace!.direction = dirLugar;
             props.newPlace!.category = categoria;
-            if(!comentarioLugar){
+            if (!comentarioLugar) {
                 props.newPlace!.comments = [];
-            }else{
+            } else {
                 props.newPlace!.comments = [comentario];
             }
             props.newPlace!.photoLink = urlImagenes;
@@ -146,7 +154,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         }
 
         var mapa = props.mapas.find((m) => m.id === mapaSelected && m.owner === webId?.split("profile")[0]);
-        
+
         if (mapa !== undefined && mapa !== null) {
             await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
         } else {
@@ -178,21 +186,24 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 <label>Dirección: <input id="dirLugar" type="text" className="inputForm" defaultValue={dir} required></input></label>
                 <label>Comentario: <input id="commentLugar" type="text" className="inputForm"></input></label>
                 <label>Categoría:
-                    <Combobox
+                    <DropdownList
                         defaultValue={categories[0]}
                         data={categories}
                         name="categoria"
                         id="categoria"
                     />
                 </label>
+
                 <label>Mapa:
                     <Combobox
-                        defaultValue={maps[0]}
+                        placeholder="Nombre del mapa"
+                        defaultValue={maps.length===0?maps[0]:""}
                         data={maps}
                         name="mapa"
                         id="mapa"
                     />
                 </label>
+
                 <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
                 <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
             </form>
