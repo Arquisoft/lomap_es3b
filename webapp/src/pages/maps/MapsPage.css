@@ -208,6 +208,7 @@ html {
 
 .mapa {
     border-radius: 8px;
+    margin: 10px 8px;
 }
 
 .map {
@@ -223,22 +224,8 @@ html {
     border: none;
 }
 
-.buscador {
-    width: calc(100% - 16px);
-    margin: 10px 8px;
-    display: flex;
-    flex-direction: row;
-    border-radius: 8px 8px 8px 8px;
-}
 
-.buscador>button {
-    background-color: var(--orange200);
-    border-radius: 0px 8px 8px 0px;
-    border: 0px;
-    color: white;
-    padding: 0px;
-    margin-right: 4px;
-}
+
 
 .inputForm {
     width: 100%;
