@@ -15,7 +15,8 @@ test('Render Icono App', () => {
     let map:MapType = {
         id: "MapaPrueba",
         owner: "",
-        map: []
+        map: [],
+        ownerName: ""
     }
 
     let friend:Friend = {

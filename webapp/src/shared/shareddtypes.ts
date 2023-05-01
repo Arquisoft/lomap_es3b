@@ -24,6 +24,7 @@ export type MapType = {
     id: string;
     owner: string;
     map: PlacePOD[];
+    ownerName: string;
 }
 
 export type Friend = {

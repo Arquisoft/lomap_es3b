@@ -50,7 +50,7 @@ export default function Filters({mapas, friends ,onCategoriaChange, onAmigoChang
       <div className="menu">
         <Dropdown items={categories} dropdownTitle="Categorias" onChange={handleCategoriaChange}/>        
         <Dropdown items={friends.map((friend)=>friend.name)} dropdownTitle="Amigos" onChange={handleAmigoChange} />
-        <Dropdown items={mapas.map((mapa)=>mapa.id)} dropdownTitle="Mapas" onChange={handleMapaChange} />
+        <Dropdown items={mapas.map((mapa)=>mapa.id + "-" + mapa.ownerName)} dropdownTitle="Mapas" onChange={handleMapaChange} />
         <div className="slider">
           <MinimumDistanceSlider value={0} onChange={handleMinDistanceChange}/>
         </div>
