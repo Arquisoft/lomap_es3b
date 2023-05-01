@@ -20,6 +20,8 @@ export default function Filters({mapas, friends ,onCategoriaChange, onAmigoChang
     'Biblioteca',
     'Monumento',
     'Restaurante',
+    'Tienda',
+    'Parking'
   ];
 
   const handleCategoriaChange = (selectedOption: string[]) => {
