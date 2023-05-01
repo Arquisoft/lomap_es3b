@@ -19,6 +19,12 @@
 
 |Github
 |Todos lo hemos usado ya y sabemos más o menos el funcionamiento, pero hay caracteristicas que son nuevas para nosotros y estamos aprendiendo a utilizar.
+
+|PODs
+|A la hora de guardar lugares en los PODs tenemos problemas con los ACL y, aunque tengas permiso para acceder al POD del usuario en cuestión, todo lo que guardes dentro se irá directo a la carpeta Public, lo cual no es lo ideal.
+
+|Fetch
+|Las cuentas antiguas de Inrupt para algunas labores que queremos realizar no funcionan. Por tanto, es necesaria una cuenta relativamente reciente para poder usar la aplicación.
 |===
 
 [cols="1,1"]

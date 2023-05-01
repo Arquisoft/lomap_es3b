@@ -8,6 +8,7 @@ import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
+import { Console } from "console";
 
 
 type FormProps = {
@@ -22,6 +23,10 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
     const { session } = useSession();
     const { webId } = session.info;
     const [rating, setRating] = useState(0);
+    const [dir,setDir] = useState("");
+
+    getDirectionFromAPI(props.newPlace!.latitude,props.newPlace!.longitude).then((data) => {setDir(data)});
+
 
     let urlImagenes: string[] = [];
 
@@ -63,6 +68,20 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         await addMapPOD(session, mapName, file, mapUrl)
         console.log("Mapa actualizado");
     }
+
+    async function getDirectionFromAPI(lat:number, lng:number){
+        const response = await fetch(
+          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCfMMAO1EahrSRx2oo4bdtS6HKEvuslKvE`);
+        console.log(lat);
+        console.log(lng);
+        const data = await response.json();
+        if (data.status === "OK") {
+          const address:string = data.results[0].formatted_address;
+          return address;
+        } else {
+          throw new Error(`Error al obtener la dirección. Status: ${data.status}`);
+        }
+      }
 
     async function guardarDatos() {
         //abrir el modal
@@ -164,7 +183,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                     starSpacing="5px"
                 />
                 <label>Nombre: <input id="nombreLugar" type="text" className="inputForm" required></input></label>
-                <label>Dirección: <input id="dirLugar" type="text" className="inputForm" required></input></label>
+                <label>Dirección: <input id="dirLugar" type="text" className="inputForm" defaultValue={dir} required></input></label>
                 <label>Comentario: <input id="commentLugar" type="text" className="inputForm"></input></label>
                 <label>Categoría:
                     <DropdownList
