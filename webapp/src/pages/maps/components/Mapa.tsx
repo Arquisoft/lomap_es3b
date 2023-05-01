@@ -140,10 +140,6 @@ function Mapa(props: MapProps): JSX.Element {
 
     return (
         <>
-            <div className="buscador">
-                <input type="text" name="buscar"></input>
-                <button> 🔍︎ Buscar  </button>
-            </div>
             <div className="map">
                 <MapContainer center={[43.35485, -5.85123]} zoom={14} scrollWheelZoom={true}>
                     <TileLayer

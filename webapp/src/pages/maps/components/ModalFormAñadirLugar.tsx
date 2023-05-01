@@ -48,7 +48,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         let uniqueId = crypto.randomUUID();
 
         mapa.id = mapName;
-
+        
         mapa.map.push({
             id: uniqueId,
             place: place,
@@ -139,7 +139,8 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         if (mapa !== undefined && mapa !== null) {
             await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
         } else {
-            mapa = { id: mapaSelected, map: [], owner: webId!.split("profile")[0] }
+            var x = await getProfileName(webId!);
+            mapa = { id: mapaSelected, map: [], owner:webId!.split("profile")[0], ownerName: x}
             await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
         }
     }

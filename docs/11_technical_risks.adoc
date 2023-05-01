@@ -20,3 +20,13 @@
 |Github
 |Todos lo hemos usado ya y sabemos más o menos el funcionamiento, pero hay caracteristicas que son nuevas para nosotros y estamos aprendiendo a utilizar.
 |===
+
+[cols="1,1"]
+|===
+|Deuda Técnica |Explicación 
+
+|Cuentas antiguas de inrupt 
+|En cuentas de inrupt muy antiguas, fetch no funciona, una posible solución sería iniciar con solid community
+
+|===
+

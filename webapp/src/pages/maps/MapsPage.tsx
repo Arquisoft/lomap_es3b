@@ -105,7 +105,7 @@ function MapsPage(props: MapProps): JSX.Element {
                 console.log("Error obteniendo mapas de los amigos")
             }
 
-            
+
         } catch (err) {
             console.log("Error obteniendo amigos")
         }
@@ -114,7 +114,7 @@ function MapsPage(props: MapProps): JSX.Element {
         setMaps(mapasTotales);
         setFilteredMaps(mapasTotales);
 
-        
+
 
         //Establecemos los lugares
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterByFriends(filterByCategory(placesTotales))));
@@ -258,8 +258,19 @@ function MapsPage(props: MapProps): JSX.Element {
     const handleMapaChange = (selectedOption: string[]) => {
         console.log(`Mapa seleccionado: ${selectedOption}`);
 
+        var nombres = new Array<string>();
+        var nombrePropietario = new Array<string>();
+
+        selectedOption.forEach(mapa => {
+            var nomrbes = mapa.split("-")
+            nombres.push(nomrbes[0]);
+            nombrePropietario.push(nomrbes[1]);
+        });
+
+        console.log(`Mapa seleccionado: ${nombres}`);
+
         let selectedMaps = maps.filter((mapa) => {
-            return selectedOption.includes(mapa.id);
+            return nombres.includes(mapa.id) && nombrePropietario.includes(mapa.ownerName);
         })
 
         if (selectedOption.length === 0) {
@@ -267,7 +278,6 @@ function MapsPage(props: MapProps): JSX.Element {
         } else {
             setFilteredMaps(selectedMaps);
         }
-
     };
 
     const handleMinDistanceChange = (selectedMinDistance: number, selectedMaxDistance: number) => {
