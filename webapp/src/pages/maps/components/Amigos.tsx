@@ -15,7 +15,7 @@ function Amigos({friends}: AmigosProps): JSX.Element {
                 </div>
                 <div className="content">
                     {
-                        friends.map((friend) => <Amigo name={friend.name} webId={friend.webId}/>)
+                        friends.map((friend) => <Amigo key={friend.webId} name={friend.name} webId={friend.webId}/>)
                     }
                 </div>
             </div>

@@ -64,7 +64,6 @@ export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Pr
         )
 
         let fileText = await file.text()
-        console.log(fileText);
 
         //Buscamos los mapas guardados
 
@@ -86,12 +85,9 @@ export async function getFriendsMapsPOD(session: Session, friends: Friend[]): Pr
         }
       } catch (err) {
         console.log("No tienes permisos de lectura de este POD o bien no existe la carpeta");
-        console.log(err);
       }
     }
   }
-
-  console.log(mapas);
 
   return Promise.resolve(mapas);
 }
@@ -113,7 +109,6 @@ async function readFileFromPod(fileURL: string, session: Session, name: string):
     return fileInfo;
 
   } catch (err) {
-    console.log(err);
     return Promise.reject();
   }
 }
