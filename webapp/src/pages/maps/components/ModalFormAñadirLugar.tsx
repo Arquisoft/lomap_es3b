@@ -8,6 +8,7 @@ import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
+import { addMarker } from "../../../api/api";
 
 
 type FormProps = {
@@ -23,7 +24,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
     const { webId } = session.info;
     const [rating, setRating] = useState(0);
     const [dir, setDir] = useState("");
-
+    const [submitButton, setSubmitButton] = useState("POD");
     getDirectionFromAPI(props.newPlace!.latitude, props.newPlace!.longitude).then((data) => { setDir(data) });
 
 
@@ -152,14 +153,22 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
             props.newPlace!.rating = puntuacion;
         }
 
-        var mapa = props.mapas.find((m) => m.id === mapaSelected && m.owner === webId?.split("profile")[0]);
+        if (submitButton === "POD") {           
 
-        if (mapa !== undefined && mapa !== null) {
-            await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
-        } else {
-            var x = await getProfileName(webId!);
-            mapa = { id: mapaSelected, map: [], owner: webId!.split("profile")[0], ownerName: x }
-            await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+            var mapa = props.mapas.find((m) => m.id === mapaSelected && m.owner === webId?.split("profile")[0]);
+
+            if (mapa !== undefined && mapa !== null) {
+                await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+            } else {
+                var x = await getProfileName(webId!);
+                if(mapaSelected === undefined || mapaSelected === null || mapaSelected === ""){
+                    mapaSelected = "NewMap";
+                }
+                mapa = { id: mapaSelected, map: [], owner: webId!.split("profile")[0], ownerName: x }
+                await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+            }
+        }else{
+            await addMarker(props.newPlace!);
         }
     }
 
@@ -204,7 +213,8 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 </label>
 
                 <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
-                <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+                <button id="guardarPOD" className="submit btn btn-primary" name="submitPOD" type="submit" onClick={() => setSubmitButton("POD")}> Añadir POD</button>
+                <button id="guardarBBDD" className="submit btn btn-primary" name="submitBBDD" type="submit" onClick={() => setSubmitButton("BBDD")}> Añadir BBDD</button>
             </form>
 
         </>

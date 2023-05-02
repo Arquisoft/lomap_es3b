@@ -5,13 +5,15 @@
 html{
   height: 100%;
   width: 100%;
-  overflow:hidden;
+  min-width: 850px;
+  min-height: 750px;
 }
 body{
   display: flex;
   height: 100% !important;
   background-color: transparent !important;
-  overflow:hidden;
+  min-width: 850px;
+  min-height: 750px;
 }
 
 #root{

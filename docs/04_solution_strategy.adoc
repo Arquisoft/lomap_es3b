@@ -1,15 +1,16 @@
 [[section-solution-strategy]]
 == Estrategia de solución
 
-* Base de datos: TBD.
+* MongoDB: MongoDB es una base de datos NoSQL de código abierto que utiliza un modelo de datos basado en documentos para el almacenamiento y recuperación de información.
 
 * Express js: Express es un marco de aplicación web de Node js que proporciona amplias funciones para crear aplicaciones web y móviles. Se utiliza para crear una aplicación web híbrida, de varias páginas y de una sola página.
 
 * React JS: Es un framework creado por Facebook ampliamente utlizado para crear componentes de la interfaz de usuario. Escogido por el gran volumen de documentación y ser el framework utilizado durante los anteriores cursos.
 
-* Despliegue: TBD.
+* Microsoft Azure: plataforma de computación en la nube que proporciona servicios de infraestructura, plataforma y software como servicio para alojar, administrar y escalar aplicaciones y servicios en línea.
 
 === Diseño
+La página web diseñada está compuesta por un frontend en React, un backend en Node.js y Express.js, y está documentada usando Asciidoc. Cada usuario contará con su propio POD con su información para interactuar con la funcionalidad principal, los mapas y los puntos que se creen en ellos. Las decisiones relacionadas con el diseño se detallan en el punto 9.
 
 === Seguridad
 Garantizamos la seguridad del usuario mediante el uso de PODs.
@@ -21,6 +22,7 @@ Se realizarán pruebas para cada parte individual de la aplicación, garantizand
 Para esta fase inicial del proyecto se ha tenido más en cuenta el Front-End, el Back-End se tendrá mayor en consideración más adelante en el curso, ya que en otras asignaturas se van a adquirir conocimientos útiles que se podrán aplicar.
 
 === Estructura
+La estructura involucra tanto un frontend que utiliza librerías de mapeo, como un backend que interactúa con Inrupt para manejar los PODs.
 
 === Interfaz
 La interfaz gráfica será elegida entre todos los miembros del equipo, aportando cada uno algún boceto o idea, los cuales serán puestos en común y se decidirá cual se ajusta mejor a la apicación esperada y que elementos de dichos bocetos resultan más adecuados.

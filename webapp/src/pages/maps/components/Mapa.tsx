@@ -126,8 +126,6 @@ function Mapa(props: MapProps): JSX.Element {
         const map = useMap();
 
         map.on('zoomend', function () {
-
-            console.log(map.getZoom());
             if (map.getZoom() < 12) {
                 setShowMarkers(false);
             } else {
@@ -148,7 +146,7 @@ function Mapa(props: MapProps): JSX.Element {
                     />
                     <MapContent />
                     {Array.isArray(props.markers) && showMarkers ? props.markers.map((marker) =>
-                        <CustomMarker marker={marker} />) : <></>}
+                        <CustomMarker key={marker.id} marker={marker} />) : <></>}
                     <HideShowLayers />
 
                 </MapContainer>

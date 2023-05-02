@@ -4,7 +4,7 @@
 
 image:07_deployment_view.png["Deployment view de la aplicación"]
 
-La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 8081. Ademés, este servidor se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt.
+La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 3000. Además, esta aplicación se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt, y guarda las imagenes de los mismos en un contenedor de Cloudinary.
 
 === Infraestructura Nivel 2
 ==== Web App
@@ -19,14 +19,17 @@ Los PODs almacenan la información de los usuarios y se encuentran dentro de los
 ==== MongoDB
 La base de datos se encuentra alojada en los propios servidores que proporciona MongoDB en la nube exactamente se encuentra en (Poner la máquina de AWS que almacena la BBDD)
 
+==== CloudinaryDB
+La base de imagenes se encuentra alojada en los servidores de cloudinary, se está utilizando la versión de demo que proporciona cloudinary para guardar imagenes. Si se necesitara algo mas fiable y estable se compraría la versión de pago de la misma.
+
 === Aspectos de calidad y rendimiento
-Se espera que los componentes de la LoMap proporcionen los siguientes aspectos de calidad y de rendimiento en cuanto a los tiempos de respuesta y a la disponibilidad de los distintos elementos
+Se espera que los componentes de la LoMap proporcionen los siguientes aspectos de calidad y de rendimiento en cuanto a los tiempos de respuesta y a la disponibilidad de los distintos elementos.
 
 [options="header", cols="1,1,1"]
 |===
-| Dispositivo | Tiempo de respuesta | Disponibilidad
-| Web App | Poco tiempo de respuesta | Alta
-| REST API | Tiempo medio de respuesta | Alta
-| MongoDB | Especificado por el proveedor | Especificado por el proveedor
+| Dispositivo | Especificado por Azure | La disponibilidad es la que nos proporciona Azure (99,95%)
+| Web App | La aplicación debe responder con un tiempo medio de menos de 2 segundos | La aplicación debe estar disponible al 99% del tiempo. Dentro de sto entendemos problemas relacionados con la caida del servidor e incluso problemas relacionados con SOLID
+| REST API | La API debe responder con un tiempo de menos de 1 segundo | La REST API debe estar disponible un 99% del tiempo
+| MongoDB | Especificado por MongoDB (Tiempo de respuesta Alto) | Especificado por MongoDB (Alta)
 | PODs Solid | Especificado por Inrupt | Especificado por Inrupt 
 |===

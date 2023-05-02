@@ -5,9 +5,10 @@
 |===
 |Nombre|Problema|Decisión
 | POD | La aplicación necesita acceder a información del usuario de una manera descentralizada. | Cada usuario debe tener su propio POD con información del mismo y al iniciar la aplicación le dará permiso a la misma para usar su información guardada.
-| DB | Se piensa en cómo guardar información general de la aplicación y se piensa en usar una base de datos. | POR DECIDIR ESTE APARTADO
+| DB | Se piensa en cómo guardar información general de la aplicación y se piensa en usar una base de datos. | Se guardan lugares de manera general en MongoDB, aunque el usuario tenga guardados los suyos propios dentro de su POD personal.
 | Frontend | Se necesita decidir el lenguaje a usar en frontend | Se usará React, ya que su posibilidad con los componentes es realmente buena.
 | Backend | Se necesita decidir el lenguaje a usar en backend | Se usarán Node.js y Express.js.
 | Documentación | Se necesita decidir el lenguaje a usar en la documentación | Se usará Asciidoc, se pensó en usar Markdown, pero por evitar posibles problemas de compatibilidad se decide usar Asciidoc.
 | Reuniones | El grupo tiene que decidir como repartir el trabajo o solucionar problemas | Previo a las clases de laboratorio, cada miembro propondrá temas a tratar en cada reunión mediante Issues en el repositorio en Github. Una vez reunidos, si durante la semana fuera necesario, se reune otra vez el grupo y quedará constancia de ello.
+| Imágenes | Se necesita decidir como almacenar las imágenes de los lugares que se guarden | Se utilizará Cloudinary, un sistema en nube que permite almacenar imágenes y que te devuelve un enlace a la misma para ser utilizada, haciendo que el peso de la aplicación por esa parte sea bastante menor.
 |===

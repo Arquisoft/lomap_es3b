@@ -28,9 +28,9 @@ Los principales requisitos funcionales de la aplicación serán:
 |===
 |Prioridad|Meta|Motivación
 | 1 | Usabilidad | La aplicación debe ser fácilmente usable por cualquier usuario, con mucha o poca experiencia. Para ello se llevarán a cabo tanto cuestionarios como pruebas de usabilidad exhaustivas.
-| 2 | Calidad | La aplicación debe tener una calidad y claridad de código que será revisada con ESLint.
-| 3 | Privacidad | El tratamiento de la información privada del usuario debe ser descentralizada, asegurando así su privacidad.
-| 4 | Eficiencia | Al abrir la aplicación o seleccionar un elemento debe ser eficiente y sus tiempos de carga bajos.
+| 2 | Comprensibilidad | 	La aplicación debe ser sencilla de usar para todos los usuarios independientemente de su nivel de experiencia o posibles dificultades.
+| 3 | Seguridad | El tratamiento de la información privada del usuario debe ser descentralizada, asegurando así su privacidad.
+| 4 | Testabilidad | Se haran diferentes pruebas para probar las funcionalidades de la aplicación
 |===
 
 === Stakeholders
@@ -42,4 +42,16 @@ Los principales requisitos funcionales de la aplicación serán:
 | Cliente | Interaccionan de manera directa con la aplicación, tienen un usuario y amigos y pueden visualizar los puntos de interés | El objetivo principal es que sea capaz de interactuar con la aplicación de forma intuitiva y de una manera cómoda para el usuario aún sin ser un usuario avanzado.
 | Equipo de desarrollo | Los creadores de la aplicación, pueden modificarla y mejorarla | Trabajan para aprender las tecnologías necesarias para desarrollar el proyecto y funcionar como un equipo.
 | Profesores | Interaccionan con el equipo de desarrollo para corregir posibles defectos | Esperan que la aplicación sea funcional y cumpla los requisitos requeridos. También proporcionan soporte en caso de que sea necesario para el equipo de desarrollo.
+|===
+
+=== Miembros del equipo
+
+[options="header",cols="1,2,2"]
+
+|===
+|Nombre|Contacto| Usuario de Github
+| Miguel Mier  | UO277301 | https://github.com/uo277301 y https://github.com/michumier 
+| Lara Fernández | UO276026 | https://github.com/uo276026
+| Eloy Alfredo Schmidt  | UO271588 | https://github.com/UO271588 
+| Luis Manuel Solares  | UO282631 | https://github.com/UO282631
 |===
