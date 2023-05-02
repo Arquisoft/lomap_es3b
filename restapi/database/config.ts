@@ -28,7 +28,7 @@ export async function guardarLugar(lugar:string) {
 
     const tablaDB = db.collection('places');
 
-    await tablaDB.insertOne(place);
+    await tablaDB.insertOne(place.toString());
 
     console.log('Lugar guardado con exito! Nombre: ', place.name);
 
