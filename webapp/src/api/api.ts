@@ -37,6 +37,9 @@ export async function addMarker(marker:Place):Promise<boolean>{
 
   console.log(apiEndPoint+"/db/add");
 
+
+  console.log(marker);
+
   let response = await fetch(apiEndPoint+'/db/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},

@@ -70,7 +70,7 @@ api.post(
     let direccion = req.body.direction;
     let comments = req.body.comments;
     let photoLink = req.body.photoLink;
-    let cat = req.body.category;
+    let category = req.body.category;
     let rat = req.body.rating;
 
     let place = JSON.stringify({
@@ -80,10 +80,11 @@ api.post(
       "direction":direccion, 
       "comments":comments, 
       "photoLink":photoLink, 
-      "category":cat, 
+      "category":category, 
       "rating":rat
     })
     
+    console.log(place);
     try {
       await guardarLugar(place);
     }catch(err){
