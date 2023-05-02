@@ -40,6 +40,7 @@ participant Iomap
 database Pod
 database DataBase as "DataBase"
 Bob -> Iomap: Pulsa en filtro "Restaurantes"
+Bob -> Iomap: Hace click en "Aplicar filtros"
 Iomap-> DataBase: Pide la lista de restaurantes
 DataBase --> Iomap: Devuelve la lista de restaurantes
 Iomap-> Iomap: Muestra solo los restaurantes en el mapa
@@ -54,7 +55,7 @@ participant Iomap
 database Pod
 database DataBase as "DataBase"
 Bob -> Iomap: Pulsa en "Crear lugar"
-Iomap-> Iomap: Bob es redireccionado a la vista de "Crear lugar"
+Iomap-> Iomap: Se abre un modal para "Crear lugar"
 Bob <-- Iomap: La aplicación pide los datos del lugar
 Bob -> Iomap: Bob inserta los datos
 Iomap --> DataBase: La aplicación añade el lugar a la base de datos
