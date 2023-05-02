@@ -20,6 +20,8 @@ image:03_business_context.png["Business Context de la Aplicación"]
 | BBDD | Como entrada tiene las peticiones de datos almacenados por parte del Backend de la aplicación | Como salidas devuelve los objetos solicitados o un mensaje de error en el caso de que no exista lo que el Backend solicita.
 | POD SOLID | Como entrada el POD recibe una petición de obtención de los datos de un Usuario | Como salida devuelve los datos del Usuario si está autorizada la petición o un mensaje de error en caso contrario.
 | Usuario | El usuario visualiza de forma gráfica la petición que ha realizado al Frontend de la aplicación | El usuario solicita al Frontend la visualización de una pagina de la aplicación.
+| API de Google Maps | El usuario selecciona en el mapa un lugar para agregarlo a su colección de lugares | Como salida tenemos la dirección exacta del lugar que se ha seleccionado en base a las coordenadas geográficas.
+| Cloudinary | El usuario selecciona una imagen de su dispositivo y la incluye a la hora de guardar un lugar | Cuando se selecciona el lugar, Cloudinary devuelve un enlace a la aplicación y se permite que se visualice la imagen
 |===
 
 === Contexto Técnico
