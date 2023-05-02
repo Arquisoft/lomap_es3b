@@ -614,18 +614,18 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Calidad</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe tener una calidad y claridad de código que será revisada con ESLint.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comprensibilidad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe ser sencilla de usar para todos los usuarios independientemente de su nivel de experiencia o posibles dificultades.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Privacidad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seguridad</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El tratamiento de la información privada del usuario debe ser descentralizada, asegurando así su privacidad.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Eficiencia</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Al abrir la aplicación o seleccionar un elemento debe ser eficiente y sus tiempos de carga bajos.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Testabilidad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se haran diferentes pruebas para probar las funcionalidades de la aplicación</p></td>
 </tr>
 </tbody>
 </table>
@@ -811,6 +811,16 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <td class="tableblock halign-left valign-top"><p class="tableblock">El usuario visualiza de forma gráfica la petición que ha realizado al Frontend de la aplicación</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El usuario solicita al Frontend la visualización de una pagina de la aplicación.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API de Google Maps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El usuario selecciona en el mapa un lugar para agregarlo a su colección de lugares</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Como salida tenemos la dirección exacta del lugar que se ha seleccionado en base a las coordenadas geográficas.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloudinary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El usuario selecciona una imagen de su dispositivo y la incluye a la hora de guardar un lugar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cuando se selecciona el lugar, Cloudinary devuelve un enlace a la aplicación y se permite que se visualice la imagen</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -871,7 +881,7 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <div class="ulist">
 <ul>
 <li>
-<p>Base de datos: TBD.</p>
+<p>MongoDB: MongoDB es una base de datos NoSQL de código abierto que utiliza un modelo de datos basado en documentos para el almacenamiento y recuperación de información.</p>
 </li>
 <li>
 <p>Express js: Express es un marco de aplicación web de Node js que proporciona amplias funciones para crear aplicaciones web y móviles. Se utiliza para crear una aplicación web híbrida, de varias páginas y de una sola página.</p>
@@ -880,13 +890,15 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <p>React JS: Es un framework creado por Facebook ampliamente utlizado para crear componentes de la interfaz de usuario. Escogido por el gran volumen de documentación y ser el framework utilizado durante los anteriores cursos.</p>
 </li>
 <li>
-<p>Despliegue: TBD.</p>
+<p>Microsoft Azure: plataforma de computación en la nube que proporciona servicios de infraestructura, plataforma y software como servicio para alojar, administrar y escalar aplicaciones y servicios en línea.</p>
 </li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="_diseño">4.1. Diseño</h3>
-
+<div class="paragraph">
+<p>La página web diseñada está compuesta por un frontend en React, un backend en Node.js y Express.js, y está documentada usando Asciidoc. Cada usuario contará con su propio POD con su información para interactuar con la funcionalidad principal, los mapas y los puntos que se creen en ellos. Las decisiones relacionadas con el diseño se detallan en el punto 9.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_seguridad">4.2. Seguridad</h3>
@@ -908,7 +920,9 @@ For documentation of your own system you use better the <em>plain</em> version.<
 </div>
 <div class="sect2">
 <h3 id="_estructura">4.5. Estructura</h3>
-
+<div class="paragraph">
+<p>La estructura involucra tanto un frontend que utiliza librerías de mapeo, como un backend que interactúa con Inrupt para manejar los PODs.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_interfaz">4.6. Interfaz</h3>
@@ -946,10 +960,6 @@ El sistema se divide en Whitebox y Blackbox.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Actores</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cliente / Usuario</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Es el que interactúa directamente con la aplicación y su interfaz de usuario. Cada uno tiene un POD en el cual se almacenan sus datos y al cual se puede acceder.</p></td>
 </tr>
@@ -975,10 +985,6 @@ El sistema se divide en Whitebox y Blackbox.</p>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Nombre</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Descripción</p></td>
-</tr>
-<tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SOLID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cada usuario tiene su POD y permite a la aplicación acceder a sus datos.</p></td>
 </tr>
@@ -989,6 +995,14 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Interfaz de usuario</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">La interfaz con la que interactúa el usuario.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cloudinary</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Provee a la aplicación de las imágenes que incluya el usuario al guardar un lugar.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">API de Google Maps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Proporciona direcciones exactas a la aplicación en base a las coordenadas de un lugar seleccionado.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1019,7 +1033,7 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <h3 id="_busqueda_de_lugares_mediante_filtros_considerando_que_la_sesión_ya_está_iniciada">6.3. Busqueda de lugares mediante filtros (considerando que la sesión ya está iniciada)</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/filtro.png" alt="filtro" width="564" height="318">
+<img src="./images/filtro.png" alt="filtro" width="564" height="348">
 </div>
 </div>
 </div>
@@ -1027,7 +1041,7 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <h3 id="_añadir_nuevo_lugar_al_mapa_considerando_que_la_sesión_ya_está_iniciada">6.4. Añadir nuevo lugar al mapa (considerando que la sesión ya está iniciada)</h3>
 <div class="imageblock">
 <div class="content">
-<img src="./images/añadirLugar.png" alt="añadirLugar" width="705" height="378">
+<img src="./images/añadirLugar.png" alt="añadirLugar" width="646" height="378">
 </div>
 </div>
 <div style="page-break-after: always;"></div>
@@ -1043,7 +1057,7 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <p><span class="image"><img src="./images/07_deployment_view.png" alt="Deployment view de la aplicación"></span></p>
 </div>
 <div class="paragraph">
-<p>La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 8081. Ademés, este servidor se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt.</p>
+<p>La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 3000. Además, esta aplicación se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt, y guarda las imagenes de los mismos en un contenedor de Cloudinary.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1072,11 +1086,17 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <p>La base de datos se encuentra alojada en los propios servidores que proporciona MongoDB en la nube exactamente se encuentra en (Poner la máquina de AWS que almacena la BBDD)</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_cloudinarydb">7.2.5. CloudinaryDB</h4>
+<div class="paragraph">
+<p>La base de imagenes se encuentra alojada en los servidores de cloudinary, se está utilizando la versión de demo que proporciona cloudinary para guardar imagenes. Si se necesitara algo mas fiable y estable se compraría la versión de pago de la misma.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_aspectos_de_calidad_y_rendimiento">7.3. Aspectos de calidad y rendimiento</h3>
 <div class="paragraph">
-<p>Se espera que los componentes de la LoMap proporcionen los siguientes aspectos de calidad y de rendimiento en cuanto a los tiempos de respuesta y a la disponibilidad de los distintos elementos</p>
+<p>Se espera que los componentes de la LoMap proporcionen los siguientes aspectos de calidad y de rendimiento en cuanto a los tiempos de respuesta y a la disponibilidad de los distintos elementos.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1087,25 +1107,25 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Dispositivo</th>
-<th class="tableblock halign-left valign-top">Tiempo de respuesta</th>
-<th class="tableblock halign-left valign-top">Disponibilidad</th>
+<th class="tableblock halign-left valign-top">Especificado por Azure</th>
+<th class="tableblock halign-left valign-top">La disponibilidad es la que nos proporciona Azure (99,95%)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Web App</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Poco tiempo de respuesta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe responder con un tiempo medio de menos de 2 segundos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe estar disponible al 99% del tiempo. Dentro de sto entendemos problemas relacionados con la caida del servidor e incluso problemas relacionados con SOLID</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">REST API</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tiempo medio de respuesta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La API debe responder con un tiempo de menos de 1 segundo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La REST API debe estar disponible un 99% del tiempo</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por el proveedor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por el proveedor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por MongoDB (Tiempo de respuesta Alto)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por MongoDB (Alta)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PODs Solid</p></td>
@@ -1185,7 +1205,7 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">DB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Se piensa en cómo guardar información general de la aplicación y se piensa en usar una base de datos.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">POR DECIDIR ESTE APARTADO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se guardan lugares de manera general en MongoDB, aunque el usuario tenga guardados los suyos propios dentro de su POD personal.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Frontend</p></td>
@@ -1206,6 +1226,11 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Reuniones</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">El grupo tiene que decidir como repartir el trabajo o solucionar problemas</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Previo a las clases de laboratorio, cada miembro propondrá temas a tratar en cada reunión mediante Issues en el repositorio en Github. Una vez reunidos, si durante la semana fuera necesario, se reune otra vez el grupo y quedará constancia de ello.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Imágenes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se necesita decidir como almacenar las imágenes de los lugares que se guarden</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se utilizará Cloudinary, un sistema en nube que permite almacenar imágenes y que te devuelve un enlace a la misma para ser utilizada, haciendo que el peso de la aplicación por esa parte sea bastante menor.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1305,6 +1330,34 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Github</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Todos lo hemos usado ya y sabemos más o menos el funcionamiento, pero hay caracteristicas que son nuevas para nosotros y estamos aprendiendo a utilizar.</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PODs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A la hora de guardar lugares en los PODs tenemos problemas con los ACL y, aunque tengas permiso para acceder al POD del usuario en cuestión, todo lo que guardes dentro se irá directo a la carpeta Public, lo cual no es lo ideal.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Fetch</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Las cuentas antiguas de Inrupt para algunas labores que queremos realizar no funcionan. Por tanto, es necesaria una cuenta relativamente reciente para poder usar la aplicación.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Deuda Técnica</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Explicación</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cuentas antiguas de inrupt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">En cuentas de inrupt muy antiguas, fetch no funciona, una posible solución sería iniciar con solid community</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACL y guardado de lugares en PODs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entendiendo la necesidad de permitir decidir si se quiere o no compartir los mapas con los amigos de nuestro POD, se intentó vincular permisos específicos a cada amigo, sin embargo aunque en SOLID se muestra que se tienen permisos suficientes de lectura, al intentar acceder a los mapas de un amigo teniendo permiso por parte del mismo y mostrándose correctamente desde el apartado de permisos de la carpeta, no se puede acceder. Es por ello que se ha tomado la decisión, en acuerdo con la profesora correspondiente de laboratorio, que se mueva la creación de la carpeta a dentro del apartado publico del POD para que así herede los permisos públicos del mismo. Entendemos que este problema radica en el mismo SOLID y no es problema de nuestra aplicación.</p></td>
+</tr>
 </tbody>
 </table>
 <div style="page-break-after: always;"></div>
@@ -1380,7 +1433,7 @@ Created by Dr. Peter Hruschka &amp; Dr. Gernot Starke.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2023-02-28 15:30:11 +0100
+Last updated 2023-02-12 18:43:41 +0100
 </div>
 </div>
 </body>
