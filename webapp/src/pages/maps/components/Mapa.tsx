@@ -7,6 +7,8 @@ import { useState } from "react";
 import IconoRestaurante from "../../../assets/icono-restaurante.svg";
 import IconoMonumento from "../../../assets/icono-monumento.svg";
 import IconoBiblioteca from "../../../assets/icono-biblioteca.svg";
+import IconoParking from "../../../assets/icono-parking.svg";
+import IconoTienda from "../../../assets/icono-tienda.svg";
 
 
 type MapProps = {
@@ -81,6 +83,22 @@ function Mapa(props: MapProps): JSX.Element {
                     className: 'leaflet-div-icon'
                 });
                 break;
+            case "Tienda":
+                icono = new L.Icon({
+                    iconUrl: IconoTienda,
+                    iconSize: new L.Point(40, 40),
+                    iconAnchor: [20, 40],
+                    className: 'leaflet-div-icon'
+                });
+                break;
+            case "Parking":
+                icono = new L.Icon({
+                    iconUrl: IconoParking,
+                    iconSize: new L.Point(40, 40),
+                    iconAnchor: [20, 40],
+                    className: 'leaflet-div-icon'
+                });
+                break;
             default:
                 icono = icon;
                 break;
@@ -129,8 +147,8 @@ function Mapa(props: MapProps): JSX.Element {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                     <MapContent />
-                    { Array.isArray(props.markers) && showMarkers?props.markers.map((marker) =>
-                        <CustomMarker marker={marker} />):<></>}
+                    {Array.isArray(props.markers) && showMarkers ? props.markers.map((marker) =>
+                        <CustomMarker marker={marker} />) : <></>}
                     <HideShowLayers />
 
                 </MapContainer>

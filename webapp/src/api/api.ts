@@ -37,11 +37,21 @@ export async function addMarker(marker:Place):Promise<boolean>{
 
   console.log(apiEndPoint+"/db/add");
 
+
+  console.log(marker);
+
   let response = await fetch(apiEndPoint+'/db/add', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({'name':marker.name, 'direction':marker.direction,'latitude':marker.latitude, 'longitude':marker.longitude, 'comment':marker.comments,
-        'photoLink':marker.photoLink, 'category':marker.category, 'rating':marker.rating})
+      body: JSON.stringify({
+        'name':marker.name, 
+        'direction':marker.direction,
+        'latitude':marker.latitude, 
+        'longitude':marker.longitude, 
+        'comments':marker.comments,
+        'photoLink':marker.photoLink, 
+        'category':marker.category, 
+        'rating':marker.rating})
     });
 
   if (response.status===200)
