@@ -34,5 +34,8 @@
 |Cuentas antiguas de inrupt 
 |En cuentas de inrupt muy antiguas, fetch no funciona, una posible solución sería iniciar con solid community
 
+|ACL y guardado de lugares en PODs
+|Entendiendo la necesidad de permitir decidir si se quiere o no compartir los mapas con los amigos de nuestro POD, se intentó vincular permisos específicos a cada amigo, sin embargo aunque en SOLID se muestra que se tienen permisos suficientes de lectura, al intentar acceder a los mapas de un amigo teniendo permiso por parte del mismo y mostrándose correctamente desde el apartado de permisos de la carpeta, no se puede acceder. Es por ello que se ha tomado la decisión, en acuerdo con la profesora correspondiente de laboratorio, que se mueva la creación de la carpeta a dentro del apartado publico del POD para que así herede los permisos públicos del mismo. Entendemos que este problema radica en el mismo SOLID y no es problema de nuestra aplicación.
+
 |===
 
