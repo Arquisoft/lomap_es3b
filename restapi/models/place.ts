@@ -63,4 +63,4 @@ PlaceSchema.methods.toJSON = function () {
     return place 
 }
 
-module.exports = model('Place', PlaceSchema)
+module.exports = model('PlaceModel', PlaceSchema)

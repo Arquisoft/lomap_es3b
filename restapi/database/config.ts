@@ -24,11 +24,11 @@ export async function connectToDatabase() {
 export async function guardarLugar(lugar:string) {
     await connectToDatabase();
 
-    let place = JSON.parse(lugar);
+    let place:Place = JSON.parse(lugar);
 
     const tablaDB = db.collection('places');
 
-    await tablaDB.insertOne(place.toString());
+    await tablaDB.insertOne(place);
 
     console.log('Lugar guardado con exito! Nombre: ', place.name);
 
