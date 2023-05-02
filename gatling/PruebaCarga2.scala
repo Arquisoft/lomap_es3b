@@ -92,8 +92,9 @@ class PruebaCarga1 extends Simulation {
 		setUp(
   scn.inject(
     nothingFor(4), // 1
-    constantUsersPerSec(20).during(60), // 4
-    stressPeakUsers(500).during(20) // 8
+    constantUsersPerSec(50).during(60), // 4
+    stressPeakUsers(500).during(30) // 8
   ).protocols(httpProtocol)
 )
 }
+

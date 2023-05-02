@@ -43,3 +43,15 @@ Los principales requisitos funcionales de la aplicación serán:
 | Equipo de desarrollo | Los creadores de la aplicación, pueden modificarla y mejorarla | Trabajan para aprender las tecnologías necesarias para desarrollar el proyecto y funcionar como un equipo.
 | Profesores | Interaccionan con el equipo de desarrollo para corregir posibles defectos | Esperan que la aplicación sea funcional y cumpla los requisitos requeridos. También proporcionan soporte en caso de que sea necesario para el equipo de desarrollo.
 |===
+
+=== Miembros del equipo
+
+[options="header",cols="1,2,2"]
+
+|===
+|Nombre|Contacto| Usuario de Github
+| Miguel Mier  | UO277301 | https://github.com/uo277301 y https://github.com/michumier 
+| Lara Fernández | UO276026 | https://github.com/uo276026
+| Eloy Alfredo Schmidt  | UO271588 | https://github.com/UO271588 
+| Luis Manuel Solares  | UO282631 | https://github.com/UO282631
+|===
