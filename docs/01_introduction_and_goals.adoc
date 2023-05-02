@@ -28,9 +28,10 @@ Los principales requisitos funcionales de la aplicación serán:
 |===
 |Prioridad|Meta|Motivación
 | 1 | Usabilidad | La aplicación debe ser fácilmente usable por cualquier usuario, con mucha o poca experiencia. Para ello se llevarán a cabo tanto cuestionarios como pruebas de usabilidad exhaustivas.
-| 2 | Calidad | La aplicación debe tener una calidad y claridad de código que será revisada con ESLint.
-| 3 | Privacidad | El tratamiento de la información privada del usuario debe ser descentralizada, asegurando así su privacidad.
+| 2 | Comprensibilidad | 	La aplicación debe ser sencilla de usar para todos los usuarios independientemente de su nivel de experiencia o posibles dificultades.
+| 3 | Seguridad | El tratamiento de la información privada del usuario debe ser descentralizada, asegurando así su privacidad.
 | 4 | Eficiencia | Al abrir la aplicación o seleccionar un elemento debe ser eficiente y sus tiempos de carga bajos.
+| 5 | Testabilidad | Se haran diferentes pruebas para probar las funcionalidades de la aplicación
 |===
 
 === Stakeholders
