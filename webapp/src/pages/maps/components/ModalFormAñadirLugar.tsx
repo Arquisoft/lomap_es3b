@@ -10,7 +10,6 @@ import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
 import { addMarker } from "../../../api/api";
 
-
 type FormProps = {
     mapas: MapType[];
     newPlace: Place | undefined;
@@ -70,8 +69,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
     }
 
     async function getDirectionFromAPI(lat: number, lng: number) {
+        console.log(process.env.GOOGLE_API_KEY);
         const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCfMMAO1EahrSRx2oo4bdtS6HKEvuslKvE`);
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=` + process.env.REACT_APP_GOOGLE_API_KEY);
         console.log(lat);
         console.log(lng);
         const data = await response.json();
