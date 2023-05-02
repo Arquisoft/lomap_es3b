@@ -15,6 +15,8 @@ function InicioSesion(props: inicioProps): JSX.Element {
     const { session } = useSession();
     const [showModal, setShowModal] = useState(false);
 
+    console.log(window.location.href);
+
     function handleOpenModal() {
         console.log("abrirModal");
         setShowModal(true);
