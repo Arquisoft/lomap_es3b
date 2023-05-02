@@ -52,7 +52,6 @@ html {
     display: grid;
     grid-auto-columns: minmax(0px, 1fr);
     grid-auto-flow: column;
-    height: 50px;
     width: 100%;
     border-radius: 8px;
     margin: 10px 0px;
