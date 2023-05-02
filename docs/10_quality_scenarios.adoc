@@ -14,6 +14,7 @@ image::arbolDeCalidad.png["Example UML Diagram"]
 |SEG1    |Seguridad             |Los datos de los usuarios estarán protegidos y no será                                  posible el acceso por parte de terceros.            
 |TEST1   |Testabilidad          |Se documentará la funcionalidad de las diferentes partes                                 de la aplicación en su código con la finalidad de poder                                  ser modificado y testeado por los diferentes miembros del                                 equipo.
 |TEST2   |Testabilidad          |Antes de de añadir una funcionalidad, ésta debe ser                                     probada, ya sea con pruebas unitarias o pruebas de                                       usabilidad.
+|CARGA1 |Usabilidad | Test de carga que 
 |==================================================================================
 
 

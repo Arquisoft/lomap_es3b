@@ -29,3 +29,16 @@ image:05_Esquema_Whitebox.png["Whitebox"]
 | Cloudinary | Provee a la aplicación de las imágenes que incluya el usuario al guardar un lugar.
 | API de Google Maps | Proporciona direcciones exactas a la aplicación en base a las coordenadas de un lugar seleccionado.
 |===
+
+=== Building block view - Level 2
+
+image:05_building_block_level2.jpg["Level 2"]
+
+[options="header",cols="1,2"]
+
+|===
+| Nombre | Descripción
+| Markers y Places | Se agrupan las dos funciones en las que es necesario acceder a MongoDB y a Cloudinary a por datos para mostrar al usuario.
+| Login | El cliente tiene una cuenta con un POD que podemos manejar para guardar información.
+| Webapp | La interfaz con la que interactúa el usuario.
+|===

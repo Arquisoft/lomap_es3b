@@ -1,8 +1,8 @@
 {
   "simulation": "PruebaCarga1",
-  "simulationId": "pruebacarga1-20230426102504503",
-  "start": 1682504705131,
-  "description": "50 usuaarios en 60 segundos",
+  "simulationId": "pruebacarga1-20230502191920749",
+  "start": 1683055165374,
+  "description": "Prueba larga",
   "scenarios": ["PruebaCarga1"],
   "assertions": [
 
