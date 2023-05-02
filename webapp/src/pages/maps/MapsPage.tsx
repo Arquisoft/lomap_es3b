@@ -10,6 +10,7 @@ import { getMapsPOD } from '../../pods/Markers';
 import { PlacePOD, Place, MapType, Friend } from "../../shared/shareddtypes";
 import { getFriends, getFriendsMapsPOD } from '../../pods/Friends';
 import Amigos from './components/Amigos';
+import { getPlaces } from '../../api/api';
 
 type MapProps = {
 
@@ -75,6 +76,26 @@ function MapsPage(props: MapProps): JSX.Element {
             console.log("O bien no hay mapas o ha habido un error");
         }
 
+        //Sacamos los mapas de la base de datos
+        let placesBBDD = await getPlaces();
+        let mapBBDD:MapType = {
+            id: "MapaBBDD",
+            owner: "BBDD",
+            map: [],
+            ownerName: "BBDD"
+        };
+
+        placesBBDD.forEach(element => {
+            let place:PlacePOD = {
+                id: crypto.randomUUID(),
+                owner: "BBDD",
+                place: element
+            }
+            placesTotales.push(place);
+            mapBBDD.map.push(place);
+        });
+
+        mapasTotales.push(mapBBDD);
 
         try {
             console.log("Sacamos los amigos")

@@ -1,5 +1,5 @@
 import express, { Request, Response, Router } from 'express';
-import {body, check} from 'express-validator';
+import {body} from 'express-validator';
 import { cogerLugares, guardarLugar } from '../database/config';
 import {Place} from '../../webapp/src/shared/shareddtypes';
 
@@ -70,10 +70,21 @@ api.post(
     let direccion = req.body.direction;
     let comments = req.body.comments;
     let photoLink = req.body.photoLink;
-    let cat = req.body.category;
+    let category = req.body.category;
     let rat = req.body.rating;
-    let place: Place = {name:name, longitude:longitud, latitude:latitud, direction:direccion, comments:comments, photoLink:photoLink, category:cat, rating:rat};
+
+    let place = JSON.stringify({
+      "name":name, 
+      "longitude":longitud, 
+      "latitude":latitud, 
+      "direction":direccion, 
+      "comments":comments, 
+      "photoLink":photoLink, 
+      "category":category, 
+      "rating":rat
+    })
     
+    console.log(place);
     try {
       await guardarLugar(place);
     }catch(err){
@@ -82,11 +93,6 @@ api.post(
     return res.sendStatus(200);
   }
 )
-
-api.get('/place/:place', (req:Request, res:Response) => {
-
-  return res.send(req.params.place);
-});
 
 api.get('/db/get', async (req:Request, res:Response):Promise<Response> => {
   var arrayLugares = await cogerLugares();

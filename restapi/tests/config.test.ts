@@ -2,8 +2,7 @@ import { borrarLugaresPorNombre, buscarLugaresPorNombre } from "../database/conf
 
 // Importamos las dependencias necesarias
 const { MongoClient } = require('mongodb');
-const { guardarLugar, connectToDatabase, borrarLugar2 } = require('../database/config'); // Es necesario importar la función que queremos probar
-const {Place} = require('../../webapp/src/shared/shareddtypes');
+import { guardarLugar, borrarLugar2 } from '../database/config'; // Es necesario importar la función que queremos probar
 
 // Creamos los test unitarios
 describe('guardarLugar', () => {
@@ -14,14 +13,14 @@ describe('guardarLugar', () => {
         direction: "",
         latitude: 0.0,
         longitude: 0.0,
-        comments: "",
+        comments: [],
         photoLink: [],
         category: "",
         rating: 0.0
     }
 
     // Llamamos a la función guardarLugar con el objeto Place creado
-    await guardarLugar(lugar);
+    await guardarLugar(JSON.stringify(lugar));
 
     // Buscamos el lugar guardado en la base de datos y comprobamos que existe
 
@@ -40,13 +39,13 @@ describe('borrarLugar', () => {
         direction: '',
         latitude: 0.0,
         longitude: 0.0,
-        comments: '',
+        comments: [],
         photoLink: [],
         category: '',
         rating: 0.0,
       };
       
-      await guardarLugar(testPlace);
+      await guardarLugar(JSON.stringify(testPlace));
   
       // Call the function to delete the test place
       await borrarLugar2(testPlace);

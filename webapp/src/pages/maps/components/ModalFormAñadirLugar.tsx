@@ -8,7 +8,7 @@ import DropdownList from "react-widgets/DropdownList";
 import "react-widgets/styles.css";
 import StarRatings from 'react-star-ratings';
 import { getProfileName } from "../../../pods/Profile";
-import { Console } from "console";
+import { addMarker } from "../../../api/api";
 
 
 type FormProps = {
@@ -23,9 +23,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
     const { session } = useSession();
     const { webId } = session.info;
     const [rating, setRating] = useState(0);
-    const [dir,setDir] = useState("");
-
-    getDirectionFromAPI(props.newPlace!.latitude,props.newPlace!.longitude).then((data) => {setDir(data)});
+    const [dir, setDir] = useState("");
+    const [submitButton, setSubmitButton] = useState("POD");
+    getDirectionFromAPI(props.newPlace!.latitude, props.newPlace!.longitude).then((data) => { setDir(data) });
 
 
     let urlImagenes: string[] = [];
@@ -43,7 +43,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
     props.mapas.forEach((mapa) => {
         console.log(session.info.webId!)
         console.log(mapa.owner)
-        if(mapa.owner === session.info.webId!.split("profile")[0]){
+        if (mapa.owner === session.info.webId!.split("profile")[0]) {
             maps.push(mapa.id)
         }
     })
@@ -53,7 +53,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         let uniqueId = crypto.randomUUID();
 
         mapa.id = mapName;
-        
+
         mapa.map.push({
             id: uniqueId,
             place: place,
@@ -69,19 +69,19 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
         console.log("Mapa actualizado");
     }
 
-    async function getDirectionFromAPI(lat:number, lng:number){
+    async function getDirectionFromAPI(lat: number, lng: number) {
         const response = await fetch(
-          `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCfMMAO1EahrSRx2oo4bdtS6HKEvuslKvE`);
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=AIzaSyCfMMAO1EahrSRx2oo4bdtS6HKEvuslKvE`);
         console.log(lat);
         console.log(lng);
         const data = await response.json();
         if (data.status === "OK") {
-          const address:string = data.results[0].formatted_address;
-          return address;
+            const address: string = data.results[0].formatted_address;
+            return address;
         } else {
-          throw new Error(`Error al obtener la dirección. Status: ${data.status}`);
+            throw new Error(`Error al obtener la dirección. Status: ${data.status}`);
         }
-      }
+    }
 
     async function guardarDatos() {
         //abrir el modal
@@ -153,14 +153,19 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
             props.newPlace!.rating = puntuacion;
         }
 
-        var mapa = props.mapas.find((m) => m.id === mapaSelected && m.owner === webId?.split("profile")[0]);
+        if (submitButton === "POD") {           
 
-        if (mapa !== undefined && mapa !== null) {
-            await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
-        } else {
-            var x = await getProfileName(webId!);
-            mapa = { id: mapaSelected, map: [], owner:webId!.split("profile")[0], ownerName: x}
-            await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+            var mapa = props.mapas.find((m) => m.id === mapaSelected && m.owner === webId?.split("profile")[0]);
+
+            if (mapa !== undefined && mapa !== null) {
+                await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+            } else {
+                var x = await getProfileName(webId!);
+                mapa = { id: mapaSelected, map: [], owner: webId!.split("profile")[0], ownerName: x }
+                await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
+            }
+        }else{
+            await addMarker(props.newPlace!);
         }
     }
 
@@ -197,7 +202,7 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 <label>Mapa:
                     <Combobox
                         placeholder="Nombre del mapa"
-                        defaultValue={maps.length===0?maps[0]:""}
+                        defaultValue={maps.length === 0 ? maps[0] : ""}
                         data={maps}
                         name="mapa"
                         id="mapa"
@@ -205,7 +210,8 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 </label>
 
                 <label>Fotos:<input type="file" id="fotos" accept="image/png, image/jpeg, image/jpg" multiple></input></label>
-                <button id="pruebaguardar" type="submit"> Añadir Lugar</button>
+                <button id="guardarPOD" className="submit btn btn-primary" name="submitPOD" type="submit" onClick={() => setSubmitButton("POD")}> Añadir POD</button>
+                <button id="guardarBBDD" className="submit btn btn-primary" name="submitBBDD" type="submit" onClick={() => setSubmitButton("BBDD")}> Añadir BBDD</button>
             </form>
 
         </>

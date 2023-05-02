@@ -4,7 +4,6 @@ import * as http from 'http';
 import bp from 'body-parser';
 import cors from 'cors';
 import api from '../routes/api';
-import { MongoClient } from 'mongodb';
 import { borrarLugaresPorNombre, buscarLugaresPorNombre } from '../database/config';
 const { guardarLugar, connectToDatabase, borrarLugar2 } = require('../database/config');
 
@@ -99,21 +98,6 @@ describe('POST /api/db/add', () => {
       .expect(400);
 
     expect(response.status).toBe(400);
-  });
-});
-
-
-describe('GET /api/place/:place', () => {
-  it('should return the requested place', async () => {
-    const place = 'New York';
-    const response = await request(app).get(`/api/place/${place}`);
-    expect(response.status).toBe(200);
-    expect(response.text).toBe(place);
-  });
-
-  it('should return an error if no place is provided', async () => {
-    const response = await request(app).get('/api/place/');
-    expect(response.status).toBe(404);
   });
 });
 
