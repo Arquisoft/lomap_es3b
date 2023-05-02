@@ -25,21 +25,20 @@ function Amigo({ name, webId }: AmigoProps): JSX.Element {
 
 
     const getAmigoAccess = async () => {
+        try {
+            // Fetch the SolidDataset and its associated ACLs, if available:
+            const myDatasetWithAcl = await getSolidDatasetWithAcl(session.info.webId!.split("/profile")[0] + "/public/map/", { fetch: session.fetch });
 
-        // Fetch the SolidDataset and its associated ACLs, if available:
-        const myDatasetWithAcl = await getSolidDatasetWithAcl(session.info.webId!.split("/profile")[0] + "/public/map/", { fetch: session.fetch });
+            const permisos = getAgentAccess(myDatasetWithAcl, webId)
 
-        const permisos = getAgentAccess(myDatasetWithAcl, webId)
-        
-        console.log(permisos);
-
-        if(permisos?.read){
-            setAccess(true);
-        }else{
-            setAccess(false);
+            if (permisos?.read) {
+                setAccess(true);
+            } else {
+                setAccess(false);
+            }
+        } catch {
+            console.log("O no existe la carpeta o no tiene permisos");
         }
-
-        console.log(access);
     }
 
     useEffect(() => {

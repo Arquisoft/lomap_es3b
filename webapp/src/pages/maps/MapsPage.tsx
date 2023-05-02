@@ -35,7 +35,6 @@ function MapsPage(props: MapProps): JSX.Element {
 
     //De la session sacar el webId
     const { webId } = session.info;
-    console.log(webId);
 
     const containsMap = (MapsList: MapType[], mapa: MapType) => {
 
@@ -77,6 +76,7 @@ function MapsPage(props: MapProps): JSX.Element {
         }
 
         //Sacamos los mapas de la base de datos
+        try{
         let placesBBDD = await getPlaces();
         let mapBBDD:MapType = {
             id: "MapaBBDD",
@@ -96,6 +96,9 @@ function MapsPage(props: MapProps): JSX.Element {
         });
 
         mapasTotales.push(mapBBDD);
+        }catch(err){
+            console.log("No se han podido sacar los lugares de la BBDD")
+        }
 
         try {
             console.log("Sacamos los amigos")
@@ -135,15 +138,12 @@ function MapsPage(props: MapProps): JSX.Element {
         setMaps(mapasTotales);
         setFilteredMaps(mapasTotales);
 
-
-
         //Establecemos los lugares
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterByFriends(filterByCategory(placesTotales))));
     }
 
     if (session.info.isLoggedIn && onlyOnce) {
         setOnlyOnce(false);
-        console.log(webId);
         getMarkups();
     }
 
@@ -171,12 +171,6 @@ function MapsPage(props: MapProps): JSX.Element {
     }
 
     function filterByFriends(places: PlacePOD[]): PlacePOD[] {
-        console.log("Amigos para filtrar");
-        console.log(filteredFriends);
-
-        console.log("Lugares antes de filtrar")
-        console.log(places);
-
         if (places !== undefined && places !== null) {
             if (filteredFriends.length === 0) {
                 return places;
@@ -313,13 +307,9 @@ function MapsPage(props: MapProps): JSX.Element {
 
         let filteredMapPlaces: PlacePOD[] = [];
 
-        console.log(filteredMaps);
-
         filteredMaps.forEach((mapa) => {
             mapa.map.forEach((place) => filteredMapPlaces.push(place));
         });
-
-        console.log(filteredMapPlaces);
 
         setFilteredPlaces(filterByDistance(centro, minDistance, maxDistance, filterByFriends(filterByCategory(filteredMapPlaces))));
     };

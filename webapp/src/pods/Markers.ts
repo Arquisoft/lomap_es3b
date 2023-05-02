@@ -16,11 +16,9 @@ export async function addMapPOD(session: Session, name: string, file: File, url:
     }catch(error){
       
       //En el caso de que la carpeta no exista la creamos para poder añadir los nuevos mapas
-      var result = await createContainerAt(url, { fetch: fet });
-      console.log(result);
+      await createContainerAt(url, { fetch: fet });
     }
   } catch (error) {
-    console.log(error)
   }
 
   //Una vez que o bien la carpeta existe o bien la hemos creado añadimos el nuevo mapa o el mapa modificado
@@ -31,7 +29,7 @@ export async function addMapPOD(session: Session, name: string, file: File, url:
       fetch: session.fetch
     });
   } catch (error) {
-    console.log(error);
+    console.log("Problema al guardar datos en el POD")
   }
 }
 
@@ -48,7 +46,6 @@ export async function getMapsPOD(session: Session, url: string): Promise<MapType
       );
 
       let fileText = await file.text()
-      console.log(fileText);
 
       //Buscamos los mapas guardados
 
@@ -73,8 +70,6 @@ export async function getMapsPOD(session: Session, url: string): Promise<MapType
         }
       }
     }
-
-    console.log(mapas);
     return Promise.resolve(mapas);
 }
 
@@ -95,7 +90,6 @@ async function readFileFromPod(fileURL: string, session: Session, name:string):P
     return fileInfo;
 
   } catch (err) {
-    console.log(err);
     return Promise.reject();
   }
 }

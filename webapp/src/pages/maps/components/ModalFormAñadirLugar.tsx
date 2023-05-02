@@ -161,6 +161,9 @@ function ModalFormAñadirLugar(props: FormProps): JSX.Element {
                 await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
             } else {
                 var x = await getProfileName(webId!);
+                if(mapaSelected === undefined || mapaSelected === null || mapaSelected === ""){
+                    mapaSelected = "NewMap";
+                }
                 mapa = { id: mapaSelected, map: [], owner: webId!.split("profile")[0], ownerName: x }
                 await guardarEnPOD(props.newPlace!, mapa, mapaSelected);
             }
