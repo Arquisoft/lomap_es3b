@@ -447,6 +447,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_descripción_de_los_requisitos">1.1. Descripción de los requisitos</a></li>
 <li><a href="#_objetivos_de_calidad">1.2. Objetivos de calidad</a></li>
 <li><a href="#_stakeholders">1.3. Stakeholders</a></li>
+<li><a href="#_miembros_del_equipo">1.4. Miembros del equipo</a></li>
 </ul>
 </li>
 <li><a href="#section-architecture-constraints">2. Restricciones</a>
@@ -476,6 +477,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_whitebox_overall_system">5.1. Whitebox Overall System</a></li>
 <li><a href="#_blackbox_overall_system">5.2. Blackbox Overall System</a></li>
+<li><a href="#_building_block_view_level_2">5.3. Building block view - Level 2</a></li>
 </ul>
 </li>
 <li><a href="#section-runtime-view">6. Vista en tiempo de ejecución</a>
@@ -660,6 +662,45 @@ For documentation of your own system you use better the <em>plain</em> version.<
 <td class="tableblock halign-left valign-top"><p class="tableblock">Profesores</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Interaccionan con el equipo de desarrollo para corregir posibles defectos</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Esperan que la aplicación sea funcional y cumpla los requisitos requeridos. También proporcionan soporte en caso de que sea necesario para el equipo de desarrollo.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_miembros_del_equipo">1.4. Miembros del equipo</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 40%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nombre</th>
+<th class="tableblock halign-left valign-top">Contacto</th>
+<th class="tableblock halign-left valign-top">Usuario de Github</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Miguel Mier</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UO277301</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/uo277301" class="bare">https://github.com/uo277301</a> y <a href="https://github.com/michumier" class="bare">https://github.com/michumier</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lara Fernández</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UO276026</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/uo276026" class="bare">https://github.com/uo276026</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Eloy Alfredo Schmidt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UO271588</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/UO271588" class="bare">https://github.com/UO271588</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Luis Manuel Solares</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UO282631</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://github.com/UO282631" class="bare">https://github.com/UO282631</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -945,7 +986,7 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <div class="sect2">
 <h3 id="_whitebox_overall_system">5.1. Whitebox Overall System</h3>
 <div class="paragraph">
-<p><span class="image"><img src="./images/05_Esquema_Whitebox.jpg" alt="Whitebox"></span></p>
+<p><span class="image"><img src="./images/05_Esquema_Whitebox.png" alt="Whitebox"></span></p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1006,6 +1047,38 @@ El sistema se divide en Whitebox y Blackbox.</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sect2">
+<h3 id="_building_block_view_level_2">5.3. Building block view - Level 2</h3>
+<div class="paragraph">
+<p><span class="image"><img src="./images/05_building_block_level2.jpg" alt="Level 2"></span></p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Nombre</th>
+<th class="tableblock halign-left valign-top">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Markers y Places</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Se agrupan las dos funciones en las que es necesario acceder a MongoDB y a Cloudinary a por datos para mostrar al usuario.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Login</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">El cliente tiene una cuenta con un POD que podemos manejar para guardar información.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Webapp</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La interfaz con la que interactúa el usuario.</p></td>
+</tr>
+</tbody>
+</table>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
@@ -1057,7 +1130,7 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <p><span class="image"><img src="./images/07_deployment_view.png" alt="Deployment view de la aplicación"></span></p>
 </div>
 <div class="paragraph">
-<p>La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 8081. Ademés, este servidor se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt.</p>
+<p>La aplicación se encuentra alojada en un servidor web que interactúa con los diferentes clientes a traves del puerto 3000. Además, esta aplicación se nutre de la información almacenada dentro de una base de datos MongoDB alojada en un servidor en la nube. También obtiene la información de los usuarios a traves de los PODs de SOLID que se encuentran en nuestro caso dentro del provedor de SOLID Inrupt, y guarda las imagenes de los mismos en un contenedor de Cloudinary.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1086,11 +1159,17 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <p>La base de datos se encuentra alojada en los propios servidores que proporciona MongoDB en la nube exactamente se encuentra en (Poner la máquina de AWS que almacena la BBDD)</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_cloudinarydb">7.2.5. CloudinaryDB</h4>
+<div class="paragraph">
+<p>La base de imagenes se encuentra alojada en los servidores de cloudinary, se está utilizando la versión de demo que proporciona cloudinary para guardar imagenes. Si se necesitara algo mas fiable y estable se compraría la versión de pago de la misma.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_aspectos_de_calidad_y_rendimiento">7.3. Aspectos de calidad y rendimiento</h3>
 <div class="paragraph">
-<p>Se espera que los componentes de la LoMap proporcionen los siguientes aspectos de calidad y de rendimiento en cuanto a los tiempos de respuesta y a la disponibilidad de los distintos elementos</p>
+<p>Se espera que los componentes de la LoMap proporcionen los siguientes aspectos de calidad y de rendimiento en cuanto a los tiempos de respuesta y a la disponibilidad de los distintos elementos.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -1101,25 +1180,25 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <thead>
 <tr>
 <th class="tableblock halign-left valign-top">Dispositivo</th>
-<th class="tableblock halign-left valign-top">Tiempo de respuesta</th>
-<th class="tableblock halign-left valign-top">Disponibilidad</th>
+<th class="tableblock halign-left valign-top">Especificado por Azure</th>
+<th class="tableblock halign-left valign-top">La disponibilidad es la que nos proporciona Azure (99,95%)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Web App</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Poco tiempo de respuesta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe responder con un tiempo medio de menos de 2 segundos</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La aplicación debe estar disponible al 99% del tiempo. Dentro de sto entendemos problemas relacionados con la caida del servidor e incluso problemas relacionados con SOLID</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">REST API</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Tiempo medio de respuesta</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Alta</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La API debe responder con un tiempo de menos de 1 segundo</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">La REST API debe estar disponible un 99% del tiempo</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MongoDB</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por el proveedor</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por el proveedor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por MongoDB (Tiempo de respuesta Alto)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Especificado por MongoDB (Alta)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">PODs Solid</p></td>
@@ -1282,6 +1361,16 @@ El sistema se divide en Whitebox y Blackbox.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TEST2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Testabilidad</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Antes de de añadir una funcionalidad, ésta debe ser                                     probada, ya sea con pruebas unitarias o pruebas de                                       usabilidad.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CARGA1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usabilidad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test de carga que realiza funciones básicas en la aplicación con 20 usuarios por segundo y un pico máximo de 500.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CARGA2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usabilidad</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Test más exigente que el anterior en el que 50 usuarios durante un minuto realizan una prueba de carga exigente en base a las funciones básicas de la aplicación.</p></td>
 </tr>
 </tbody>
 </table>
