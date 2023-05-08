@@ -4,9 +4,5 @@ COPY . /app
 WORKDIR /app
 #Install the dependencies
 RUN npm install
-#Compilar desde typescript a javascript (Se genera la salida en el directorio build)
-RUN npm run build
-# La siguiente línea optimiza node.js para entornos de producción
-ENV NODE_ENV production 
 #Ejecutar en producción
-CMD ["node", "build/server.js"]cd 
+CMD ["npm", "start"] 
