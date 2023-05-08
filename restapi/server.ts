@@ -20,11 +20,7 @@ const options = {
 const metricsMiddleware:RequestHandler = promBundle({includeMethod: true});
 app.use(metricsMiddleware);
 
-app.use(cors({
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE"
-    }
-));
+app.use(cors());
 app.use(bp.json());
 
 app.use("/api", api)
