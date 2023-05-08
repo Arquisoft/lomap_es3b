@@ -52,6 +52,7 @@ jobs:
       uses: elgohr/Publish-Docker-Github-Action@v5
       env:
         API_URI: https://${{ secrets.DEPLOY_HOST }}:5000/api
+        REACT_APP_GOOGLE_API_KEY: ${{secrets.REACT_APP_GOOGLE_API_KEY}}
       with:
           name: arquisoft/lomap_es3b/webapp
           username: ${{ github.actor }}
