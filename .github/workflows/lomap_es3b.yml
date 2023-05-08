@@ -19,6 +19,7 @@ jobs:
     - uses: actions/setup-node@v3
       with: 
           node-version: 18
+          fetch-depth: 0
     - run: npm --prefix webapp ci
     - run: npm --prefix restapi ci
     - run: npm --prefix webapp test --coverage --watchAll
