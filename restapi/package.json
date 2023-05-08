@@ -2,6 +2,7 @@
   "name": "restapi",
   "version": "1.0.0",
   "scripts": {
+    "build": "tsc",
     "start": "ts-node-dev ./server.ts",
     "test": "jest --runInBand --coverage"
   },
